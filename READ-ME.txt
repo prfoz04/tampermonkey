@@ -1,0 +1,7 @@
+Scripts desenvolvidos para facilitar as rotinas relacionadas aos sistemas da 4º Vara.
+
+Para utilizar os mesmos deve-se instalar a extensão Tampermonkey, a mesma é capaz de inserir scripts dinamicamente sobre sites abertos, alterando sua interface visual e pequenas funcionalidades.
+
+Neste repositório se encontram apenas scripts desenvolvidos para o sistema SEEU.
+
+Autoria: Estagiários de informática da 4º Vara.

@@ -20,6 +20,8 @@
 
     const ID_FORM = '#frmConsulta';
 
+    const ID_MES = '#cmbMesAno';
+
     //value necessário para fazer a requisição da geração de relatório
     const CMB_VARA = await aguardarSelect(ID_SELECT_VARA, option => option.textContent.includes('Foz do Iguaçu') && option.textContent.includes('4'));
 
@@ -28,8 +30,14 @@
     //vazia pois não queremos filtrar por entidade
     const CMB_ENTIDADE = " ";
 
-    function gerar() {
-
+    async function gerar() {
+        const selectPrestadores = document.querySelector(ID_SELECT_PRESTADORES)
+        for (let prestador of CMB_PRESTADORES) {
+            selectPrestadores.value = prestador;
+            let nome = selectPrestadores.textContent;
+            let mes = await aguardarSelect(ID_MES);
+            console.log(`${nome} prestou no mes ${mes}`);
+        }
     }
 
     /**
@@ -46,10 +54,11 @@
                 //espera ter algo além da opção vazia
                 if (options.length > 1) {
                     clearInterval(interval);
-                    let prestadores = Array.from(options);
+                    let respostas = Array.from(options);
                     if (filtro)
-                        prestadores = prestadores.filter(filtro);
-                    response(prestadores.map(option => option.value));
+                        respostas = respostas.filter(filtro);
+                    respostas.filter(option => option.value);
+                    response(respostas.map(option => option.value));
                 }
             }, 300) //tempo de checagem
         })

@@ -31,13 +31,10 @@
     const CMB_ENTIDADE = " ";
 
     async function gerar() {
-        const selectPrestadores = document.querySelector(ID_SELECT_PRESTADORES)
-        for (let prestador of CMB_PRESTADORES) {
-            selectPrestadores.value = prestador;
-            let nome = selectPrestadores.textContent;
-            let mes = await aguardarSelect(ID_MES);
-            console.log(`${nome} prestou no mes ${mes}`);
-        }
+        const selectPrestadores = document.querySelector(ID_SELECT_PRESTADORES);
+        const selectMes = document.querySelector(ID_MES);
+        selectPrestadores.value = CMB_PRESTADORES[0];
+        selectMes.value = (await aguardarSelect(ID_MES))[0];
     }
 
     /**
@@ -52,7 +49,7 @@
                 const select = document.querySelector(idSelect);
                 const options = select.querySelectorAll('option');
                 //espera ter algo além da opção vazia
-                if (options.length > 1) {
+                if (options.length > 1 || !options[0].value) {
                     clearInterval(interval);
                     let respostas = Array.from(options);
                     if (filtro)

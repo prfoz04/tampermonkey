@@ -68,7 +68,6 @@
             // @ts-ignore
             const params = new URLSearchParams(formData)
             try {
-                console.log(`Enviando formulário do prestador ${nomePrestador}`);
                 const response = await fetch(form.action, {
                     method: form.method || 'POST',
                     headers: {
@@ -78,29 +77,14 @@
                 });
                 if (response.url.endsWith('.pdf') || response.headers.get('content-type')?.includes('application/pdf')) {
                     linksPDF.push({ prestador: nomePrestador, pdfUrl: response.url });
-                    console.log(`PDF capturado para ${nomePrestador}: ${response.url}`);
                 }
-                else {
-                const htmlTexto = await response.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlTexto, 'text/html');
-                const iframePdf = doc.querySelector('iframe[src*="pdf"], embed[src*="pdf"], a[href*="pdf"]');
-                const pdfUrl = iframePdf ? (iframePdf.src || iframePdf.href) : null;
-
-                if (pdfUrl) {
-                    linksPDF.push({ prestador: value, pdfUrl });
-                    console.log(`PDF extraído do HTML para ${value}: ${pdfUrl}`);
-                } else {
-                    console.warn(`Não foi possível localizar a URL do PDF na resposta para o prestador ${value}`);
-                }
-            }
             }
             catch (error) {
                 console.error(`erro ao gerar relatório do prestador ${nomePrestador}: ${error}`);
             }
         }
         criaBotao();
-        console.log("PDF's gerados: " + linksPDF);
+        console.log("PDF's gerados: " + JSON.stringify(linksPDF));
     }
 
     /**

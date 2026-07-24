@@ -48,15 +48,15 @@
             var mesesCumpridos = await aguardarSelect(ID_MES);
             var ultimoMesCumprido = mesesCumpridos[0];
             if (!ultimoMesCumprido) {
-                console.log(`${selectPrestadores.textContent} não cumpriu nada ainda`);
+                console.log(`${value} não cumpriu nada ainda`);
                 continue;
             }
             if (!ultimoMesCumprido.includes(MES_STR) && !ultimoMesCumprido.includes(ANO_STR)) {
-                console.log(`${selectPrestadores.textContent} não cumpriu no último mês`);
+                console.log(`${value} não cumpriu no último mês`);
                 continue;
             }
             document.querySelector(ID_MES).value = ultimoMesCumprido;
-            console.log(`${selectPrestadores.textContent} cumpriu`);
+            console.log(`${value} cumpriu`);
         }
     }
 
@@ -80,10 +80,11 @@
                     respostas = respostas.filter(option => option.value && option.value !== ' ' && option.value !== 'Selecione');
                     response(respostas.map(option => option.value));
                 }
-                if (!options[0].value) {
+                if (options.length === 1 && (!options[0].value || options[0].value.trim() === '')) {
                     clearInterval(interval);
-                    response(null);
-                }
+                    response([]); 
+                    return;
+            }
             }, 300) //tempo de checagem
         })
     }

@@ -37,6 +37,8 @@
      * @param {string} mesAno
      */
     async function gerar(mesAno) {
+        if (mesAno === 'Selecione')
+            return;
         console.log(`Gerando relatórios para o mês ${mesAno}`);
         //predefine a vara por garantia
         document.querySelector(ID_SELECT_VARA).value + CMB_VARA[0];
@@ -102,6 +104,9 @@
         const div = document.querySelector(ID_FORM);
         const select = document.createElement('select');
         select.className = 'eproc-select w-default';
+        select.onchange = function() {
+            gerar(select.value);
+        };
         select.appendChild(criarOption('Selecione'));
         for (let ano = DATE.getFullYear(); ano >= 2026; ano--) {
             for (let mes = DATE.getMonth() + 1; mes >= 1; mes--) {

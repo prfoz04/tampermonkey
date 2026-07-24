@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Geração de relatórios mensais
 // @namespace    https://github.com/4Vara
-// @version      1.0.7
+// @version      1.0.8
 // @description  Gera automaticamente os relatórios do último mês registrado para todos os prestadores no eproc.
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=relatorio_diario_cumprimento_pena*
@@ -30,18 +30,25 @@
     //vazia pois não queremos filtrar por entidade
     const CMB_ENTIDADE = " ";
 
+    const DATE = new Date();
+
+    const MES_STR = DATE.getMonth() + 1 < 10 ? `0${(DATE.getMonth()+1).toString()}` : (DATE.getMonth()+1).toString();
+
+    const ANO_STR = DATE.getFullYear().toString();
+
     async function gerar() {
-        const selectPrestadores = document.querySelector(ID_SELECT_PRESTADORES);
-        const selectMes = document.querySelector(ID_MES);
-        selectPrestadores.value = CMB_PRESTADORES[0];
-        selectMes.value = (await aguardarSelect(ID_MES))[0];
+        console.log(`Gerando relatórios par o mês ${MES_STR}/${ANO_STR}`);
+        CMB_VARA[0].selected = true;
+        CMB_PRESTADORES[0].selected = true;
+        const CMB_MES_ANO = await aguardarSelect(ID_MES, option => !!option.value);
+        CMB_MES_ANO[0].selected = true;
     }
 
     /**
      * função necessária pois o select é preenchido alguns milissegundos atrasado
      * @param {string} idSelect 
      * @param {(option: HTMLOptionElement)=>boolean} [filtro=null] 
-     * @return {Promise<string[]>}
+     * @return {Promise<HTMLOptionElement[]>}
      */
     async function aguardarSelect(idSelect, filtro = null) {
         return new Promise((response) => {
@@ -54,8 +61,7 @@
                     let respostas = Array.from(options);
                     if (filtro)
                         respostas = respostas.filter(filtro);
-                    respostas.filter(option => option.value);
-                    response(respostas.map(option => option.value));
+                    response(respostas);
                 }
             }, 300) //tempo de checagem
         })

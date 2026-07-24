@@ -37,14 +37,27 @@
     const ANO_STR = DATE.getFullYear().toString();
 
     async function gerar() {
-        console.log(`Gerando relatórios par o mês ${MES_STR}/${ANO_STR}`);
+        console.log(`Gerando relatórios para o mês ${MES_STR}/${ANO_STR}`);
+        //predefine a vara por garantia
         document.querySelector(ID_SELECT_VARA).value + CMB_VARA[0];
-        const selectPrestadores = document.querySelector(ID_SELECT_PRESTADORES);
-        selectPrestadores.value = CMB_PRESTADORES[0];
-        selectPrestadores.dispatchEvent(new Event('change'));
-        const selectMesAno = document.querySelector(ID_MES);
-        const mesano = await aguardarSelect(ID_MES);
-        console.log(mesano)
+        var selectPrestadores = document.querySelector(ID_SELECT_PRESTADORES);
+        //itera sobre os prestadores utilizando o proprio forms da pagina
+        for (let value of CMB_PRESTADORES) {
+            selectPrestadores.value = value;
+            selectPrestadores.dispatchEvent(new Event('change'));
+            var mesesCumpridos = await aguardarSelect(ID_MES);
+            var ultimoMesCumprido = mesesCumpridos[0];
+            if (!ultimoMesCumprido) {
+                console.log(`${selectPrestadores.textContent} não cumpriu nada ainda`);
+                continue;
+            }
+            if (!ultimoMesCumprido.includes(MES_STR) && !ultimoMesCumprido.includes(ANO_STR)) {
+                console.log(`${selectPrestadores.textContent} não cumpriu no último mês`);
+                continue;
+            }
+            document.querySelector(ID_MES).value = ultimoMesCumprido;
+            console.log(`${selectPrestadores.textContent} cumpriu`);
+        }
     }
 
     /**

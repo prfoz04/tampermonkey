@@ -10,8 +10,6 @@
 // @run-at       document-idle
 // ==/UserScript==
 
-import { useOptimistic } from "react";
-
 (async function () {
     'use strict';
     console.log('[eproc - geração de relatórios] script iniciado.');
@@ -104,16 +102,24 @@ import { useOptimistic } from "react";
         const div = document.querySelector(ID_FORM);
         const select = document.createElement('select');
         select.className = 'eproc-selectw-default';
+        select.appendChild(criarOption('Selecione'));
         for (let ano = DATE.getFullYear(); ano >= 2026; ano--) {
             for (let mes = DATE.getMonth() + 1; mes >= 1; mes--) {
-                var option = document.createElement('option');
-                let text = `${mes < 10 ? "0" + mes : mes} / ${ano}`;
-                option.value = text;
-                option.textContent = text;
-                select.appendChild(option);
+                select.appendChild(criarOption(`${mes<10?"0"+mes:mes} / ${ano}`));
             }
         }
         div.appendChild(select);
+    }
+
+    /**
+     * @param {string} text 
+     * @returns {HTMLOptionElement}
+     */
+    function criarOption(text) {
+        var option = document.createElement('option');
+        option.value = text;
+        option.textContent = text;
+        return option
     }
 
     criaBotao();

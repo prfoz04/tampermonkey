@@ -62,8 +62,12 @@
             if (!mesesCumpridos[0] || mesesCumpridos.indexOf(mesAno) === -1) {
                 continue;
             }
-            // @ts-ignore
-            document.querySelector(ID_MES).value = mesAno;
+            /**
+             * @type {HTMLSelectElement}
+             */
+            var selectMes = document.querySelector(ID_MES);
+            selectMes.value = mesAno;
+            selectMes.dispatchEvent(new Event('change'));
 
             const formData = new FormData(form);
             // @ts-ignore

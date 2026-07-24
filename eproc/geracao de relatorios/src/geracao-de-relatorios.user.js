@@ -39,23 +39,51 @@
     async function gerar(mesAno) {
         if (mesAno === 'Selecione')
             return;
-
         console.log(`Gerando relatórios para o mês ${mesAno}`);
         //predefine a vara por garantia
+        // @ts-ignore
         document.querySelector(ID_SELECT_VARA).value + CMB_VARA[0];
+        /**
+         * @type {HTMLSelectElement}
+         */
         var selectPrestadores = document.querySelector(ID_SELECT_PRESTADORES);
+        /**
+         * @type {HTMLFormElement}
+         */
+        var form = document.querySelector(ID_FORM);
+        var linksPDF = [];
         //itera sobre os prestadores utilizando o proprio forms da pagina
         for (let value of CMB_PRESTADORES) {
             selectPrestadores.value = value;
             selectPrestadores.dispatchEvent(new Event('change'));
             var mesesCumpridos = await aguardarSelect(ID_MES);
-            if (!mesesCumpridos[0]) {
+            var nomePrestador = selectPrestadores.options[selectPrestadores.selectedIndex].text;
+            if (!mesesCumpridos[0] || mesesCumpridos.indexOf(mesAno) === -1) {
                 continue;
             }
-            if (mesesCumpridos.indexOf(mesAno) === -1) {
-                continue;
-            }
+            // @ts-ignore
             document.querySelector(ID_MES).value = mesAno;
+
+            const formData = new FormData(form);
+            // @ts-ignore
+            const params = new URLSearchParams(formData)
+            try {
+                console.log(`Enviando formulário do prestador ${nomePrestador}`);
+                const response = await fetch(form.action, {
+                    method: form.method || 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: params.toString(),
+                });
+                if (response.url.endsWith('.pdf') || response.headers.get('content-type')?.includes('application/pdf')) {
+                    linksPDF.push({ prestador: nomePrestador, pdfUrl: response.url });
+                    console.log(`PDF capturado para ${nomePrestador}: ${response.url}`);
+                }
+            }
+            catch (error) {
+                console.error(`erro ao gerar relatório do prestador ${nomePrestador}: ${error}`);
+            }
         }
         criaBotao();
     }

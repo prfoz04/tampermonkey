@@ -80,10 +80,9 @@
                     respostas = respostas.filter(option => option.value && option.value !== ' ' && option.value !== 'Selecione');
                     response(respostas.map(option => option.value));
                 }
-                if (options.length === 1 && (!options[0].value || options[0].value.trim() === '')) {
+                if (options.length === 1 && (!options[0].value || options[0].value.trim() === 'null')) {
                     clearInterval(interval);
-                    response([]); 
-                    return;
+                    response([]);
             }
             }, 300) //tempo de checagem
         })

@@ -38,17 +38,16 @@
 
     async function gerar() {
         console.log(`Gerando relatórios par o mês ${MES_STR}/${ANO_STR}`);
-        CMB_VARA[0].selected = true;
-        CMB_PRESTADORES[0].selected = true;
-        const CMB_MES_ANO = await aguardarSelect(ID_MES, option => !!option.value);
-        CMB_MES_ANO[0].selected = true;
+        document.querySelector(ID_SELECT_VARA).value + CMB_VARA[0];
+        document.querySelector(ID_SELECT_PRESTADORES).value = CMB_PRESTADORES[0];
+        document.querySelector(ID_MES).value = (await aguardarSelect(ID_MES))[0];
     }
 
     /**
      * função necessária pois o select é preenchido alguns milissegundos atrasado
      * @param {string} idSelect 
      * @param {(option: HTMLOptionElement)=>boolean} [filtro=null] 
-     * @return {Promise<HTMLOptionElement[]>}
+     * @return {Promise<string[]>}
      */
     async function aguardarSelect(idSelect, filtro = null) {
         return new Promise((response) => {
@@ -61,7 +60,8 @@
                     let respostas = Array.from(options);
                     if (filtro)
                         respostas = respostas.filter(filtro);
-                    response(respostas);
+                    respostas = respostas.filter(option => option.value);
+                    response(respostas.map(option => option.value));
                 }
             }, 300) //tempo de checagem
         })

@@ -52,7 +52,7 @@
         var linksPDF = [];
         //itera sobre os prestadores utilizando o proprio forms da pagina
         for (let value of CMB_PRESTADORES) {
-            selectPrestadores.value = value;
+            forcarTrocaSelect(selectPrestadores, value);
             forcarChange(selectPrestadores);
             var mesesCumpridos = await aguardarSelect(ID_MES);
             var nomePrestador = selectPrestadores.options[selectPrestadores.selectedIndex].text;
@@ -74,7 +74,7 @@
                 console.log(`[PULADO] Prestador ${nomePrestador} não possui relatório para ${mesAno}`);
                 continue;
             }
-            selectMes.value = opcaoCorrespondente.value;
+            forcarTrocaSelect(selectMes, opcaoCorrespondente.value);
             forcarChange(selectMes);
 
             const formData = new FormData(form);
@@ -98,6 +98,18 @@
         }
         baixarPDFs(linksPDF.filter(obj => obj.prestador.includes('PICCOLI')), mesAno);
         criaBotao();
+    }
+
+    /**
+     * @param {HTMLSelectElement} selectElement 
+     * @param {string} valor 
+     */
+    function forcarTrocaSelect(selectElement, valor) {
+        selectElement.value = valor;
+        selectElement.dispatchEvent(new Event('change', { bubbles: true }));
+        if (window.$ || window.jQuery) {
+          (window.$ || window.jQuery)(selectElement).trigger('change');
+        }
     }
 
     /** 

@@ -66,7 +66,18 @@
              * @type {HTMLSelectElement}
              */
             var selectMes = document.querySelector(ID_MES);
-            selectMes.value = mesAno;
+            const opcaoCorrespondente = Array.from(selectMes.options).find(opt => {
+                const textoOption = opt.textContent.trim();
+                const valorOption = opt.value.trim();
+                const mesProcurado = mesAno.trim();
+                return textoOption === mesProcurado || valorOption === mesProcurado;
+            });
+            // Se o prestador não tiver esse mês específico disponível no select, pula
+            if (!opcaoCorrespondente) {
+                console.log(`[PULADO] Prestador ${nomePrestador} não possui relatório para ${mesAno}`);
+                continue;
+            }
+            selectMes.value = opcaoCorrespondente.value;
             selectMes.dispatchEvent(new Event('change'));
 
             const formData = new FormData(form);
@@ -88,7 +99,7 @@
                 console.error(`erro ao gerar relatório do prestador ${nomePrestador}: ${error}`);
             }
         }
-        baixarPDFs(linksPDF, mesAno);
+        baixarPDFs(linksPDF.filter(obj => obj.prestador.includes('PICCOLI')), mesAno);
         criaBotao();
     }
 

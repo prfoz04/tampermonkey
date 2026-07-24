@@ -101,7 +101,7 @@
     function criarInput() {
         const div = document.querySelector(ID_FORM);
         const select = document.createElement('select');
-        select.className = 'eproc-selectw-default';
+        select.className = 'eproc-select w-default';
         select.appendChild(criarOption('Selecione'));
         for (let ano = DATE.getFullYear(); ano >= 2026; ano--) {
             for (let mes = DATE.getMonth() + 1; mes >= 1; mes--) {

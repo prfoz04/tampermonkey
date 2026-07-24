@@ -28,9 +28,6 @@
 
     const CMB_PRESTADORES = await aguardarSelect(ID_SELECT_PRESTADORES);
 
-    //vazia pois não queremos filtrar por entidade
-    const CMB_ENTIDADE = " ";
-
     const DATE = new Date();
 
     /**
@@ -56,7 +53,7 @@
         //itera sobre os prestadores utilizando o proprio forms da pagina
         for (let value of CMB_PRESTADORES) {
             selectPrestadores.value = value;
-            selectPrestadores.dispatchEvent(new Event('change'));
+            forcarChange(selectPrestadores);
             var mesesCumpridos = await aguardarSelect(ID_MES);
             var nomePrestador = selectPrestadores.options[selectPrestadores.selectedIndex].text;
             if (!mesesCumpridos[0] || mesesCumpridos.indexOf(mesAno) === -1) {
@@ -78,7 +75,7 @@
                 continue;
             }
             selectMes.value = opcaoCorrespondente.value;
-            selectMes.dispatchEvent(new Event('change'));
+            forcarChange(selectMes);
 
             const formData = new FormData(form);
             // @ts-ignore
@@ -103,6 +100,16 @@
         criaBotao();
     }
 
+    /** 
+     * @param {HTMLSelectElement} elemento 
+     */
+    function forcarChange(elemento) {
+        elemento.dispatchEvent(new Event('change', { bubbles: true }));
+        if (typeof window.jQuery !== 'undefined') {
+            window.jQuery(elemento).trigger('change');
+        }
+    }
+
     /**
     * Baixa uma lista de objetos contendo { prestador, pdfUrl }
     * @param {Array<{prestador: string, pdfUrl: string}>} listaPDFs 
@@ -113,24 +120,14 @@
             console.warn('Nenhum PDF para baixar.');
             return;
         }
-
-        // Sanatiza a string mesAno para usar no nome do arquivo (ex: "05-2026")
         const mesAnoFormatado = mesAno.replace('/', '-').replace(/\s+/g, '');
-
         listaPDFs.forEach((item, index) => {
-        // Nome limpo do arquivo
         const nomeArquivo = `Relatorio_${item.prestador}_${mesAnoFormatado}.pdf`;
-
-        // Pequeno atraso (staggering) entre os downloads para evitar bloqueios do navegador
         setTimeout(() => {
             console.log(`Baixando: ${nomeArquivo}...`);
-
             GM_download({
                 url: item.pdfUrl,
                 name: nomeArquivo,
-                onload: () => {
-                    console.log(`[OK] Download concluído: ${nomeArquivo}`);
-                },
                 onerror: (err) => {
                     console.error(`[ERRO] Falha ao baixar ${nomeArquivo}:`, err);
                 }

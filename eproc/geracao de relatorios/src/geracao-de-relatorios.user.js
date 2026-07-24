@@ -110,6 +110,11 @@
         if (window.$ || window.jQuery) {
           (window.$ || window.jQuery)(selectElement).trigger('change');
         }
+        Array.from(selectElement.options).forEach(opt => opt.selected = false);
+        selectElement.querySelectorAll('option').forEach(option => {
+            if (option.value === valor)
+                option.selected = true;
+        })
     }
 
     /** 

@@ -39,8 +39,12 @@
     async function gerar() {
         console.log(`Gerando relatórios par o mês ${MES_STR}/${ANO_STR}`);
         document.querySelector(ID_SELECT_VARA).value + CMB_VARA[0];
-        document.querySelector(ID_SELECT_PRESTADORES).value = CMB_PRESTADORES[0];
-        document.querySelector(ID_MES).value = (await aguardarSelect(ID_MES))[0];
+        const selectPrestadores = document.querySelector(ID_SELECT_PRESTADORES);
+        selectPrestadores.value = CMB_PRESTADORES[0];
+        selectPrestadores.dispatchEvent(new Event('change'));
+        const selectMesAno = document.querySelector(ID_MES);
+        const mesano = await aguardarSelect(ID_MES);
+        console.log(mesano)
     }
 
     /**
@@ -55,13 +59,17 @@
                 const select = document.querySelector(idSelect);
                 const options = select.querySelectorAll('option');
                 //espera ter algo além da opção vazia
-                if (options.length > 1 || !options[0].value) {
+                if (options.length > 1) {
                     clearInterval(interval);
                     let respostas = Array.from(options);
                     if (filtro)
                         respostas = respostas.filter(filtro);
-                    respostas = respostas.filter(option => option.value);
+                    respostas = respostas.filter(option => option.value && option.value !== ' ' && option.value !== 'Selecione');
                     response(respostas.map(option => option.value));
+                }
+                if (!options[0].value) {
+                    clearInterval(interval);
+                    response(null);
                 }
             }, 300) //tempo de checagem
         })

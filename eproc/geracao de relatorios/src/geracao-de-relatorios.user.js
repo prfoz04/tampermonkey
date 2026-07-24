@@ -8,6 +8,7 @@
 // @updateURL    https://raw.githubusercontent.com/prfoz04/tampermonkey/eproc/geracao de relatorios/src/geracao-de-relatorios.user.js
 // @downloadURL  https://raw.githubusercontent.com/prfoz04/tampermonkey/eproc/geracao de relatorios/src/geracao-de-relatorios.user.js
 // @run-at       document-idle
+// @grant        GM_download
 // ==/UserScript==
 
 (async function () {
@@ -83,8 +84,45 @@
                 console.error(`erro ao gerar relatório do prestador ${nomePrestador}: ${error}`);
             }
         }
+        baixarPDFs(linksPDF, mesAno);
         criaBotao();
-        console.log("PDF's gerados: " + JSON.stringify(linksPDF));
+    }
+
+    /**
+    * Baixa uma lista de objetos contendo { prestador, pdfUrl }
+    * @param {Array<{prestador: string, pdfUrl: string}>} listaPDFs 
+    * @param {string} mesAno 
+    */
+    function baixarPDFs(listaPDFs, mesAno) {
+        if (!listaPDFs || listaPDFs.length === 0) {
+            console.warn('Nenhum PDF para baixar.');
+            return;
+        }
+
+        // Sanatiza a string mesAno para usar no nome do arquivo (ex: "05-2026")
+        const mesAnoFormatado = mesAno.replace('/', '-').replace(/\s+/g, '');
+
+        listaPDFs.forEach((item, index) => {
+        // Nome limpo do arquivo
+        const nomeArquivo = `Relatorio_${item.prestador}_${mesAnoFormatado}.pdf`;
+
+        // Pequeno atraso (staggering) entre os downloads para evitar bloqueios do navegador
+        setTimeout(() => {
+            console.log(`Baixando: ${nomeArquivo}...`);
+
+            GM_download({
+                url: item.pdfUrl,
+                name: nomeArquivo,
+                onload: () => {
+                    console.log(`[OK] Download concluído: ${nomeArquivo}`);
+                },
+                onerror: (err) => {
+                    console.error(`[ERRO] Falha ao baixar ${nomeArquivo}:`, err);
+                }
+            });
+
+            }, index * 1000); // Aguarda 1 segundo entre cada download
+        });
     }
 
     /**

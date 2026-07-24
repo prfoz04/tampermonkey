@@ -39,6 +39,7 @@
     async function gerar(mesAno) {
         if (mesAno === 'Selecione')
             return;
+
         console.log(`Gerando relatórios para o mês ${mesAno}`);
         //predefine a vara por garantia
         document.querySelector(ID_SELECT_VARA).value + CMB_VARA[0];
@@ -48,18 +49,15 @@
             selectPrestadores.value = value;
             selectPrestadores.dispatchEvent(new Event('change'));
             var mesesCumpridos = await aguardarSelect(ID_MES);
-            var ultimoMesCumprido = mesesCumpridos[0];
-            if (!ultimoMesCumprido) {
-                console.log(`${value} não cumpriu nada ainda`);
+            if (!mesesCumpridos[0]) {
                 continue;
             }
-            if (ultimoMesCumprido !== mesAno) {
-                console.log(`${value} não cumpriu no último mês`);
+            if (mesesCumpridos.indexOf(mesAno) === -1) {
                 continue;
             }
-            document.querySelector(ID_MES).value = ultimoMesCumprido;
-            console.log(`${value} cumpriu`);
+            document.querySelector(ID_MES).value = mesAno;
         }
+        criaBotao();
     }
 
     /**
@@ -96,16 +94,19 @@
         botao.className = 'eproc-button-primary'
         botao.type = 'button'
         botao.onclick = criarInput;
+        botao.id = 'gerar-tudo';
         botao.textContent = 'Gerar todos os relatórios'
         div.appendChild(botao);
     }
 
     function criarInput() {
+        document.querySelector('#gerar-tudo').remove();
         const div = document.querySelector(ID_FORM);
         const select = document.createElement('select');
         select.className = 'eproc-select w-default';
         select.onchange = function() {
             gerar(select.value);
+            select.remove();
         };
         select.appendChild(criarOption('Selecione'));
         for (let ano = DATE.getFullYear(); ano >= 2026; ano--) {

@@ -10,6 +10,8 @@
 // @run-at       document-idle
 // ==/UserScript==
 
+import { useOptimistic } from "react";
+
 (async function () {
     'use strict';
     console.log('[eproc - geração de relatórios] script iniciado.');
@@ -32,12 +34,12 @@
 
     const DATE = new Date();
 
-    const MES_STR = DATE.getMonth() + 1 < 10 ? `0${(DATE.getMonth()+1).toString()}` : (DATE.getMonth()+1).toString();
-
-    const ANO_STR = DATE.getFullYear().toString();
-
-    async function gerar() {
-        console.log(`Gerando relatórios para o mês ${MES_STR}/${ANO_STR}`);
+    /**
+     * itera sobre os prestadores capturando os formulários
+     * @param {string} mesAno
+     */
+    async function gerar(mesAno) {
+        console.log(`Gerando relatórios para o mês ${mesAno}`);
         //predefine a vara por garantia
         document.querySelector(ID_SELECT_VARA).value + CMB_VARA[0];
         var selectPrestadores = document.querySelector(ID_SELECT_PRESTADORES);
@@ -51,7 +53,7 @@
                 console.log(`${value} não cumpriu nada ainda`);
                 continue;
             }
-            if (!ultimoMesCumprido.includes(MES_STR) && !ultimoMesCumprido.includes(ANO_STR)) {
+            if (ultimoMesCumprido !== mesAno) {
                 console.log(`${value} não cumpriu no último mês`);
                 continue;
             }
@@ -93,9 +95,25 @@
         const botao = document.createElement('button');
         botao.className = 'eproc-button-primary'
         botao.type = 'button'
-        botao.onclick = gerar;
+        botao.onclick = criarInput;
         botao.textContent = 'Gerar todos os relatórios'
         div.appendChild(botao);
+    }
+
+    function criarInput() {
+        const div = document.querySelector(ID_FORM);
+        const select = document.createElement('select');
+        select.className = 'eproc-selectw-default';
+        for (let ano = DATE.getFullYear(); ano >= 2026; ano--) {
+            for (let mes = DATE.getMonth() + 1; mes >= 1; mes--) {
+                var option = document.createElement('option');
+                let text = `${mes < 10 ? "0" + mes : mes} / ${ano}`;
+                option.value = text;
+                option.textContent = text;
+                select.appendChild(option);
+            }
+        }
+        div.appendChild(select);
     }
 
     criaBotao();

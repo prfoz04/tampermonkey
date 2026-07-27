@@ -35,7 +35,6 @@
     async function gerar(mesAno) {
         if (!mesAno || mesAno === 'Selecione')
             return;
-        console.log(`Gerando relatórios para o mês ${mesAno}`);
 
         /**
          * @type {HTMLSelectElement}
@@ -132,10 +131,10 @@
                 formOculto.remove();
                 //destroi o iframe invisível
                 setTimeout(() => iframe.remove(), 15000);
-                linksPDF.push({ prestador: nomePrestador, pdfUrl: `${form.action}?${params.toString()}` });
+                linksPDF.push({ prestador: nomePrestador, pdfUrl: `${form.action}?${params.toString()}`, erro: false, descricao: "" });
             }
             catch (error) {
-                console.error(`erro ao gerar relatório do prestador ${nomePrestador}: ${error}`);
+                linksPDF.push({ prestador: nomePrestador, pdfUrl: null, erro: true, descricao: `Erro na busca do relatório: ${error}` })
             }
         }
         await enviarParaPlanilhas(linksPDF);
@@ -146,6 +145,8 @@
      * @typedef linkPrestador
      * @property {string} pdfUrl
      * @property {string} prestador
+     * @property {boolean} erro
+     * @property {string} descricao 
      */
 
     /**

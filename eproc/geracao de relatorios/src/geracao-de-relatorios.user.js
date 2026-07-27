@@ -138,6 +138,14 @@
     }
 
     /**
+     * envia para a planilha API para que ela possa registrar os valores na planilha PSC e enviar os pdfs para o drive
+     * @param {object} links 
+     */
+    function enviarParaPlanilhas(links) {
+        const url = 
+    }
+
+    /**
      * @param {HTMLSelectElement} selectElement 
      * @param {string} valor 
      */

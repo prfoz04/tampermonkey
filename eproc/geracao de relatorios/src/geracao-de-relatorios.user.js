@@ -142,7 +142,7 @@
      * @param {object} links 
      */
     function enviarParaPlanilhas(links) {
-        const url = 
+        const url = "https://script.google.com/macros/s/AKfycbxH4GeMfR5z0deOlwgFOpvlEY9LLKAzj921hYuEOgM4pt-oc7ce5sviMQxhqnzMP914/exec";
     }
 
     /**

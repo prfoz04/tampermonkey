@@ -60,68 +60,68 @@
         forcarTrocaSelect(selectVara, CMB_VARA[0]);
         forcarChange(selectVara);
 
-        const entidadesDisponiveis = await aguardarSelect(ID_SELECT_ENTIDADE);
-        for (const valorEntidade of entidadesDisponiveis) {
-            forcarTrocaSelect(selectEntidade, valorEntidade);
+        const entidadeSelecionada = selectEntidade?.value || ' ';
+        if (entidadeSelecionada && entidadeSelecionada.trim() !== ' ' && entidadeSelecionada.trim() !== 'Selecione') {
+            forcarTrocaSelect(selectEntidade, entidadeSelecionada);
             forcarChange(selectEntidade);
+        }
 
-            const prestadoresDisponiveis = await aguardarSelect(ID_SELECT_PRESTADORES);
-            for (const valorPrestador of prestadoresDisponiveis) {
-                forcarTrocaSelect(selectPrestadores, valorPrestador);
-                forcarChange(selectPrestadores);
+        const prestadoresDisponiveis = await aguardarSelect(ID_SELECT_PRESTADORES);
+        for (const valorPrestador of prestadoresDisponiveis) {
+            forcarTrocaSelect(selectPrestadores, valorPrestador);
+            forcarChange(selectPrestadores);
 
-                const mesesCumpridos = await aguardarSelect(ID_MES);
-                const nomePrestador = selectPrestadores.options[selectPrestadores.selectedIndex]?.text || 'Prestador sem nome';
-                const mesNormalizado = normalizarMesAno(mesAno);
-                const mesesDisponiveisNormalizados = mesesCumpridos.map(normalizarMesAno);
+            const mesesCumpridos = await aguardarSelect(ID_MES);
+            const nomePrestador = selectPrestadores.options[selectPrestadores.selectedIndex]?.text || 'Prestador sem nome';
+            const mesNormalizado = normalizarMesAno(mesAno);
+            const mesesDisponiveisNormalizados = mesesCumpridos.map(normalizarMesAno);
 
-                if (!mesesCumpridos.length || mesesDisponiveisNormalizados.indexOf(mesNormalizado) === -1) {
-                    continue;
-                }
+            if (!mesesCumpridos.length || mesesDisponiveisNormalizados.indexOf(mesNormalizado) === -1) {
+                continue;
+            }
 
-                /**
-                 * @type {HTMLSelectElement}
-                 */
-                const selectMes = document.querySelector(ID_MES);
-                const opcaoCorrespondente = Array.from(selectMes.options).find(opt => {
-                    const textoOption = normalizarMesAno(opt.textContent);
-                    const valorOption = normalizarMesAno(opt.value);
-                    const mesProcurado = mesNormalizado;
-                    return textoOption === mesProcurado || valorOption === mesProcurado;
+            /**
+             * @type {HTMLSelectElement}
+             */
+            const selectMes = document.querySelector(ID_MES);
+            const opcaoCorrespondente = Array.from(selectMes.options).find(opt => {
+                const textoOption = normalizarMesAno(opt.textContent);
+                const valorOption = normalizarMesAno(opt.value);
+                const mesProcurado = mesNormalizado;
+                return textoOption === mesProcurado || valorOption === mesProcurado;
+            });
+
+            if (!opcaoCorrespondente) {
+                console.log(`[PULADO] Prestador ${nomePrestador} não possui relatório para ${mesAno}`);
+                continue;
+            }
+
+            forcarTrocaSelect(selectMes, opcaoCorrespondente.value);
+            forcarChange(selectMes);
+
+            const formData = new FormData(form);
+            // @ts-ignore
+            const params = new URLSearchParams(formData);
+            params.append('btnPesquisar', 'Gerar Relatório');
+            params.set('cmbVara', selectVara.value);
+            params.set('cmbEntidade', entidadeSelecionada);
+            params.set('cmbPrestador', valorPrestador);
+            params.set('cmbMesAno', opcaoCorrespondente.value);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: form.method || 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: params.toString(),
                 });
-
-                if (!opcaoCorrespondente) {
-                    console.log(`[PULADO] Prestador ${nomePrestador} não possui relatório para ${mesAno}`);
-                    continue;
+                if (response.url.endsWith('.pdf') || response.headers.get('content-type')?.includes('application/pdf')) {
+                    linksPDF.push({ prestador: nomePrestador, pdfUrl: response.url });
                 }
-
-                forcarTrocaSelect(selectMes, opcaoCorrespondente.value);
-                forcarChange(selectMes);
-
-                const formData = new FormData(form);
-                // @ts-ignore
-                const params = new URLSearchParams(formData);
-                params.append('btnPesquisar', 'Gerar Relatório');
-                params.set('cmbVara', selectVara.value);
-                params.set('cmbEntidade', valorEntidade);
-                params.set('cmbPrestador', valorPrestador);
-                params.set('cmbMesAno', opcaoCorrespondente.value);
-
-                try {
-                    const response = await fetch(form.action, {
-                        method: form.method || 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: params.toString(),
-                    });
-                    if (response.url.endsWith('.pdf') || response.headers.get('content-type')?.includes('application/pdf')) {
-                        linksPDF.push({ prestador: nomePrestador, pdfUrl: response.url });
-                    }
-                }
-                catch (error) {
-                    console.error(`erro ao gerar relatório do prestador ${nomePrestador}: ${error}`);
-                }
+            }
+            catch (error) {
+                console.error(`erro ao gerar relatório do prestador ${nomePrestador}: ${error}`);
             }
         }
         console.log(linksPDF);

@@ -1,0 +1,3292 @@
+<html lang="pt-br" style="font-size: 100%;"><head>
+<link rel="shortcut icon" href="/imagens/icons/favicons/favicon_pr.ico"><meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"><style id="css-ddslick" type="text/css">.dd-select{ border-radius:2px; border:solid 1px #ccc; position:relative; cursor:pointer;}.dd-desc { color:#aaa; display:block; overflow: hidden; font-weight:normal; line-height: 1.4em; }.dd-selected{ overflow:hidden; display:block; padding:10px; font-weight:bold;}.dd-pointer{ width:0; height:0; position:absolute; right:10px; top:50%; margin-top:-3px;}.dd-pointer-down{ border:solid 5px transparent; border-top:solid 5px #000; }.dd-pointer-up{border:solid 5px transparent !important; border-bottom:solid 5px #000 !important; margin-top:-8px;}.dd-options{ border:solid 1px #ccc; border-top:none; list-style:none; box-shadow:0px 1px 5px #ddd; display:none; position:absolute; z-index:2000; margin:0; padding:0;background:#fff; overflow:auto;}.dd-option{ padding:10px; display:block; border-bottom:solid 1px #ddd; overflow:hidden; text-decoration:none; color:#333; cursor:pointer;-webkit-transition: all 0.25s ease-in-out; -moz-transition: all 0.25s ease-in-out;-o-transition: all 0.25s ease-in-out;-ms-transition: all 0.25s ease-in-out; }.dd-options > li:last-child > .dd-option{ border-bottom:none;}.dd-option:hover{ background:#f3f3f3; color:#000;}.dd-selected-description-truncated { text-overflow: ellipsis; white-space:nowrap; }.dd-option-selected { background:#f6f6f6; }.dd-option-image, .dd-selected-image { vertical-align:middle; float:left; margin-right:5px; max-width:64px;}.dd-image-right { float:right; margin-right:15px; margin-left:5px;}.dd-container{ position:relative;}​ .dd-selected-text { font-weight:bold}​</style><style>[vw] [vw-access-button]{display:none;flex-direction:row-reverse;width:40px;height:40px;cursor:pointer;overflow:hidden;position:absolute;border-radius:8px;transition:all 0.5s ease;right:0;left:auto}[vw] [vw-access-button] img{max-height:40px;transition:all 0.5s ease;border-radius:8px;opacity:1 !important;visibility:visible !important}[vw] [vw-access-button] .vp-access-button{width:40px;height:40px;z-index:1}[vw] [vw-access-button] .vp-pop-up{position:absolute;height:40px;min-width:150px;z-index:0;left:0;right:auto}[vw] [vw-access-button]:hover{width:200px}[vw] [vw-access-button].isLeft{flex-direction:row;left:0;right:auto}[vw] [vw-access-button].isLeft .vp-pop-up{left:auto;right:0}[vw] [vw-access-button].isTopOrBottom:hover{bottom:-20px;top:0;margin-right:-80px}[vw] [vw-access-button].active{display:flex}
+</style><style>[vw].left [vw-plugin-wrapper]{float:left}[vw] [vw-plugin-wrapper]{position:relative;display:none;width:300px;height:100%;float:right;background:white;-webkit-box-shadow:0px 0px 15px rgba(0,0,0,0.2);-moz-box-shadow:0px 0px 15px rgba(0,0,0,0.2);box-shadow:0px 0px 15px rgba(0,0,0,0.2);border-radius:12px;-moz-border-radius:12px;-webkit-border-radius:12px}[vw] [vw-plugin-wrapper].active{display:-webkit-flex;display:flex;flex-direction:column;-webkit-flex-direction:column;height:450px;max-width:100%;min-height:100%}
+</style><style>div[vw]{position:fixed;max-width:95vw;min-height:40px;min-width:40px;z-index:2147483645 !important;display:none;margin:10px !important}div[vw].enabled{display:block}div[vw].active{margin-top:-285px}div[vw].left{left:0;right:initial}
+</style></head><body onload="infraProcessarResize(); infraProcessarMouseDown(); inicializar();" class="bootstrap-styles instancia-1g"><input id="url_log_erro_javascript" name="url_log_erro_javascript" type="hidden" value="controlador_ajax.php?acao_ajax=log_erro_javascript&amp;acao_origem=relatorio_diario_cumprimento_pena&amp;hash=259e8e7b99e53e942250187ec439ed3a">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="robots" content="noindex">
+<title>:: eproc -  - Execução Penal - Relatório Diário de Cumprimento de Pena ::</title>
+                <link rel="stylesheet" charset="utf-8" href="css/dist/bundle-bs4.css?9.21.1-3.0.6">
+                <link rel="stylesheet" charset="utf-8" href="css/dist/bundle-bs4-contrast.css?9.21.1-3.0.6">
+                <link rel="stylesheet" charset="utf-8" href="css/dist/bundle-global.css?9.21.1-3.0.6">
+                <link rel="stylesheet" charset="utf-8" href="css/dist/bundle-infra.css?9.21.1-3.0.6">
+                <link rel="stylesheet" charset="utf-8" href="css/dist/bundle-infra-contrast.css?9.21.1-3.0.6"><link href="infra_js/multiple-select/multiple-select.css?9.21.1-3.0.6" rel="stylesheet" type="text/css" media="all">
+<link href="css/cor-capa.php" rel="stylesheet" type="text/css" media="screen">
+<script>var INFRA_PATH_CSS = "infra_css",
+    INFRA_PATH_IMAGENS = "infra_css\/imagens",
+    INFRA_PATH_JS = "infra_js",
+    INFRA_PATH_SVG = "infra_css\/svg",
+    INFRA_LUPA_TIPO_JANELA = 1,
+    INFRA_BARRA_TIPO_JANELA = 1,
+    INFRA_TIPO_ALERTA = 1,
+    ENV = "prod",
+    LOGAR_ERROS_JS = false;</script>				<script charset="utf-8" src="js/dist/runtime.29e3254c61c00a76ae7c.js"></script><script charset="utf-8" src="js/dist/npm.jquery-ui.92a8e650f4b5451c6e81.js"></script><script charset="utf-8" src="js/dist/npm.jquery.db93d612e517c67739d5.js"></script><script charset="utf-8" src="js/dist/npm.js-cookie.14f3186a57736ae5e5ad.js"></script><script charset="utf-8" src="js/dist/npm.jquery-contextmenu.b5636b90f0dde6f99c2c.js"></script><script charset="utf-8" src="js/dist/npm.expose-loader.370c01bb730bd4cf7283.js"></script><script charset="utf-8" src="js/dist/shared.6de9604309b36f2bf3c8.js"></script><script charset="utf-8" src="js/dist/3247.8bb6ac9bcdbce41b9548.js"></script><script charset="utf-8" src="js/dist/websocket.7ebbb902a90ae666e646.js"></script><script charset="utf-8" src="js/dist/npm.lodash.7e8d6ae734003ec18add.js"></script><script charset="utf-8" src="js/dist/npm.trf4.048901bf561adaacb78f.js"></script><script charset="utf-8" src="js/dist/npm.unorm.47cc161ba83e52f1e6ae.js"></script><script charset="utf-8" src="js/dist/npm.imask.9e5eaf4d2efafb4fe47c.js"></script><script charset="utf-8" src="js/dist/npm.lodash.debounce.191b0f64bbcdf669f89f.js"></script><script charset="utf-8" src="js/dist/npm.core-js.6c559d6b971e8f7f2d21.js"></script><script charset="utf-8" src="js/dist/npm.moment.b821744409b917fab105.js"></script><script charset="utf-8" src="js/dist/npm.bootstrap-fileinput.51b9a0b4102ca12b573b.js"></script><script charset="utf-8" src="js/dist/npm.local-storage-fallback.d08fdb4590045f5272b9.js"></script><script charset="utf-8" src="js/dist/npm.bootstrap-select.add788e9a401a483f286.js"></script><script charset="utf-8" src="js/dist/npm.yaireo.e79196e7996e1f57dd9f.js"></script><script charset="utf-8" src="js/dist/npm.hotwired.3ef291892b97e281f78f.js"></script><script charset="utf-8" src="js/dist/npm.axios.5be569efb5d72b6a3b1f.js"></script><script charset="utf-8" src="js/dist/npm.tempusdominus-bootstrap-4.9ff0eb91c9e5f49a0bc1.js"></script><script charset="utf-8" src="js/dist/npm.regenerator-runtime.58f1def8d4ab41d513f8.js"></script><script charset="utf-8" src="js/dist/npm.popper.js.e70d69dbb5554c640b2b.js"></script><script charset="utf-8" src="js/dist/npm.lodash.throttle.09bbb3940da5a2421739.js"></script><script charset="utf-8" src="js/dist/npm.jstree.f1bc0f58dfe777fe3bbd.js"></script><script charset="utf-8" src="js/dist/npm.cookie.2919f10e6c4063394e0a.js"></script><script charset="utf-8" src="js/dist/npm.bs-custom-file-input.b5579505d605be14552c.js"></script><script charset="utf-8" src="js/dist/npm.bootstrap.83f4700d85eceac25b4a.js"></script><script charset="utf-8" src="js/dist/npm.abortcontroller-polyfill.12791e4b290d1f27570e.js"></script><script charset="utf-8" src="js/dist/5298.0d6f5a9340e5e72e1d8e.js"></script><script charset="utf-8" src="js/dist/466.c1f1fcbc1c8a9b6fbef0.js"></script><script charset="utf-8" src="js/dist/1504.a970a8fe315f3f0aeed1.js"></script><script charset="utf-8" src="js/dist/main.a690a92376764ead400b.js"></script>
+				<script type="text/javascript" charset="iso-8859-1" src="infra_js/InfraUtil.js?9.21.1-3.0.6"></script>
+				<script type="text/javascript" charset="iso-8859-1" src="infra_js/InfraCookie.js?9.21.1-3.0.6"></script>
+				<script type="text/javascript" charset="iso-8859-1" src="infra_js/InfraUpload.js?9.21.1-3.0.6"></script>
+				<script type="text/javascript" charset="iso-8859-1" src="infra_js/InfraMenu.js?9.21.1-3.0.6"></script>
+				<script type="text/javascript" charset="iso-8859-1" src="infra_js/InfraBotaoMenu.js?9.21.1-3.0.6"></script>
+				<script type="text/javascript" charset="iso-8859-1" src="infra_js/InfraAcaoMenu.js?9.21.1-3.0.6"></script>
+				<script type="text/javascript" charset="iso-8859-1" src="infra_js/InfraTabelaDinamica.js?9.21.1-3.0.6"></script>
+				<script type="text/javascript" charset="iso-8859-1" src="infra_js/InfraLupas.js?9.21.1-3.0.6"></script>
+				<script type="text/javascript" charset="iso-8859-1" src="infra_js/InfraSelectEditavel.js?9.21.1-3.0.6"></script>
+				<script type="text/javascript" charset="iso-8859-1" src="infra_js/InfraAjax.js?9.21.1-3.0.6"></script>
+				<script type="text/javascript" charset="iso-8859-1" src="infra_js/InfraTooltip.js?9.21.1-3.0.6"></script>
+				<script type="text/javascript" charset="iso-8859-1" src="infra_js/InfraPagina.js?9.21.1-3.0.6"></script>
+				<script type="text/javascript" charset="iso-8859-1" src="infra_js/calendario/v1/InfraCalendario.js?9.21.1-3.0.6"></script>
+				<script type="text/javascript" charset="iso-8859-1" src="infra_js/arvore/InfraArvore.js?9.21.1-3.0.6"></script>
+                <script type="text/javascript" charset="utf-8" src="js/exibir-aviso.js?9.21.1-3.0.6"></script><script type="text/javascript" charset="iso-8859-1" src="infra_js/infra_pagina_renderer/bs4/main.js?9.21.1-3.0.6"></script><script src="js/analisar_links.js" type="text/javascript"></script>
+			<script type="text/javascript">
+            	$(document).ready(function() {
+					//verifica se nas "Configurações Personalizadas" a opção "Abrir processos selecionados em abas" está ativada
+					//verifica se na página atual existe a tabela de listagem de processos com o link "controlador.php?acao=processo_selecionar&" e com
+					 // o checkbox de seleção de processos.
+					$('table').each(function() {
+						var links = $(this).find('a[href^="controlador.php?acao=processo_selecionar&"],a[href^="controlador.php?acao=processo_selecionar_siapro&"]');
+						//procurar o checkbox somente na primeira coluna da tabela. Evita colocar o link "Abrir os processos selecionados em abas/janelas" quando tiver algum checkbox em 
+						//outras colunas
+						var row = $(this);
+						var trElement = row.find("tr");
+						var tdElement = trElement.find("td:first");
+						var objCheckboxPrimeiraColuna = tdElement.find('input[type="checkbox"]');
+						//Se tiver checkbox na primeira coluna e o link acao=processo_selecionar& em alguma coluna da tabela e os números de checkbox e links forem iguais então
+						//mostra link "Abrir os processo selecionados em abas/janelas"
+						if ((links.length > 1) && (objCheckboxPrimeiraColuna.length > 0)) { 
+						// adicionando o link apenas na div da respectiva tabela atual
+						var strElementoLinkParaAbrirProcessosEmAbasJanelas = '<div name="divLinkAbreEmAbas" id="divLinkAbreEmAbas" style="margin:0.5em 0px"><a href="#" onclick="abreProcessosSelecionadosEmAbas();" title="Permite que, ao clicar, todos os processos que estejam selecionados sejam abertos em novas abas (um em cada aba). O bloqueador de pop-ups deve estar desativado. Obs.: Se você não quiser que esse link apareça nas listagens de processos, você pode desativá-lo em &quot;Configurações Personalizadas&quot;.">Abrir os processos selecionados em abas/janelas</a></div>'
+							$(this).closest(".infraTable").before(strElementoLinkParaAbrirProcessosEmAbasJanelas).after(strElementoLinkParaAbrirProcessosEmAbasJanelas);                        
+						}
+					});
+                });
+			</script><script>
+function inicializar(){
+	infraEfeitoImagens();
+	infraEfeitoTabelas(true); //true indica que se tabela tiver checkboxes elas serão selecionáveis clicando na linha 
+}
+
+
+$(document).ready(function(){
+
+	if($('#cmbVara').val()!= ' '){
+					montarSelEntidades();
+					montarSelPrestadores();
+					
+	}
+	
+	
+	
+	function montarSelEntidades(){
+	
+		if($('#cmbVara').val() != ' '){
+			$.ajax({
+					  type: 'POST',	  
+					  url: 'controlador_ajax.php?acao_ajax=montar_select_entidade_assistencial&hash=dacdcf8b968334012f53a3ea53b731ee',
+					  data: {idOrgao: $('#cmbVara option:selected').val()},	  	  
+					  success: function(data){
+					  		 $('#cmbEntidade').html(data);
+			 	 
+						  	 
+						  	  	
+					  }	  	  	
+			});  		
+		}else{
+			$('#cmbVara').val(' ');
+			$('#cmbEntidade').html('<option value=" ">Selecione</option> ');
+									
+		}	
+		$('#cmbPrestador').html('<option value=" ">Selecione</option> ');		
+		$('#cmbMesAno').html('<option value=" ">Selecione</option> ');		
+		$('#btnPesquisar').attr('disabled',true);
+	
+	
+	}
+
+	function montarSelPrestadores(){
+	
+		if($('#cmbEntidade').val() != ' '){
+		  
+			$.ajax({
+					  type: 'POST',	  
+					  url: 'controlador_ajax.php?acao_ajax=montar_select_prestador_pena_alternativa_psc_relatorio&hash=7af731a6c467fd7e420495dd7fd51a6a',
+					  data: {idPessoa: $('#cmbEntidade option:selected').val()},	  	  
+					  success: function(data){
+					  		 $('#cmbPrestador').html(data);					  		 
+						  	  	  
+					  }	  	  	
+			});  		
+		}else{
+	    			$.ajax({
+					  type: 'POST',	  
+					  url: 'controlador_ajax.php?acao_ajax=montar_select_prestador_pena_alternativa_psc_relatorio&hash=7af731a6c467fd7e420495dd7fd51a6a',
+					  data: {idVara: $('#cmbVara option:selected').val()},	  	  
+					  success: function(data){
+					  		 $('#cmbPrestador').html(data);
+					  		 
+						  	  	  
+						  	  	
+					  }	  	  	
+					});  		
+	    			
+	    		}	
+		$('#cmbMesAno').html('<option value=" ">Selecione</option> ');		
+		$('#btnPesquisar').attr('disabled',true);
+		
+	}
+	
+	$('#cmbVara').change( function() {
+		montarSelEntidades();
+		montarSelPrestadores();
+	});
+	
+	$('#cmbEntidade').change( function() {
+		montarSelPrestadores();		
+	});
+	
+	 $("#cmbPrestador").change(function(){	  	
+	  	if($("#cmbPrestador option:selected").text() != 'selecione')	{
+		  	  $.ajax({
+				  type: 'POST',	  
+				  url: 'controlador_ajax.php?acao_ajax=montar_select_mes_ano_cumprimento_pena_alternativa_psc&hash=cc337fed6ad6595cad4ce386499a6db5',
+				  data: {idEntidade: $('#cmbEntidade option:selected').val(),
+				  		 idProcessoParte: $('#cmbPrestador option:selected').val() },	  	  
+				  success: function(retorno){
+				    $('#divContainerMesAno').html('');
+				    $('#divContainerMesAno').html(retorno);				    
+				  }
+			 });
+  	   }else{
+  			$('#cmbMesAno').html('<option value=" ">Selecione</option> ');			
+  	   }	 
+  	   $('#btnPesquisar').attr('disabled',true);
+  	});  
+  	
+  	$(document).on('change',"#cmbMesAno",function(){
+  		if( ($("#cmbMesAno option:selected").val()!='null') && ($("#cmbMesAno option:selected").val()!='selecione') ){
+  			$('#btnPesquisar').attr('disabled',false);
+  		}else{
+  		    $('#btnPesquisar').attr('disabled',true);
+  		}
+  	});	 
+}); 
+
+
+</script>
+
+
+
+    
+
+    <div id="divInfraAreaGlobal">
+        
+                    <div class="bootstrap-styles navbar-wrapper">
+                
+<nav id="navbar-accessibility" class="accessibility-bar bg-instancia collapse show" data-id="69" data-ativo="S" style="">
+    <a href="#divInfraBarraLocalizacao" id="ancora-conteudo" tabindex="0" title="Conteúdo principal da página (Alt+1 e ENTER)" class="item-acessibilidade">Ir para conteúdo</a>
+    <a href="#sidebar-searchbox" id="ancora-menu" tabindex="0" title="(Alt+M)" class="item-acessibilidade">Ir para menu</a>
+
+            <a href="#txtNumProcessoPesquisaRapida" id="ancora-pesquisa-processual" tabindex="0" title="(Ctrl+Shift+F)" class="item-acessibilidade">Pesquisa processual</a>
+    
+            <a href="#/" id="btn-aumentar-fonte" tabindex="0" title="Aumentar fonte (100%)" class="item-acessibilidade" data-id="70" data-ativo="N" data-numvalor="">
+            <i class="material-icons icon-aligned-sm" aria-hidden="true">text_increase</i>
+        </a>
+        <a href="#/" id="btn-diminuir-fonte" tabindex="0" title="Diminuir fonte (100%)" class="item-acessibilidade" data-id="70" data-ativo="N" data-numvalor="">
+            <i class="material-icons icon-aligned-sm" aria-hidden="true">text_decrease</i>
+        </a>
+        <a href="#/" id="btn-theme-contrast" tabindex="0" title="Alto contraste" data-id="68" data-ativo="N" class="item-acessibilidade">
+        <i class="material-icons icon-aligned-sm" aria-hidden="true">contrast</i>
+    </a>
+    <a href="#/" id="btn-vlibras" tabindex="0" title="Habilitar o tradutor para libras" class="item-acessibilidade">
+        <img src="imagens/icons/maos_libras.png" aria-hidden="true"> Libras
+    </a>
+    <input type="hidden" id="link-usuario-configuracao-personalizacao" value="controlador_ajax.php?acao_ajax=usuario_configuracao_personalizacao&amp;acao_origem=relatorio_diario_cumprimento_pena&amp;hash=1c4937fba3e978c199276397b149fd28">
+    <a href="controlador.php?acao=tutorial_acessibilidade&amp;acao_origem=relatorio_diario_cumprimento_pena&amp;hash=2a2ee6f60ba4007eccc5bf81649b2df2" id="btn-pagina-acessibilidade" tabindex="0" title="Acessibilidade (Alt+F1)" class="item-acessibilidade">Acessibilidade</a>
+
+            <a href="#/" id="fechar-barra-acessibilidade" data-toggle="collapse" data-target="#navbar-accessibility" tabindex="0" title="Fechar barra de acessibilidade" class="float-right item-acessibilidade" aria-expanded="true">
+            <i class="material-icons icon-aligned-sm" aria-hidden="true">close</i>
+        </a>
+    </nav>                <nav id="navbar" class="navbar text-white d-xl-flex bg-instancia ">
+                    <div class="d-flex w-100 justify-content-between" style="font-size: 14px;">
+    <div class="d-flex align-items-center">
+                    <div style="padding: 8px">
+
+                                
+                <button type="button" class="btn btn-link" id="menu-btn" aria-label="Abrir menu" aria-expanded="true" aria-controls="sidebar-wrapper">
+                    <i title="Abrir menu" aria-hidden="true" class="material-icons navbar-icons">menu</i>
+                </button>
+            </div>
+        
+        			<div title="Painel Inicial" style="margin-left: 7px">
+					<a href="principal.php?acao=principal&amp;home=1&amp;hash=8e731b55a9f6bcdc0169d6a4ddf8aad5" aria-label="Voltar para o Painel Inicial" title="Painel Inicial">
+					<img class="navbar-logo" src="css/images/logo-eproc.png?h=456705ce8f4ed311f570ae63f000ec25" alt="Painel Inicial" aria-hidden="true">
+					</a>
+				</div>
+				<div style="margin: 0 13px 0 13px">
+				    <a aria-label="jfpr - Ir para http://www.jfpr.jus.br" href="http://www.jfpr.jus.br" title="http://www.jfpr.jus.br" target="_blank">
+                        <span class="navbar-span">jfpr</span>
+                    </a>
+				</div>
+				<a id="search-toggle" href="#/" data-toggle="modal" data-target="#modal-pesquisar-processo" class="d-block d-md-none">
+					<i class="material-icons navbar-icons" style="padding: 0">search</i>
+				</a>
+			<div class="d-none d-lg-block">
+				<form method="post" class="mb-0 frm-lotacoes" action="controlador.php?acao=pessoa_usuario_selecionar&amp;hash=3fe97d659a02328c4bfbafe95811af80"><select class="custom-select custom-select-sm selInfraUnidades" id="selInfraUnidades" name="selInfraUnidades" onchange="mudarPerfil(this);" aria-label="Mudar perfil. Tecla de atalho: Alt+P" title="Tecla de atalho: Alt+P">
+    <optgroup title="JFPR" label="JFPR"><option title="4ª Vara Federal de Foz do Iguaçu - PRFOZ04/OFICIAL DE GABINETE" value="PR-701604491405833870456789619910">PRFOZ04/OFICIAL DE GABINETE</option>
+<option title="4ª Vara Federal de Foz do Iguaçu - PRFOZ04/SERVIDOR DE SECRETARIA (VARA)" value="PR-701391194349643400060000000001">PRFOZ04/SERVIDOR DE SECRETARIA (VARA)</option>
+<option title="4ª Vara Federal de Foz do Iguaçu - PRFOZ04/SERVIDOR DE SECRETARIA (VARA)" value="PR-999164425357986475355344389419" selected="selected">PRFOZ04/SERVIDOR DE SECRETARIA (VARA)</option>
+<option title="3ª Vara Federal de Maringá - PRMAR03/SERVIDOR DE SECRETARIA (VARA)" value="PR-999164425357986475355344389418">PRMAR03/SERVIDOR DE SECRETARIA (VARA)</option>
+</optgroup><optgroup title="JFRS" label="JFRS"><option title="SERVIDOR DE SECRETARIA (TRF4)" value="RS-711467641301633011315355776598">SERVIDOR DE SECRETARIA (TRF4)</option>
+<option title="11ª Vara Federal de Porto Alegre - RSPOA11/SERVIDOR DE SECRETARIA (VARA)" value="RS-999168917375499563586513868037">RSPOA11/SERVIDOR DE SECRETARIA (VARA)</option>
+<option title="1ª Vara Federal de Rio Grande - RSRGR01/SERVIDOR DE SECRETARIA (VARA)" value="RS-999168917375499563586513868035">RSRGR01/SERVIDOR DE SECRETARIA (VARA)</option>
+<option title="2ª Vara Federal de Santa Maria - RSSMA02/SERVIDOR DE SECRETARIA (VARA)" value="RS-999168917375499563586513868034">RSSMA02/SERVIDOR DE SECRETARIA (VARA)</option>
+</optgroup><optgroup title="JFSC" label="JFSC"><option title="SERVIDOR DE SECRETARIA (TRF4)" value="SC-721467641303600060255357123691">SERVIDOR DE SECRETARIA (TRF4)</option>
+</optgroup><optgroup title="TRF4" label="TRF4"><option title="SERVIDOR DE SECRETARIA (VARA 1o GRAU)" value="TRF4-41467641299572952015351199518">SERVIDOR DE SECRETARIA (VARA 1o GRAU)</option>
+</optgroup>
+</select>
+&nbsp;
+<script>
+    function mudarPerfil(element) {
+        var bolOutraInstancia = false;
+        
+        if (element.value.startsWith("PR")) {
+            element.form.target = "_self";
+        } else {
+            element.form.target = "_blank";
+            bolOutraInstancia = true;
+        }
+        
+        element.form.submit();
+        
+        if (bolOutraInstancia) {
+            element.value = 'PR-999164425357986475355344389419';
+        }
+    }
+</script></form>
+
+			</div>
+    </div>
+    <div class="d-none d-flex align-items-center">
+                                    <div class="d-none d-md-flex" style="margin-right: 8px">
+                                                
+
+                <a aria-label="Portal jus.br" href="controlador.php?acao=pdpj/marketplace_redirecionar&amp;acao_origem=relatorio_diario_cumprimento_pena&amp;hash=8ee4c6c879dbe51deb16827f6f283d08" class="d-flex mr-2 align-items-center navbar-pdpj-icon" target="_blank" data-notification="" style="padding-right: 10px; padding-left: 9px; border-right: 2px solid whitesmoke">
+                    <img aria-hidden="true" style="height: 1.4rem" class="d-sm-none d-md-block " src="imagens/icons/jusbr_logo_white_success.png" title="Portal jus.br" alt="Portal jus.br">
+                </a>
+            
+                                                <script>
+    var qtd = 0;
+    var bolMudou = false;
+    var arrBancos = ['RS', 'SC', 'TRF4'];
+    
+    function sincronizarLotacoesUsuario() {
+        qtd = 0
+        arrBancos.forEach(item => {
+            $.ajax(
+            {
+                url: "controlador_ajax.php?acao_ajax=sincronizar_lotacoes_usuario_outro_contexto&hash=8d62ac2e7506e24670d26da61a7cabd5",
+                type: "POST",
+                dataType: "json",
+                data: {strBanco: item},
+                async: true,
+                timeout: 10000,
+                success : function(data) {
+                    if (data && data.resultado) {
+                        bolMudou = true;
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log('sincronizarLotacoesUsuario: ' + status + ' - ' + request.responseText);
+                },
+                complete: function() {
+                    qtd++;
+                    buscarSelectUnidades();
+                }
+            });
+        });
+    }
+    
+    function buscarSelectUnidades() {
+        if (qtd === arrBancos.length && bolMudou) {
+            $.ajax(
+            {
+                url: "controlador_ajax.php?acao_ajax=buscar_select_unidades&hash=ee0fe859621b2cc375008b99798f95d5",
+                type: "POST",
+                dataType: "text",
+                async: true,
+                success : function(data) {
+                    if (data) {
+                        var arrFrmLotacoes = document.getElementsByClassName('frm-lotacoes');
+                        arrFrmLotacoes.forEach(function(elem) {
+                            elem.outerHTML = data;
+                        });
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log('buscarSelectUnidades: ' + status + ' - ' + request.responseText);
+                },
+                complete: function() {
+                    qtd = 0;
+                }
+            });
+        }
+    }
+    
+    sincronizarLotacoesUsuario();
+</script>
+                                                <a id="btn-home" aria-label="Página inicial do sistema" href="principal.php?acao=principal&amp;hash=79e21a126c1b5a24187c39439ef1708c" title="Página inicial do sistema">
+                    <i class="material-icons navbar-icons" style="padding: 0;">home</i>
+                </a>
+                                                <a id="btn-meus-localizadores" aria-label="Meus Localizadores" href="controlador.php?acao=usuario_tipo_monitoramento_localizador_listar&amp;acao_origem=relatorio_diario_cumprimento_pena&amp;acao_retorno=relatorio_diario_cumprimento_pena&amp;hash=a8baa5287c520305b908dc8ccfdb0e3c" role="button">
+				<i class="material-icons navbar-icons" title="Meus Localizadores" style="padding: 0;">all_inbox</i>
+			</a>
+                                                <div id="siscomIconContainer" class="mt-auto">
+                <a href="controlador.php?acao=siscom_mensagem/listar_caixa_de_entrada&amp;hash=32dbcf3d3eb7bb2aec0324e5298acf0c" title="Siscom" id="spinnerNaoLidas" aria-label="Siscom"><i class="material-icons navbar-icons" style="padding: 0">mail</i></a></div>
+                <input type="hidden" id="urlSiscomNaoLidas" value="controlador.php?acao=siscom_mensagem/nao_lidas&amp;hash=a1b5ea4a35322342fd968b5da1119d90">
+                <input type="hidden" id="urlSiscomCaixaEntrada" value="controlador.php?acao=siscom_mensagem/listar_caixa_de_entrada&amp;hash=32dbcf3d3eb7bb2aec0324e5298acf0c">
+                <script>
+                    $(document).ready(() => processarSiscomDesktopIcone());
+                </script>
+                                                </div>
+                                                <div class="d-flex ">
+                                                                    </div>
+                                                                    <div class="d-none d-md-block align-items-center" style="width: 280px;margin-left: 8px">
+						<form role="search" name="formPesquisaRapida" id="formPesquisaRapida" action="controlador.php?acao=processo_pesquisa_rapida&amp;hash=86a9d2a83c4485c3262529eedc1692b7" method="post" class="d-flex align-items-center searchbar">
+							<input id="txtNumProcessoPesquisaRapida" accesskey="Z" type="search" name="txtNumProcessoPesquisaRapida" class="form-control form-control-sm search-input" placeholder="Nº de processo" aria-label="Número do processo (Ctrl + Shift + F)" title="Pesquisar pelo número do processo (Ctrl + Shift + F)" style="background-color: transparent">
+                            <img alt="Carregando..." src="infra_css/imagens/aguarde.gif" id="iconeAguardePesquisa" style="display: none; width: 28px; height: 28px; margin-top: 3px; margin-right:8px" aria-live="polite" aria-relevant="additions">
+                            <button class="btn btn-link btn-pesquisar input-group-btn search-button" style="margin-left: 8px;padding: 4px" name="btnPesquisaRapidaSubmit" type="submit" title="Pesquisa rápida - Pesquisar  na mesma janela (Enter)"><i aria-hidden="true" class="material-icons icon-aligned pr-0">search</i>
+                            </button>		
+                            <button class="btn btn-link btn-pesquisar-nova-janela input-group-btn search-button" style="margin-left: 8px;padding: 4px" tabindex="0" name="btnPesquisaRapidaSubmitNovaAba" type="submit" formtarget="_blank" title="Pesquisa rápida - Pesquisar em em nova janela">
+                            <i aria-hidden="true" class="material-icons icon-aligned pr-0">open_in_new</i>
+                            </button>
+                            <input type="hidden" name="acao_retorno_pesquisa_rapida" value="relatorio_diario_cumprimento_pena">                            
+						</form>
+
+                        <script>
+                        
+                            function testeCpfCnpj() {
+                                let texto = $('input[name="txtNumProcessoPesquisaRapida"]').val().replace(/\D+/g, '');
+                                return (texto.length == 11 || texto.length == 14) && (infraValidarCpf(texto) || infraValidarCnpj(texto));
+                            }
+                            
+                            function preparaEnviaFormCpfCnpj() {
+                                    let formPesquisa = document.getElementById('formPesquisaRapida');                                  
+                                    formPesquisa.action = 'controlador.php?acao=pesquisa_processo_doc_parte&hash=456c163d193884c4cab6a68b25af8751';
+                                    var strDocParte = document.createElement('input');
+                                    strDocParte.setAttribute('type','text');
+                                    strDocParte.setAttribute('name','strDocParte');
+                                    strDocParte.setAttribute('value',$('input[name="txtNumProcessoPesquisaRapida"]').val());
+                                    formPesquisa.appendChild(strDocParte);
+                                    
+                                    var stracao = document.createElement('input');
+                                    stracao.setAttribute('type','text');
+                                    stracao.setAttribute('name','acao');
+                                    stracao.setAttribute('value','pesquisa_processo_doc_parte');
+                                    formPesquisa.appendChild(stracao);
+                                    
+                                    var autocarregar = document.createElement('input');
+                                    autocarregar.setAttribute('type','text');
+                                    autocarregar.setAttribute('name','autocarregar');
+                                    autocarregar.setAttribute('value',true);
+                                    formPesquisa.appendChild(autocarregar);
+                                    formPesquisa.submit();
+                            }
+                            
+                            $(document).ready(function(){
+                            document.getElementsByName("btnPesquisaRapidaSubmitNovaAba")[0].onclick = function(event) {
+                                  if(testeCpfCnpj()) {
+                                        preparaEnviaFormCpfCnpj();
+                                  } else {
+                                        return true;
+                                  }
+                                };
+                                
+                                document.getElementsByName("btnPesquisaRapidaSubmit")[0].onclick = function(event) {
+                                  $("#iconeAguardePesquisa").css("display", "block");
+                                  event.stopPropagation();
+                                  if(testeCpfCnpj()) {
+                                        preparaEnviaFormCpfCnpj();
+                                  } else {
+                                      $.ajax({
+                                        type: 'post',
+                                        dataType: 'json',
+                                        data: {txtNumProcessoPesquisaRapida: $('input[name="txtNumProcessoPesquisaRapida"]').val()},
+                                        url: 'controlador_ajax.php?acao_ajax=verifica_pesquisa_rapida_minuta_mandado&hash=07762554d640a60bfd3169b7bb977f74',
+                                        async: false,
+                                        success: function(dados){
+                                            if(dados.erro){
+                                                event.preventDefault();
+                                                alert(dados.erro);
+                                            }else if(dados.resultado && dados.resultado == 1){
+                                                event.preventDefault();
+                                                document.getElementsByName("btnPesquisaRapidaSubmitNovaAba")[0].click();
+                                            }
+                                        }
+                                      });
+                                  }
+                                  $("#iconeAguardePesquisa").css("display", "none");        
+                                };
+                            });
+                        </script>
+                    </div>
+                    
+                    <div style="padding: 8px">
+                <button id="btnProfile" class="btn btn-link" aria-label="Perfil do Usuário" type="button" aria-expanded="false" aria-controls="nav-profile" data-target="#nav-profile" data-toggle="collapse">
+                    <i title="Perfil do usuário (Ctrl + Shift + U)" aria-hidden="true" class="material-icons navbar-icons">account_circle</i>
+                </button>
+                <div id="frmProfile" class="profile">
+                    <div id="nav-profile" class="profile-body collapse">
+                        <div class="header bg-gray-grad" style="background-color: black">
+                            <div class="text-center font-weight-bold">
+                                <span>Bruno Rockenbach Ferreira
+                                    (BRK00)
+                                    
+                                </span>
+                            </div>
+                            <div class="text-center mt-2 d-block d-lg-none">
+                                <form method="post" class="mb-0 frm-lotacoes" action="controlador.php?acao=pessoa_usuario_selecionar&amp;hash=3fe97d659a02328c4bfbafe95811af80"><select class="custom-select custom-select-sm selInfraUnidades" id="selInfraUnidades" name="selInfraUnidades" onchange="mudarPerfil(this);" aria-label="Mudar perfil. Tecla de atalho: Alt+P" title="Tecla de atalho: Alt+P">
+    <optgroup title="JFPR" label="JFPR"><option title="4ª Vara Federal de Foz do Iguaçu - PRFOZ04/OFICIAL DE GABINETE" value="PR-701604491405833870456789619910">PRFOZ04/OFICIAL DE GABINETE</option>
+<option title="4ª Vara Federal de Foz do Iguaçu - PRFOZ04/SERVIDOR DE SECRETARIA (VARA)" value="PR-701391194349643400060000000001">PRFOZ04/SERVIDOR DE SECRETARIA (VARA)</option>
+<option title="4ª Vara Federal de Foz do Iguaçu - PRFOZ04/SERVIDOR DE SECRETARIA (VARA)" value="PR-999164425357986475355344389419" selected="selected">PRFOZ04/SERVIDOR DE SECRETARIA (VARA)</option>
+<option title="3ª Vara Federal de Maringá - PRMAR03/SERVIDOR DE SECRETARIA (VARA)" value="PR-999164425357986475355344389418">PRMAR03/SERVIDOR DE SECRETARIA (VARA)</option>
+</optgroup><optgroup title="JFRS" label="JFRS"><option title="SERVIDOR DE SECRETARIA (TRF4)" value="RS-711467641301633011315355776598">SERVIDOR DE SECRETARIA (TRF4)</option>
+<option title="11ª Vara Federal de Porto Alegre - RSPOA11/SERVIDOR DE SECRETARIA (VARA)" value="RS-999168917375499563586513868037">RSPOA11/SERVIDOR DE SECRETARIA (VARA)</option>
+<option title="1ª Vara Federal de Rio Grande - RSRGR01/SERVIDOR DE SECRETARIA (VARA)" value="RS-999168917375499563586513868035">RSRGR01/SERVIDOR DE SECRETARIA (VARA)</option>
+<option title="2ª Vara Federal de Santa Maria - RSSMA02/SERVIDOR DE SECRETARIA (VARA)" value="RS-999168917375499563586513868034">RSSMA02/SERVIDOR DE SECRETARIA (VARA)</option>
+</optgroup><optgroup title="JFSC" label="JFSC"><option title="SERVIDOR DE SECRETARIA (TRF4)" value="SC-721467641303600060255357123691">SERVIDOR DE SECRETARIA (TRF4)</option>
+</optgroup><optgroup title="TRF4" label="TRF4"><option title="SERVIDOR DE SECRETARIA (VARA 1o GRAU)" value="TRF4-41467641299572952015351199518">SERVIDOR DE SECRETARIA (VARA 1o GRAU)</option>
+</optgroup>
+</select>
+&nbsp;
+<script>
+    function mudarPerfil(element) {
+        var bolOutraInstancia = false;
+        
+        if (element.value.startsWith("PR")) {
+            element.form.target = "_self";
+        } else {
+            element.form.target = "_blank";
+            bolOutraInstancia = true;
+        }
+        
+        element.form.submit();
+        
+        if (bolOutraInstancia) {
+            element.value = 'PR-999164425357986475355344389419';
+        }
+    }
+</script></form>
+
+                            </div>
+                        </div>
+
+                        <div style="padding: 10px; color: inherit">
+                                                                                                <a aria-label="Meus Localizadores" class="d-flex profile-item" href="controlador.php?acao=usuario_tipo_monitoramento_localizador_listar&amp;acao_origem=relatorio_diario_cumprimento_pena&amp;acao_retorno=relatorio_diario_cumprimento_pena&amp;hash=a8baa5287c520305b908dc8ccfdb0e3c" role="button">
+				<div><i class="material-icons" title="Meus Localizadores">all_inbox</i></div>
+				<div>Meus localizadores</div>
+			</a>
+                                                                                                                                                    <div class="dropdown-divider"></div>
+                            			<a class="d-flex profile-item" title="novidades" href="controlador.php?acao=novidades_sistema&amp;acao_origem=relatorio_diario_cumprimento_pena&amp;acao_retorno=relatorio_diario_cumprimento_pena&amp;hash=26407e7e9afac0be5bcc79adf1760db5" target="_blank">
+				<div><i class="material-icons  notification-badge" aria-hidden="true">fiber_new</i></div>
+				<div>Novidades - 95 não lidas</div>
+			</a>			<a class="d-flex profile-item" title="" href="https://docs.google.com/forms/d/e/1FAIpQLSfE8oxiDdRUMc-pRck5nOlJSA7mEW-IhzQSIb9JZFAm1oJ2Hw/viewform" target="_blank">
+				<div><i class="material-icons  " aria-hidden="true">forum</i></div>
+				<div>Sugestões de Melhoria</div>
+			</a>			<a class="d-flex profile-item" title="" href="https://forms.gle/ZNzCb5spwsYAuQSC7" target="_blank">
+				<div><i class="material-icons  " aria-hidden="true">assignment</i></div>
+				<div>Alô, CEPER</div>
+			</a>			<a class="d-flex profile-item" title="" href="controlador.php?acao=usuario_personalizacao_configuracao&amp;hash=636f1429aa281a40de0406f789674ab7" target="_blank">
+				<div><i class="material-icons  " aria-hidden="true">settings</i></div>
+				<div>Configurações</div>
+			</a>
+                            <button type="button" class="d-flex profile-item btn btn-link" href="#/" data-toggle="collapse" data-target="#navbar-accessibility" aria-label="Exibir barra de acessibilidade" aria-expanded="true">
+                                <div><i title="Mostrar/esconder barra de acessibilidade" class="material-icons" aria-hidden="true">accessibility</i></div>
+                                Barra de acessibilidade
+                            </button>
+                            
+
+                <a href="controlador.php?acao=pdpj/marketplace_redirecionar&amp;acao_origem=relatorio_diario_cumprimento_pena&amp;hash=8ee4c6c879dbe51deb16827f6f283d08" class="navbar-pdpj-icon d-flex profile-item" target="_blank">
+                    <div>
+                        <i class="d-sm-block d-md-none material-icons">apps</i>
+                    </div>
+                    <span class="d-sm-block d-md-none">Portal jus.br</span>
+                </a>
+            
+                            <div class="dropdown-divider"></div>
+                            <section role="note" class="d-flex text-secondary">
+                                <i class="material-icons" aria-hidden="true">info</i>
+                                Versão eproc: 9.21.1-3.0.6
+                            </section>
+                            <div class="dropdown-divider"></div>
+                            <a role="link" id="btn-encerrar-sessao" class="d-flex profile-item" href="controlador.php?acao=sair&amp;hash=032f021075ab7db0d8f0234f996196ed"><div><i class="material-icons" aria-hidden="true">exit_to_app</i></div>Encerrar Sessão <span class="ml-1 text-muted font-italic">(Ctrl+Shift+F4)</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+</div>
+                </nav>
+            </div>
+            <!-- Modal -->
+            <div class="bootstrap-styles">
+                <div class="modal fade" id="modal-pesquisar-processo" tabindex="-1" aria-labelledby="pesquisaProcessoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="pesquisaProcessoModalLabel">Pesquisar processo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                                    <div class="w-100 align-items-center" style="width: 100%;">
+						<form role="search" name="formPesquisaRapida" id="formPesquisaRapida" action="controlador.php?acao=processo_pesquisa_rapida&amp;hash=86a9d2a83c4485c3262529eedc1692b7" method="post" class="d-flex w-100 align-items-center searchbar">
+							<input id="txtNumProcessoPesquisaRapida" accesskey="Z" type="search" name="txtNumProcessoPesquisaRapida" class="form-control form-control-sm search-input" placeholder="Nº de processo" aria-label="Número do processo (Ctrl + Shift + F)" title="Pesquisar pelo número do processo (Ctrl + Shift + F)" style="background-color: transparent">
+                            <img alt="Carregando..." src="infra_css/imagens/aguarde.gif" id="iconeAguardePesquisa" style="display: none; width: 28px; height: 28px; margin-top: 3px; margin-right:8px" aria-live="polite" aria-relevant="additions">
+                            <button class="btn btn-link btn-pesquisar input-group-btn search-button" style="margin-left: 8px;padding: 4px" name="btnPesquisaRapidaSubmit" type="submit" title="Pesquisa rápida - Pesquisar  na mesma janela (Enter)"><i aria-hidden="true" class="material-icons icon-aligned pr-0">search</i>
+                            </button>		
+                            <button class="btn btn-link btn-pesquisar-nova-janela input-group-btn search-button" style="margin-left: 8px;padding: 4px" tabindex="0" name="btnPesquisaRapidaSubmitNovaAba" type="submit" formtarget="_blank" title="Pesquisa rápida - Pesquisar em em nova janela">
+                            <i aria-hidden="true" class="material-icons icon-aligned pr-0">open_in_new</i>
+                            </button>
+                            <input type="hidden" name="acao_retorno_pesquisa_rapida" value="relatorio_diario_cumprimento_pena">                            
+						</form>
+
+                        <script>
+                        
+                            function testeCpfCnpj() {
+                                let texto = $('input[name="txtNumProcessoPesquisaRapida"]').val().replace(/\D+/g, '');
+                                return (texto.length == 11 || texto.length == 14) && (infraValidarCpf(texto) || infraValidarCnpj(texto));
+                            }
+                            
+                            function preparaEnviaFormCpfCnpj() {
+                                    let formPesquisa = document.getElementById('formPesquisaRapida');                                  
+                                    formPesquisa.action = 'controlador.php?acao=pesquisa_processo_doc_parte&hash=456c163d193884c4cab6a68b25af8751';
+                                    var strDocParte = document.createElement('input');
+                                    strDocParte.setAttribute('type','text');
+                                    strDocParte.setAttribute('name','strDocParte');
+                                    strDocParte.setAttribute('value',$('input[name="txtNumProcessoPesquisaRapida"]').val());
+                                    formPesquisa.appendChild(strDocParte);
+                                    
+                                    var stracao = document.createElement('input');
+                                    stracao.setAttribute('type','text');
+                                    stracao.setAttribute('name','acao');
+                                    stracao.setAttribute('value','pesquisa_processo_doc_parte');
+                                    formPesquisa.appendChild(stracao);
+                                    
+                                    var autocarregar = document.createElement('input');
+                                    autocarregar.setAttribute('type','text');
+                                    autocarregar.setAttribute('name','autocarregar');
+                                    autocarregar.setAttribute('value',true);
+                                    formPesquisa.appendChild(autocarregar);
+                                    formPesquisa.submit();
+                            }
+                            
+                            $(document).ready(function(){
+                            document.getElementsByName("btnPesquisaRapidaSubmitNovaAba")[0].onclick = function(event) {
+                                  if(testeCpfCnpj()) {
+                                        preparaEnviaFormCpfCnpj();
+                                  } else {
+                                        return true;
+                                  }
+                                };
+                                
+                                document.getElementsByName("btnPesquisaRapidaSubmit")[0].onclick = function(event) {
+                                  $("#iconeAguardePesquisa").css("display", "block");
+                                  event.stopPropagation();
+                                  if(testeCpfCnpj()) {
+                                        preparaEnviaFormCpfCnpj();
+                                  } else {
+                                      $.ajax({
+                                        type: 'post',
+                                        dataType: 'json',
+                                        data: {txtNumProcessoPesquisaRapida: $('input[name="txtNumProcessoPesquisaRapida"]').val()},
+                                        url: 'controlador_ajax.php?acao_ajax=verifica_pesquisa_rapida_minuta_mandado&hash=07762554d640a60bfd3169b7bb977f74',
+                                        async: false,
+                                        success: function(dados){
+                                            if(dados.erro){
+                                                event.preventDefault();
+                                                alert(dados.erro);
+                                            }else if(dados.resultado && dados.resultado == 1){
+                                                event.preventDefault();
+                                                document.getElementsByName("btnPesquisaRapidaSubmitNovaAba")[0].click();
+                                            }
+                                        }
+                                      });
+                                  }
+                                  $("#iconeAguardePesquisa").css("display", "none");        
+                                };
+                            });
+                        </script>
+                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="infraButton" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+                    <div id="wrapper" class="abre-automaticamente">
+        
+                                
+            <div class="bootstrap-styles">
+                <nav id="sidebar-wrapper" aria-labelledby="menu-title" aria-expanded="true" class="abre-automaticamente show menu-dark">
+                    <h2 id="menu-title" class="sr-only">Menu lateral</h2>
+                    <div class="menu-searchbox input-group input-group-sm">
+                        <input id="sidebar-searchbox" type="text" class="form-control menu-search-box" style="margin: 5px;" title="Pesquisar no menu (Alt + m)" placeholder="Pesquisar no Menu (Alt + m)">
+                    </div>
+                    <ul id="main-menu" class="sidebar-nav search-list">
+                        
+    <li class="">
+
+        <a href="controlador.php?acao=menu_textual&amp;hash=9a822d63191fedd1e00c3ecedaea6dee" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-105" aria-label="Menu Textual">
+            <span class="menu-item-text">Menu Textual</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-453" aria-label="AJG">
+            <span class="menu-item-text">AJG</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-453">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=nomeacoes_ajg_listar&amp;hash=feaf2f7031a0c9af819a43eaa3a26f28" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-454" aria-label="Nomeações criadas (aguardando solicitar pagamento)">
+            <span class="menu-item-text">Nomeações criadas (aguardando solicitar pagamento)</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=solicitacoes_pagamento_ajg_listar&amp;hash=35cd5da8ff84f3b1257073e885b78973" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-455" aria-label="Solicitações criadas (aguardando validação)">
+            <span class="menu-item-text">Solicitações criadas (aguardando validação)</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=assinatura_digital&amp;hash=5920843c979f4b7cb6d785c94a3a67e9" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-215" aria-label="Assinador Digital de Documentos" target="_blank">
+            <span class="menu-item-text">Assinador Digital de Documentos</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-124" aria-label="Audiência">
+            <span class="menu-item-text">Audiência</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-124">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=audiencia_calendario&amp;hash=a3d38dd74b0320d201c181a0a19371f2" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-383" aria-label="Calendário de Audiências">
+            <span class="menu-item-text">Calendário de Audiências</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=sala_audiencia_orgao_listar&amp;hash=81e6cb063e1da407b31a0ab5d1100ad6" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-125" aria-label="Gerenciamento de Salas">
+            <span class="menu-item-text">Gerenciamento de Salas</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=audiencia_videos_gerenciar&amp;hash=83f91a5de866b76bdd43e5582ce02ef3" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-330" aria-label="Gerenciamento de vídeos">
+            <span class="menu-item-text">Gerenciamento de vídeos</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_audiencia_virtual_proposta&amp;hash=83b32a18dbef335b4d027594b631a406" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-425" aria-label="Propostas de Acordo das Audiências Virtuais">
+            <span class="menu-item-text">Propostas de Acordo das Audiências Virtuais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=audiencia_relatorio&amp;hash=e33124c1535c8e016ecdab1c8aee7081" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-126" aria-label="Relatório de Audiências">
+            <span class="menu-item-text">Relatório de Audiências</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=RelatorioAudiencias/Listar&amp;hash=ebfc6053d0add7dd87c4680ff956209f" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-766" aria-label="Relatório de Audiências Novo">
+            <span class="menu-item-text">Relatório de Audiências Novo</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=audiencia_relatorio_portal&amp;hash=87ffbea5a62ed550e75f2d6084fa8599" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-462" aria-label="Relatórios de Audiências (Portal)">
+            <span class="menu-item-text">Relatórios de Audiências (Portal)</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-661" aria-label="Bens Associados">
+            <span class="menu-item-text">Bens Associados</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-661">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=bap_localizacao_interna_listar&amp;hash=253e29af512ee4712cf8825e0240463c" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-664" aria-label="Cadastro de Localizações Internas">
+            <span class="menu-item-text">Cadastro de Localizações Internas</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_bens_apreendidos_listar&amp;hash=a5992666137fc2d676320a88d4ced481" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-662" aria-label="Relatório de bens associados">
+            <span class="menu-item-text">Relatório de bens associados</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=recebimento_bens_listar&amp;hash=c8152ccd08c4192e1e811d7f2b6d9f4d" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-665" aria-label="Transferência de bens">
+            <span class="menu-item-text">Transferência de bens</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_consultar&amp;acao_origem=desmembramento_processo_consultar&amp;hash=0bcc72805bfecc32f3feb6615c4d165c" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-239" aria-label="Cisão/Desmembramento de Processo">
+            <span class="menu-item-text">Cisão/Desmembramento de Processo</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-373" aria-label="Conciliações Virtuais">
+            <span class="menu-item-text">Conciliações Virtuais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-373">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=gerenciamento_forum_proposta_rpp&amp;hash=a2052fa18dd1ac18ec06da6f93ef06da" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-526" aria-label="Habilitação de fóruns em bloco - RPPs">
+            <span class="menu-item-text">Habilitação de fóruns em bloco - RPPs</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=gerenciamento_forum_conciliacao_proposta_habilitar_bloco&amp;hash=ec0052fbafd5dee71843051d84191626" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-374" aria-label="Habilitação de fóruns em bloco por localizador">
+            <span class="menu-item-text">Habilitação de fóruns em bloco por localizador</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=gerenciamento_forum_propostas&amp;hash=59864d3013a2875eb334d70ff3bb1bcf" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-375" aria-label="Propostas de acordo">
+            <span class="menu-item-text">Propostas de acordo</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=gerenciamento_propostas_acordo_embranco_bloco&amp;hash=4e828bdda729282c12f2a58bb9e9038d" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-393" aria-label="Propostas de Acordo em branco - envio em bloco">
+            <span class="menu-item-text">Propostas de Acordo em branco - envio em bloco</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=conciliacoes_virtuais_relatorio&amp;hash=4c616749f18314b6c5662d4c8d1228a9" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-388" aria-label="Relatório Conciliações Virtuais">
+            <span class="menu-item-text">Relatório Conciliações Virtuais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-3" aria-label="Consulta Processual">
+            <span class="menu-item-text">Consulta Processual</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-3">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=consulta_documentos_stj_stf&amp;hash=895e98a27e918995e0b1ab113d18e53f" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-527" aria-label="Consultar Documentos no STF/STJ">
+            <span class="menu-item-text">Consultar Documentos no STF/STJ</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_consultar&amp;acao_origem=consultar&amp;hash=65095a99d5b287b51c5b777d862ddce9" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-4" aria-label="Consultar Processos">
+            <span class="menu-item-text">Consultar Processos</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_consultar_siapro&amp;hash=d337711822dcd75e267b8910f0d4075d" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-536" aria-label="Consultar Processos - Siapro">
+            <span class="menu-item-text">Consultar Processos - Siapro</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_consultar_v1&amp;hash=7865d5e077b5378f4047fbcd1ddbf682" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-410" aria-label="Consultar Processos V1">
+            <span class="menu-item-text">Consultar Processos V1</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-378" aria-label="Custas Processuais">
+            <span class="menu-item-text">Custas Processuais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-378">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=processo_custas_consultar&amp;acao_origem=custas&amp;hash=0b2db0f493dafbf21623045134157f90" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-379" aria-label="Guias geradas para um processo">
+            <span class="menu-item-text">Guias geradas para um processo</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=guia_pagamento_custas_gerados_listar&amp;hash=1f7aaf906bead449e154c66f26db5abb" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-381" aria-label="Guias geradas pelo usuário">
+            <span class="menu-item-text">Guias geradas pelo usuário</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=guia_pagamento_custas_usuario_listar&amp;hash=ae7bf7835fb58d231960d16d57c4931f" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-380" aria-label="Guias geradas por um usuário">
+            <span class="menu-item-text">Guias geradas por um usuário</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-463" aria-label="Depósitos Judiciais">
+            <span class="menu-item-text">Depósitos Judiciais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-463">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=processo_depositos_judiciais_consultar&amp;acao_origem=processo_depositos_judiciais_consultar&amp;hash=31bc25ac196d53fd5ebc5c7c3fbb738f" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-465" aria-label="Consultar/gerar guias">
+            <span class="menu-item-text">Consultar/gerar guias</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=guia_pagamento_depositos_judiciais_usuario_listar&amp;hash=6f40e7a498bf3f9414c29c126ded81c6" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-467" aria-label="Guias geradas por um usuário">
+            <span class="menu-item-text">Guias geradas por um usuário</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-280" aria-label="Execução Penal">
+            <span class="menu-item-text">Execução Penal</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-280">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=trf4@EntidadeAssistencialProjeto/listar_novo&amp;hash=a3f8719ec059a0224f98616547649a1a" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-366" aria-label="Ajuizamento de Processo - Novo Projeto">
+            <span class="menu-item-text">Ajuizamento de Processo - Novo Projeto</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=pena_alternativa_consulta_interna&amp;hash=c96ef4eab190faa43977456d6cd27845" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-284" aria-label="Consultar Cumprimento da Pena">
+            <span class="menu-item-text">Consultar Cumprimento da Pena</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=cumprimento_pena_psc_consultar&amp;hash=bee7432148dd96496dc01e09c19e2913" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-286" aria-label="Cumprimento da Prestação de Serviços (PSC)">
+            <span class="menu-item-text">Cumprimento da Prestação de Serviços (PSC)</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=cumprimento_pena_pp_listar&amp;hash=0ccaf1140026c00976c43721f9151c1c" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-285" aria-label="Cumprimento da Prestação Pecuniária (PP)">
+            <span class="menu-item-text">Cumprimento da Prestação Pecuniária (PP)</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=entidade_assistencial_listar&amp;hash=22c0487c6052857d14d0e77e8f13be3f" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-282" aria-label="Gerenciar Entidades Assistenciais">
+            <span class="menu-item-text">Gerenciar Entidades Assistenciais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=pena_alternativa_consultar&amp;hash=a1ec128fb221388c228248f10b62bbb2" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-281" aria-label="Gerenciar Pena">
+            <span class="menu-item-text">Gerenciar Pena</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=trf4@EntidadeAssistencialProjeto/listar&amp;hash=64df70fa283219298ecf5fbc14559224" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-741" aria-label="Projetos Assistenciais">
+            <span class="menu-item-text">Projetos Assistenciais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_cumprimento_pena&amp;hash=caaa2e58eacd62d757f2393a9fc4f9af" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-287" aria-label="Relatório de Cumprimento de Pena">
+            <span class="menu-item-text">Relatório de Cumprimento de Pena</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_diario_cumprimento_pena&amp;hash=eb73a4b456c61a1c4a916eab6d6fef76" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-289" aria-label="Relatório Diário de Cumprimento da Pena">
+            <span class="menu-item-text">Relatório Diário de Cumprimento da Pena</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_entidade_prestador&amp;hash=24cf4cc53c0252c1cb209d2d5c2dc674" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-288" aria-label="Relátorio Entidade X Prestador">
+            <span class="menu-item-text">Relátorio Entidade X Prestador</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorios_automatizados&amp;hash=3de721e5673f07b171ecf9ac562c42b7" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-320" aria-label="Relatórios e Opções Automatizadas">
+            <span class="menu-item-text">Relatórios e Opções Automatizadas</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-1" aria-label="Gerenciamento de Advogados/Conciliadores">
+            <span class="menu-item-text">Gerenciamento de Advogados/Conciliadores</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-1">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=advogado_cadastrado_listar&amp;hash=1fa57a105f6f6840dbf134ab103278c6" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-68" aria-label="Advogados Cadastrados">
+            <span class="menu-item-text">Advogados Cadastrados</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=advogado_listar&amp;hash=2345d91832bb5c9d731daf15feadd5cf" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-2" aria-label="Validar Advogado">
+            <span class="menu-item-text">Validar Advogado</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-104" aria-label="Gerenciamento de Entidades">
+            <span class="menu-item-text">Gerenciamento de Entidades</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-104">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=entidade_listar&amp;hash=0e4ee1d9e5747fab481613f09e68e339" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-130" aria-label="Cadastro de Entidades">
+            <span class="menu-item-text">Cadastro de Entidades</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-73" aria-label="Gerenciamento de Partes">
+            <span class="menu-item-text">Gerenciamento de Partes</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-73">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=processo_consultar&amp;acao_origem=gerenciamento_partes_listar&amp;hash=db83a5a81d93e37dc555fd5a1b8dd4ae" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-80" aria-label="Gerenciar Partes">
+            <span class="menu-item-text">Gerenciar Partes</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_consultar&amp;acao_origem=gerenciamento_partes_situacao_listar&amp;hash=e535bbc4c77f3e10d33ebefb19b37875" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-121" aria-label="Gerenciar Situação de Partes">
+            <span class="menu-item-text">Gerenciar Situação de Partes</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_parte_procurador_procuracao_validacao_bloco/listar_pendencias&amp;hash=a82fb3e22d32f6510d196b200db19b7b" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-864" aria-label="Procurações e Contratos de Honorários aguardando conferência">
+            <span class="menu-item-text">Procurações e Contratos de Honorários aguardando conferência</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-134" aria-label="Gerenciamento de Processos Físicos">
+            <span class="menu-item-text">Gerenciamento de Processos Físicos</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-134">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=processo_siapro_cadastrar&amp;hash=19d6acd8fa8c7d1cfd80eb18b5e71933" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-135" aria-label="Autuação de Processos - Siapro">
+            <span class="menu-item-text">Autuação de Processos - Siapro</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=migracao_processo_siapro&amp;hash=f02d50ebb27da597da2303fbc281e887" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-525" aria-label="Autuação de Processos Siapro em Lote">
+            <span class="menu-item-text">Autuação de Processos Siapro em Lote</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=trf4@siapro/peticao_sup/listar_pendentes&amp;hash=2617fff9530e64eb6e736e163797313c" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-782" aria-label="Baixa/Juntada de Petições SUP">
+            <span class="menu-item-text">Baixa/Juntada de Petições SUP</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=siapro_processo_bloco_listar&amp;hash=9a1241c01cdd8535fdbcbb48ddb2860b" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-552" aria-label="Blocos de Processos - Siapro">
+            <span class="menu-item-text">Blocos de Processos - Siapro</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=siapro_caixa_listar&amp;hash=07a903cd3beaf0a36b8375788d0b5520" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-553" aria-label="Cadastramento de Caixas - Siapro">
+            <span class="menu-item-text">Cadastramento de Caixas - Siapro</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=siapro_localizador_listar&amp;hash=93d0327060ddb7ef0597e614f783f329" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-570" aria-label="Cadastramento de Localizadores Físicos - Siapro">
+            <span class="menu-item-text">Cadastramento de Localizadores Físicos - Siapro</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=siapro_consulta_guia_remessa&amp;hash=277525b75db391502ff5cae5e26d1055" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-574" aria-label="Consulta Guias de Remessa">
+            <span class="menu-item-text">Consulta Guias de Remessa</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=siapro_pedido_desarquivamento_listar&amp;hash=59c110f7d95dbf542d022bbe71b3a072" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-569" aria-label="Consulta Pedidos de Desarquivamento - Siapro">
+            <span class="menu-item-text">Consulta Pedidos de Desarquivamento - Siapro</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=siapro_consulta_processos_carga&amp;hash=3dbaeea41f59aa33933c3a9ab725c97e" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-554" aria-label="Consulta Processos em Carga">
+            <span class="menu-item-text">Consulta Processos em Carga</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_consultar_siapro&amp;hash=d337711822dcd75e267b8910f0d4075d" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-555" aria-label="Consultar Processos - Siapro">
+            <span class="menu-item-text">Consultar Processos - Siapro</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=siapro_processo_movimento_filtrar&amp;hash=9d242819d0b157bfa67bec0e70f5bb03" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-550" aria-label="Movimentação Processual - Siapro">
+            <span class="menu-item-text">Movimentação Processual - Siapro</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=siapro_agravo_judicial_receber_listar&amp;hash=1b4cda0b0a7a2ebfeb261d75be6f93b2" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-682" aria-label="Recebimento de Agravos">
+            <span class="menu-item-text">Recebimento de Agravos</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=siapro_agravo_judicial_local_listar&amp;hash=a8b4b6bb67d2cb4b974cf68131a43472" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-681" aria-label="Relação de Agravos no Órgão Atual">
+            <span class="menu-item-text">Relação de Agravos no Órgão Atual</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=siapro_execucoes_fiscais_filtrar&amp;hash=7b821eb5e03612bbe8ac75ad7eb6b832" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-571" aria-label="Relatório de Execuções Fiscais">
+            <span class="menu-item-text">Relatório de Execuções Fiscais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=trf4@siapro/processos_aguarda_digitalizacao/listar&amp;hash=26f9dfe648c22309e1e549a27b113548" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-772" aria-label="Relatório de Processos Aguardando Digitalização">
+            <span class="menu-item-text">Relatório de Processos Aguardando Digitalização</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-230" aria-label="Gerenciamento de Videoconferências">
+            <span class="menu-item-text">Gerenciamento de Videoconferências</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-230">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=agenda_videoconferencia_listar&amp;hash=d5c7badb307fdb6e232ac0c9b3308668" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-237" aria-label="Agenda de Videoconferências">
+            <span class="menu-item-text">Agenda de Videoconferências</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=sala_videoconferencia_listar&amp;hash=2fd6a012e91e652271dcf46e01e31fe0" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-232" aria-label="Salas de Videoconferência">
+            <span class="menu-item-text">Salas de Videoconferência</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=videoconferencia_listar&amp;hash=aa8a2e30b89e1c8e8bb12e83318cac83" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-231" aria-label="Videoconferências">
+            <span class="menu-item-text">Videoconferências</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-572" aria-label="Inteligência Artificial">
+            <span class="menu-item-text">Inteligência Artificial</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-572">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=InteligenciaArtificial/LlmPrompt/indexMenu&amp;hash=cb21e05cee459b65408cf37c29656106" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-855" aria-label="Gaia Assistente - Gestão de Prompts">
+            <span class="menu-item-text">Gaia Assistente - Gestão de Prompts</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-821" aria-label="Júri">
+            <span class="menu-item-text">Júri</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-821">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=jurado/listar&amp;hash=58b11646ad916735f833e28123fef576" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-822" aria-label="Jurados">
+            <span class="menu-item-text">Jurados</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=juri/listas_anuais/index&amp;hash=9fd18395cda4a2837c5359a9d90bc897" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-854" aria-label="Listas Anuais">
+            <span class="menu-item-text">Listas Anuais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=periodo_juri/index&amp;hash=9baa8f4ed28eebd0c80fa8e6124c2a26" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-824" aria-label="Períodos de Júri">
+            <span class="menu-item-text">Períodos de Júri</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio/audiencia/juri/index&amp;hash=c9ad24935a53f357ef16a183731a34f1" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-853" aria-label="Relatório de Audiência de Júri">
+            <span class="menu-item-text">Relatório de Audiência de Júri</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=reuniao_juri/listar&amp;hash=695dbd81d7c2e2f6390b7132913b9a07" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-823" aria-label="Reuniões">
+            <span class="menu-item-text">Reuniões</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-530" aria-label="Laudos Periciais">
+            <span class="menu-item-text">Laudos Periciais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-530">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=processo_consultar&amp;acao_origem=consulta_laudo_pericial_por_parte&amp;hash=a3adb9025901083b00641a0ff898daf1" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-531" aria-label="Consulta de Laudos Periciais por Parte">
+            <span class="menu-item-text">Consulta de Laudos Periciais por Parte</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-419" aria-label="Laudos Técnicos">
+            <span class="menu-item-text">Laudos Técnicos</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-419">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=laudo_tecnico_listar_inicial&amp;hash=d7d1fbbd14d4848adabb9b7b2c7a710b" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-422" aria-label="Consultar/Gerenciar Laudos Técnicos">
+            <span class="menu-item-text">Consultar/Gerenciar Laudos Técnicos</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_consultar&amp;acao_origem=exportacao_laudo_processo_listar&amp;hash=acfcaffa6008d6362942bbf215c28a7a" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-420" aria-label="Exportar Laudos do Processo">
+            <span class="menu-item-text">Exportar Laudos do Processo</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=funcao_externo_listar&amp;hash=baab75ee605b6fb7ddf4cd575d8bce22" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-421" aria-label="Gerenciar Funções Externas">
+            <span class="menu-item-text">Gerenciar Funções Externas</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=setor_externo_listar&amp;hash=8b047798c7f8e199ec646c8e655fedab" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-423" aria-label="Gerenciar Setores Externos">
+            <span class="menu-item-text">Gerenciar Setores Externos</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-24" aria-label="Localizadores">
+            <span class="menu-item-text">Localizadores</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-24">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=automatizar_localizadores&amp;hash=89b2387a2e18cf63221d3b48b8f45a08" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-331" aria-label="Automatizar Tramitação Processual">
+            <span class="menu-item-text">Automatizar Tramitação Processual</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_localizador_historico&amp;hash=e95878fe6fe65fa8548961c319da849f" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-805" aria-label="Histórico de Processos por Localizador">
+            <span class="menu-item-text">Histórico de Processos por Localizador</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=localizador_processos_lista&amp;hash=993b256052731ee61846a972dd17a4fe" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-78" aria-label="Lista de Processos por Localizador">
+            <span class="menu-item-text">Lista de Processos por Localizador</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=localizador_orgao_listar&amp;hash=f9800d52b8d0189594e94c1e548fb91b" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-25" aria-label="Localizadores do Órgão">
+            <span class="menu-item-text">Localizadores do Órgão</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=usuario_tipo_monitoramento_localizador_listar&amp;hash=756c2850802ad0ea43bfbfcae9573cf9" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-129" aria-label="Meus Localizadores">
+            <span class="menu-item-text">Meus Localizadores</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-701" aria-label="Manutenção do Sistema">
+            <span class="menu-item-text">Manutenção do Sistema</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-701">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=cronograma_versoes&amp;hash=ac2d6decec64bceeea48d8125a414871" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-702" aria-label="Cronograma de Versões">
+            <span class="menu-item-text">Cronograma de Versões</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=eprocsysadm_listar&amp;hash=fb2bc6ef4c8a76f6cd572adab9be849d" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-103" aria-label="Paradas do Sistema">
+            <span class="menu-item-text">Paradas do Sistema</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-108" aria-label="Mensagens">
+            <span class="menu-item-text">Mensagens</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-108">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=caixa_mensagem_listar&amp;hash=a4fbe068c90988a61a02cc9d69cb21b6" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-109" aria-label="Caixa de Mensagens">
+            <span class="menu-item-text">Caixa de Mensagens</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-343" aria-label="Minutas">
+            <span class="menu-item-text">Minutas</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-343">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=minuta_area_trabalho&amp;hash=e811195a3883fffb297b7e5f73c2f929" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-344" aria-label="Área de Trabalho">
+            <span class="menu-item-text">Área de Trabalho</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=minuta_bloqueio_listar&amp;hash=2431d498c88b160d8b5e6a6366f75633" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-377" aria-label="Desbloquear">
+            <span class="menu-item-text">Desbloquear</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_diario_eletronico_listar&amp;hash=61a0695a22af152505801e2b765e20a2" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-389" aria-label="Diário Eletrônico">
+            <span class="menu-item-text">Diário Eletrônico</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=estatistica_minuta&amp;hash=fa6821ea975795dfb0050cabb17dff18" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-398" aria-label="Estatística">
+            <span class="menu-item-text">Estatística</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=lote_minuta_listar&amp;hash=e284ecb89dcf02a0cf07b10aab65fc8f" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-382" aria-label="Lotes">
+            <span class="menu-item-text">Lotes</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=modelo_padrao_listar&amp;hash=cc25988dc12667d76e2191311d7752dd" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-364" aria-label="Modelos">
+            <span class="menu-item-text">Modelos</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=trf4@gedpro_documento/listar_documento&amp;hash=2f33ebafaa2d9a57e1eea6093c36f5cd" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-796" aria-label="Pesquisar documento GEDPRO">
+            <span class="menu-item-text">Pesquisar documento GEDPRO</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=formulario_personalizacao_listar&amp;nome_acao=minuta_cadastrar&amp;acao_origem=minuta_cadastrar&amp;sin_abrir_link_janela=S&amp;hash=5caded4990c8c082e12eb90d27a1420d" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-679" aria-label="Preferências">
+            <span class="menu-item-text">Preferências</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=tag_formulario_listar&amp;hash=67cfadd7fde4c441acab7af3d9c75417" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-831" aria-label="Tags de Formulário">
+            <span class="menu-item-text">Tags de Formulário</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=texto_padrao_listar&amp;hash=f25256ee840f2c30a32d17fe6b15de29" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-345" aria-label="Textos Padrão">
+            <span class="menu-item-text">Textos Padrão</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-30" aria-label="Movimentação Processual">
+            <span class="menu-item-text">Movimentação Processual</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-30">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=audiencia_bloco_filtrar&amp;hash=0ace609cb44887816c7b1d4cbe5d93cc" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-279" aria-label="Audiencia em Bloco">
+            <span class="menu-item-text">Audiencia em Bloco</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=citacao_bloco_filtrar&amp;hash=9afbe356deab85f98aaeb27398667143" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-112" aria-label="Citação em Bloco">
+            <span class="menu-item-text">Citação em Bloco</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=eliminacao_agravos_fisicos&amp;hash=c5c98d3d4a4c95d8e989230986506b18" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-415" aria-label="Gestão Doc - eliminação agravos físicos - Siapro TRF">
+            <span class="menu-item-text">Gestão Doc - eliminação agravos físicos - Siapro TRF</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=conciliador_externo_bloco_filtrar&amp;hash=5833ed625a1ed621341b27f908dc8d53" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-781" aria-label="Inclusão de Conciliador Externo em Bloco">
+            <span class="menu-item-text">Inclusão de Conciliador Externo em Bloco</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=perito_bloco_filtrar&amp;hash=5c34c8af3fe571e26b6b6695744e563b" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-240" aria-label="Inclusão de Perito em Bloco">
+            <span class="menu-item-text">Inclusão de Perito em Bloco</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=intimacao_bloco_filtrar&amp;hash=12c9210d50771d4e2dc4f673871c7a3b" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-136" aria-label="Intimação em Bloco">
+            <span class="menu-item-text">Intimação em Bloco</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_movimento_filtrar&amp;hash=3ea54c80d5f559caa791a511518fade3" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-32" aria-label="Movimentação Processual em Bloco">
+            <span class="menu-item-text">Movimentação Processual em Bloco</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_movimentar&amp;hash=dc4806f9d63b467d14dd0f3457b2bf1a" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-31" aria-label="Movimentação Processual Individual">
+            <span class="menu-item-text">Movimentação Processual Individual</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=remessa_tr_bloco_filtrar&amp;hash=ded5cfc9ed8538ac2150315cc0c92875" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-174" aria-label="Remessa Turma Recursal em Bloco">
+            <span class="menu-item-text">Remessa Turma Recursal em Bloco</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=intimacao_aps_bloco_filtrar&amp;hash=fd8b6cbbbc6f80291cc94aefb111705d" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-157" aria-label="Requisição para APS em Bloco">
+            <span class="menu-item-text">Requisição para APS em Bloco</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=tema_repetitivo_bloco_filtrar&amp;hash=e86f1aaaed1e9e9646f563c279002b16" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-808" aria-label="Temas Repetitivos em Bloco">
+            <span class="menu-item-text">Temas Repetitivos em Bloco</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_consultar&amp;acao_origem=traslado_pecas_processo_listar&amp;hash=3c960f8953f672c31c7466287b5d2326" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-400" aria-label="Traslado de documentos do processo">
+            <span class="menu-item-text">Traslado de documentos do processo</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-456" aria-label="Ofício Requisitório">
+            <span class="menu-item-text">Ofício Requisitório</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-456">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=gera_oficio_requisitorio_analisar&amp;hash=0e32873668d46d46b96b9464aad56281" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-686" aria-label="Ações Coletivas/Importar Beneficiários de Planilha">
+            <span class="menu-item-text">Ações Coletivas/Importar Beneficiários de Planilha</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=alteracao_precatorio_rpv&amp;hash=c427f0b8d63b5c7e558d1affe1519333" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-788" aria-label="Alteração de Precatório/RPV">
+            <span class="menu-item-text">Alteração de Precatório/RPV</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=oficio_requisitorio_requisicoes_cadastrar&amp;hash=3a170b7df799a4c7d3897b074c614ef1" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-457" aria-label="Cadastrar Ofício Requisitório">
+            <span class="menu-item-text">Cadastrar Ofício Requisitório</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=oficio_requisitorio_listar&amp;hash=f3887b63322cac75d42447c06187f4a6" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-458" aria-label="Consultar Ofício Requisitório">
+            <span class="menu-item-text">Consultar Ofício Requisitório</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=trf4@certidao_v_l_d/redirecionar&amp;hash=23c2fff95f131eeee3d92e57f442d38a" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-809" aria-label="Listar Pedidos de CVLD" target="_blank">
+            <span class="menu-item-text">Listar Pedidos de CVLD</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=troca_processo_oficio_requisitorio&amp;hash=c66dc256febe57b3714afdc9a29ed894" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-535" aria-label="Trocar Processo de Uma Requisição - Digitalizados">
+            <span class="menu-item-text">Trocar Processo de Uma Requisição - Digitalizados</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-747" aria-label="Ordens de Consulta/Restrição">
+            <span class="menu-item-text">Ordens de Consulta/Restrição</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-747">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=convenios_orgao_sistema&amp;tipo_sistema=SERASAJUD&amp;hash=4910c81e5f3633c6e300999a82e6eb05" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-748" aria-label="SERASAJUD">
+            <span class="menu-item-text">SERASAJUD</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=principal&amp;hash=79e21a126c1b5a24187c39439ef1708c" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-33" aria-label="Página Inicial">
+            <span class="menu-item-text">Página Inicial</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-517" aria-label="Perícias">
+            <span class="menu-item-text">Perícias</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-517">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=exame_agenda_padrao_orgao_listar&amp;hash=cdb47ccd0a963448815eee3297384431" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-518" aria-label="Agenda padrão dos Peritos do Órgão">
+            <span class="menu-item-text">Agenda padrão dos Peritos do Órgão</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=exame_bloqueio_perito_listar&amp;hash=525a60b125eddc77a9e3aa85aa3085a6" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-670" aria-label="Bloqueios/impedimentos dos Peritos">
+            <span class="menu-item-text">Bloqueios/impedimentos dos Peritos</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=sala_exame_listar&amp;hash=39947c7ce49179ceda1e2cae38f1261f" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-519" aria-label="Gerenciamento de Salas de Perícias">
+            <span class="menu-item-text">Gerenciamento de Salas de Perícias</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=apresentacao_relatorios_exame&amp;hash=c4b552a40fbc295ae0b90442405062f0" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-520" aria-label="Relatórios">
+            <span class="menu-item-text">Relatórios</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=exame_agenda_padrao_orgao_calendario&amp;hash=17573e8f81a4a7615306830622c6c6da" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-521" aria-label="Reserva de Horários para Perícias">
+            <span class="menu-item-text">Reserva de Horários para Perícias</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_cadastrar&amp;hash=ef2eb89a44eaf6a52208041533e673aa" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-11" aria-label="Petição Inicial">
+            <span class="menu-item-text">Petição Inicial</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=siapro_peticoes_listar&amp;hash=a40e76c826b7cb5a05bad6fad32b3bc9" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-736" aria-label="Petições de Processos Físicos - Siapro">
+            <span class="menu-item-text">Petições de Processos Físicos - Siapro</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-368" aria-label="Precedentes Qualificados">
+            <span class="menu-item-text">Precedentes Qualificados</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-368">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=paradigma_judicial_listar&amp;hash=8a66fcd755e313ba48b402063af62fbe" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-369" aria-label="Consulta/Cadastro Precedentes Qualificados">
+            <span class="menu-item-text">Consulta/Cadastro Precedentes Qualificados</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_processos_paradigmas&amp;hash=7e5221e4030ad0efbd069723cefe5665" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-371" aria-label="Relatório de Processos por Temas">
+            <span class="menu-item-text">Relatório de Processos por Temas</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_paradigmas_processos_representativos&amp;hash=e0835d9d9fdd30cb563e165643972601" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-384" aria-label="Relatório de Processos Representativos">
+            <span class="menu-item-text">Relatório de Processos Representativos</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_processos_paradigmas_totais&amp;hash=e48c10f679ab3f313ab8447da9a65f65" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-370" aria-label="Relatório Total de Temas">
+            <span class="menu-item-text">Relatório Total de Temas</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=repercussao_paradigmas_listar&amp;hash=1905be5c49e98859e0d67e34239dbdd6" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-376" aria-label="Últimas Alterações">
+            <span class="menu-item-text">Últimas Alterações</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-88" aria-label="Prevenção Judicial">
+            <span class="menu-item-text">Prevenção Judicial</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-88">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=prevencao_judicial_bloco&amp;hash=0ee5eba085213fa2672eb0eb560179c9" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-90" aria-label="Prevenção em Bloco">
+            <span class="menu-item-text">Prevenção em Bloco</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=prevencao_judicial&amp;hash=77c68e528ab9fb89dd0d98c683b2a176" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-89" aria-label="Prevenção Individual">
+            <span class="menu-item-text">Prevenção Individual</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-70" aria-label="Procurador">
+            <span class="menu-item-text">Procurador</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-70">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=processo_consultar&amp;acao_origem=procurador_parte_listar&amp;hash=730fe526707dce1e17154b345514773d" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-69" aria-label="Gerenciar Procurador Parte">
+            <span class="menu-item-text">Gerenciar Procurador Parte</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=procurador_entidade_listar&amp;hash=4889abd19dce95400d43d39cef9dc6ab" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-76" aria-label="Listar Procuradores por Entidade">
+            <span class="menu-item-text">Listar Procuradores por Entidade</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-723" aria-label="Relatório Unificado">
+            <span class="menu-item-text">Relatório Unificado</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-723">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_pesquisa_clima&amp;hash=a0f705e9d2930d02f6c92c193e4f2da8" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-734" aria-label="Pesquisa de Clima">
+            <span class="menu-item-text">Pesquisa de Clima</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_acoes_constitucionais&amp;hash=77c7cc49e2b7b0085f78a6a597857a83" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-763" aria-label="Relatório Ações Constitucionais">
+            <span class="menu-item-text">Relatório Ações Constitucionais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_conclusos&amp;hash=dd20b191cc954e49b7e793b77bb13517" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-724" aria-label="Relatório Conclusos Sentença/Despacho">
+            <span class="menu-item-text">Relatório Conclusos Sentença/Despacho</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_decisoes_proferidas&amp;hash=ab6429f4b3a6b4e028c9b24a6b425ba9" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-756" aria-label="Relatório Decisões Proferidas">
+            <span class="menu-item-text">Relatório Decisões Proferidas</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_metas&amp;hash=cd9ccb2287b9737ce4b25c7f6f8b5ea0" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-730" aria-label="Relatório Metas">
+            <span class="menu-item-text">Relatório Metas</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_ordem_cronologica&amp;hash=53591f7f76aafd88ff36fcdbbd6df81e" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-727" aria-label="Relatório Ordem Cronológica">
+            <span class="menu-item-text">Relatório Ordem Cronológica</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_processos_sem_movimentacao&amp;hash=3092c8bfef960280375e8367f1697c61" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-725" aria-label="Relatório Processos sem Movimentação">
+            <span class="menu-item-text">Relatório Processos sem Movimentação</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_quadro_correicao&amp;hash=c23fa130fc9093a603e79657cb9e45ef" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-726" aria-label="Relatório Quadro Estatístico Preparatório de Correição">
+            <span class="menu-item-text">Relatório Quadro Estatístico Preparatório de Correição</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_remanescentes_julgamento&amp;hash=54d001817e0a4ce7a3882b3247cb0f9b" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-740" aria-label="Relatório Remanescentes para Julgamento">
+            <span class="menu-item-text">Relatório Remanescentes para Julgamento</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=rh_magistrados&amp;hash=cd60c8eb0a70b372b0b48fa001a50536" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-755" aria-label="RH - Magistrados">
+            <span class="menu-item-text">RH - Magistrados</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=rh_servidores&amp;hash=ce1ba5da246664d1c9c4433da573fe58" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-729" aria-label="RH - Servidores">
+            <span class="menu-item-text">RH - Servidores</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=sistema_acompanhamento_permanente&amp;hash=9b510c655a5b8bbde4cef3c1c296a128" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-728" aria-label="Sistema de Acompanhamento Permanente">
+            <span class="menu-item-text">Sistema de Acompanhamento Permanente</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-34" aria-label="Relatórios">
+            <span class="menu-item-text">Relatórios</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-34">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=antecedentes_jij/listar&amp;hash=003c340e88a36386318e9249f10ce39e" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-735" aria-label=" Relatório Antecedentes JIJ">
+            <span class="menu-item-text"> Relatório Antecedentes JIJ</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_internacoes_JIJ_listar&amp;hash=dcee560963c5db46212225067f7f50a9" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-757" aria-label=" Relatório de Internações JIJ">
+            <span class="menu-item-text"> Relatório de Internações JIJ</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_requisicao_para_ceabdj&amp;hash=12980fd7c0ba6336731edd3b09e31d20" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-732" aria-label="Análise de cumprimento de requisições CEAB/DJ">
+            <span class="menu-item-text">Análise de cumprimento de requisições CEAB/DJ</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=carta_ar/relatorio_carta_ar&amp;hash=c5bf41b59b76276fc4e0e4fd4af515a2" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-449" aria-label="Cartas AR">
+            <span class="menu-item-text">Cartas AR</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_certidao&amp;hash=080e4b39a4cc545924b94ecd5a14a677" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-159" aria-label="Certidão">
+            <span class="menu-item-text">Certidão</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=certidao_processos_advogado/index&amp;hash=bcb5d127dd36eb2f38026086ffa6b624" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-826" aria-label="Certidão Advogados">
+            <span class="menu-item-text">Certidão Advogados</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_controle_presc_penal&amp;hash=736424ef5a508b5a479bf553919c4c9b" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-216" aria-label="Controle de Prescrição Penal">
+            <span class="menu-item-text">Controle de Prescrição Penal</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_declinacao_competencia_outros_tribunais/listar&amp;hash=90dc7f2dded521b01300f7872602ce46" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-776" aria-label="Declinação de competência para outros tribunais">
+            <span class="menu-item-text">Declinação de competência para outros tribunais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_estatistica&amp;hash=12693e29523ae94e2d8ba90367403880" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-143" aria-label="Estatísticas Mensais de 1º Grau">
+            <span class="menu-item-text">Estatísticas Mensais de 1º Grau</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_status_processo_evento_listar&amp;hash=438f27be6867e1041e8f073deadce15c" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-224" aria-label="Eventos Lançáveis por Situação atual do Processo">
+            <span class="menu-item-text">Eventos Lançáveis por Situação atual do Processo</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-843" aria-label="Intimações DJEN">
+            <span class="menu-item-text">Intimações DJEN</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-843">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=RelatorioEnvioComunicacaoIntimacaoDjen/index&amp;hash=73f2c971d46b8daa275634bf248d1c60" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-844" aria-label="Relatório de Intimações enviadas ao DJEN">
+            <span class="menu-item-text">Relatório de Intimações enviadas ao DJEN</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=RelatorioAcessoProcesso/index&amp;hash=7f61e8b448af5db6e32368f280b1fe2b" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-386" aria-label="Log de Acesso ao Processo">
+            <span class="menu-item-text">Log de Acesso ao Processo</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=RelatorioAcessoDocumento/index&amp;hash=412bb8998b28a4ef16e52c259a8356cb" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-387" aria-label="Log de Acesso aos Documentos">
+            <span class="menu-item-text">Log de Acesso aos Documentos</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=mandados/relatorio_secretaria/consultar&amp;hash=a0824060f593ecd0a5117a6b7150ea64" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-533" aria-label="Mandados">
+            <span class="menu-item-text">Mandados</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_processos_audiencia_realizada_cejuscon_listar&amp;hash=7a8888f58ee7896bec1180dad16f1310" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-412" aria-label="Processos com Audiência Realizada pelo Cejuscon">
+            <span class="menu-item-text">Processos com Audiência Realizada pelo Cejuscon</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_distribuicao_orgao_auxiliar&amp;hash=d438d07f686c3575810d4c0f0bad15ec" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-764" aria-label="Processos distribuídos a órgãos auxiliares">
+            <span class="menu-item-text">Processos distribuídos a órgãos auxiliares</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_processos_sem_movimentacao&amp;hash=3092c8bfef960280375e8367f1697c61" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-47" aria-label="Processos sem Movimentação nos Últimos N Dias">
+            <span class="menu-item-text">Processos sem Movimentação nos Últimos N Dias</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_produtividade_teletrabalho&amp;hash=872611d812d1e55cabd468d454cafc0a" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-794" aria-label="RAP4 - Relatório de Análise de Performance da JF4R">
+            <span class="menu-item-text">RAP4 - Relatório de Análise de Performance da JF4R</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_processo_carta_precatoria_listar&amp;hash=0fde975b835e91a4ccee51c24af1c9a8" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-173" aria-label="Relatório - Cartas Precatórias Expedidas/Recebidas">
+            <span class="menu-item-text">Relatório - Cartas Precatórias Expedidas/Recebidas</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_laudo_pericial&amp;hash=f2306d438bb7a19149ba9435ae84f9f6" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-528" aria-label="Relatório de Perícias por Incapacidade">
+            <span class="menu-item-text">Relatório de Perícias por Incapacidade</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio/processo/parte/prisao/index&amp;hash=de2395fe0df89370e1ec8af29a855c99" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-713" aria-label="Relatório de Prisões">
+            <span class="menu-item-text">Relatório de Prisões</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_tramitacao_externa_listar&amp;hash=64e84cef76c5f7c1d57639d21deebd1c" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-721" aria-label="Relatório de processos em tramitação externa">
+            <span class="menu-item-text">Relatório de processos em tramitação externa</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_processos_recebidos_cejuscon_listar&amp;hash=f28f6affc3914be078e378a028d0425c" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-322" aria-label="Relatório de Processos Recebidos">
+            <span class="menu-item-text">Relatório de Processos Recebidos</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_geral_listar&amp;hash=bf7be75d41016a9d348898eb56e0c6e0" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-48" aria-label="Relatório Geral">
+            <span class="menu-item-text">Relatório Geral</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=litigancia_predatoria/listar&amp;hash=a73b4e53221d227f8c756bfb961b5c69" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-840" aria-label="Relatório Litigância Predatória">
+            <span class="menu-item-text">Relatório Litigância Predatória</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_peticao_parte&amp;hash=a0b68d0243981ec9fc8934ab13faf2eb" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-514" aria-label="Relatório Petição/Parte">
+            <span class="menu-item-text">Relatório Petição/Parte</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_processos_plantao&amp;hash=60e197d7860b49e82501effc8c5577b7" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-194" aria-label="Relatório Processos Plantão">
+            <span class="menu-item-text">Relatório Processos Plantão</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=trf4@relatorio/corregedoria/index&amp;hash=660c356a90c0b1c830aca18b224b739b" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-132" aria-label="Relatório Unificado Corregedoria (antigo Relatório Conclusos/Julgados)">
+            <span class="menu-item-text">Relatório Unificado Corregedoria (antigo Relatório Conclusos/Julgados)</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=trf4@relatorio/corregedoria/index&amp;hash=660c356a90c0b1c830aca18b224b739b" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-142" aria-label="Relatórios Estatísticos da Corregedoria">
+            <span class="menu-item-text">Relatórios Estatísticos da Corregedoria</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_requisicoes_por_localidade&amp;hash=3934210448b5e1dca73ab3d9fcc06f14" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-775" aria-label="Requisições Pagas/Expedidas por Localidade">
+            <span class="menu-item-text">Requisições Pagas/Expedidas por Localidade</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_resumo_movimentacao_listar&amp;hash=8ba61b3d18fb313165991a439fe35acc" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-49" aria-label="Resumo da Movimentação por Dia/Período">
+            <span class="menu-item-text">Resumo da Movimentação por Dia/Período</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_rol&amp;hash=21325a2c8676ffddf0e800a621ff3d80" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-160" aria-label="Rol de Culpados">
+            <span class="menu-item-text">Rol de Culpados</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_situacao_processo_instancia_superior&amp;hash=36e75517c73388b8e223b5211100b276" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-475" aria-label="Situação de Processos Remetidos ao STF">
+            <span class="menu-item-text">Situação de Processos Remetidos ao STF</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=RelatorioUltimosProcessosAcessados/index&amp;hash=d3d5a6bc6115fd8ca6742f26b79b8266" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-866" aria-label="Ultimos Processos Acessados">
+            <span class="menu-item-text">Ultimos Processos Acessados</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-17" aria-label="Retifica Autuação">
+            <span class="menu-item-text">Retifica Autuação</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-17">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=processo_consultar&amp;acao_origem=alterar_cabecalho_peticao_listar&amp;hash=214def4c0d7cca6747969e0ae543e133" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-397" aria-label="Alterar Cabeçalho Petição">
+            <span class="menu-item-text">Alterar Cabeçalho Petição</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_consultar&amp;acao_origem=documento_sigilo&amp;hash=7e992700555f9c505e767b06234ae321" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-114" aria-label="Alterar Nível de Sigilo do Documento">
+            <span class="menu-item-text">Alterar Nível de Sigilo do Documento</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_consultar&amp;acao_origem=retificar&amp;hash=db7d87d2732be0b67f633214a18812ea" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-18" aria-label="Retificação de Autuação">
+            <span class="menu-item-text">Retificação de Autuação</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-508" aria-label="Sessão de Julgamento">
+            <span class="menu-item-text">Sessão de Julgamento</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-508">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=sessao_julgamento_calendario&amp;hash=eba12ada2bcf6b519b45e099786c19d9" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-480" aria-label="Calendário de Sessões de Julgamento">
+            <span class="menu-item-text">Calendário de Sessões de Julgamento</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=sessao_julgamento_listar&amp;hash=419166080cf78ec66358c6770a0ef356" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-479" aria-label="Cronograma de Sessões de Julgamento">
+            <span class="menu-item-text">Cronograma de Sessões de Julgamento</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=sessao_julgamento_pedidos/listar&amp;hash=12dafb77c026df2982e2e074ce28779d" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-803" aria-label="Solicitações de Sustentação e Preferência">
+            <span class="menu-item-text">Solicitações de Sustentação e Preferência</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-332" aria-label="SIAPE - Apresentações">
+            <span class="menu-item-text">SIAPE - Apresentações</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-332">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=apresentacao_cadastro&amp;hash=5053c688dc16104fad807b96b138775e" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-333" aria-label="Cadastra novo benefício">
+            <span class="menu-item-text">Cadastra novo benefício</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=apresentacao_comparece_secretaria&amp;hash=49b86ce1f88adc853b1e956094f704f5" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-334" aria-label="Comparecimento em Secretaria">
+            <span class="menu-item-text">Comparecimento em Secretaria</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=apresentacao_justifica_prazo_vencido&amp;hash=d92fc515d4e4b2849d3811e11b80c783" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-335" aria-label="Justificar prazo vencido">
+            <span class="menu-item-text">Justificar prazo vencido</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=apresentacao_download_manual&amp;hash=3ea8583173fd0ea8ed0b355841c960a5" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-722" aria-label="Manual do SIAPE">
+            <span class="menu-item-text">Manual do SIAPE</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=apresentacao_manutencao&amp;hash=9bb81626820dc6711b28c62a6a1a065a" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-336" aria-label="Manutenção de benefícios">
+            <span class="menu-item-text">Manutenção de benefícios</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=apresentacao_manutencao_prazo&amp;hash=bd8eac5f7e4145a6b2b7126e4b8c33fe" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-337" aria-label="Manutenção de prazos e mandados">
+            <span class="menu-item-text">Manutenção de prazos e mandados</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=apresentacao_recadastra_digital&amp;hash=450f8e8109c7a131925599f4a41e7007" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-338" aria-label="Recadastramento de impressão digital">
+            <span class="menu-item-text">Recadastramento de impressão digital</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=apresentacao_relatorios&amp;hash=19a5ef61d51f8baa21ef5fba34709676" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-339" aria-label="Relatórios">
+            <span class="menu-item-text">Relatórios</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=siscom_mensagem/listar_caixa_de_entrada&amp;hash=32dbcf3d3eb7bb2aec0324e5298acf0c" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-771" aria-label="Siscom">
+            <span class="menu-item-text">Siscom</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-42" aria-label="Tabelas Básicas">
+            <span class="menu-item-text">Tabelas Básicas</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-42">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=competencia_assunto_judicial_listar&amp;hash=433eed8da086222439b2b0c9f220d52f" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-162" aria-label="Assuntos Judiciais">
+            <span class="menu-item-text">Assuntos Judiciais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=classe_prevento_judicial_listar&amp;hash=591754da63bd7ce607cb56430e5cb9f0" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-161" aria-label="Classe Prevento Judicial">
+            <span class="menu-item-text">Classe Prevento Judicial</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=competencia_classe_judicial_listar&amp;hash=bd27ce2bffa7d3a2303ae5433af173d3" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-163" aria-label="Classes Judiciais">
+            <span class="menu-item-text">Classes Judiciais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=processo_digitalizados_recebidos&amp;hash=ae3c11ea7d3a13ce8e67fcb25d809935" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-268" aria-label="Comunicações Recebidas do STF">
+            <span class="menu-item-text">Comunicações Recebidas do STF</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=evento_peticao_tipo_documento_listar&amp;hash=b9c49743eedbb632efe4bd518dd603e0" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-236" aria-label="Evento/Petição Tipo Documento">
+            <span class="menu-item-text">Evento/Petição Tipo Documento</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=evento_orgao_judicial_listar&amp;hash=54cf0f21b54cd7ecdb8c2bf254000b52" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-244" aria-label="Eventos Judiciais">
+            <span class="menu-item-text">Eventos Judiciais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=lista_eventos_migrados&amp;hash=ee6f55e087a37a202369fdbe62d90343" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-714" aria-label="Lista de Eventos Migrados">
+            <span class="menu-item-text">Lista de Eventos Migrados</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=localidade_judicial_listar&amp;hash=61b987a48fb3b51128fcfb2adde72c29" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-537" aria-label="Localidades Judiciais">
+            <span class="menu-item-text">Localidades Judiciais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=mapeamento_decisao_intimacao&amp;hash=3a8e7ae1848b3c736c4848052e5b0c6a" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-323" aria-label="Mapeamento Decisão/Intimação">
+            <span class="menu-item-text">Mapeamento Decisão/Intimação</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=automatizacao_localizadores_relatorio&amp;hash=5da0a254b519b6a3b24bfa9294d9c40f" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-797" aria-label="Regras de Automatização">
+            <span class="menu-item-text">Regras de Automatização</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=tipo_peticao_judicial_listar&amp;hash=1629a9969c1f3558e9186446f3007df0" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-414" aria-label="Tipo Petição Judicial">
+            <span class="menu-item-text">Tipo Petição Judicial</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-318" aria-label="Tutorial">
+            <span class="menu-item-text">Tutorial</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-318">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=tutorial_acessibilidade&amp;hash=cb15304b0e3e953aaef4de3b35c3dfe6" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-801" aria-label="Acessibilidade">
+            <span class="menu-item-text">Acessibilidade</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=manual_entidade_exec_penal&amp;hash=8d9edea104397491d854eb2b2bcea46d" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-342" aria-label="Entidades (execução penal)">
+            <span class="menu-item-text">Entidades (execução penal)</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=tutorial_intimacao_automatica&amp;hash=e118f5647314c7b933d219517c23f677" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-324" aria-label="Intimação Automática">
+            <span class="menu-item-text">Intimação Automática</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-433" aria-label="Manual de Alvarás de Soltura - SIJE">
+            <span class="menu-item-text">Manual de Alvarás de Soltura - SIJE</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="https://intra.trf4.jus.br/manual-tecnico/tutoriais-internos/" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-789" aria-label="Tutoriais (Novo)" target="_blank">
+            <span class="menu-item-text">Tutoriais (Novo)</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+
+    <li class="has-submenu">
+
+        <a href="#" class="collapsed" tabindex="0" data-toggle="collapse" data-target="#menu-ul-53" aria-label="Usuários">
+            <span class="menu-item-text">Usuários</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+                    <ul class="collapse" id="menu-ul-53">
+                
+    <li class="">
+
+        <a href="controlador.php?acao=pessoa_alterar&amp;hash=ddab8ffe39fdef9f8ba007ea6e52327d" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-113" aria-label="Alteração de Dados Pessoais">
+            <span class="menu-item-text">Alteração de Dados Pessoais</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=senha_alterar&amp;hash=e75c5179231341a46d1251f33c0f01d3" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-54" aria-label="Alterar Senha Pessoal">
+            <span class="menu-item-text">Alterar Senha Pessoal</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=usuario_listar_todos&amp;hash=568dc0d44f2cfd160118bd0757a7c0be" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-72" aria-label="Lista de Usuários">
+            <span class="menu-item-text">Lista de Usuários</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=usuario_relatorio_acesso&amp;hash=bcb6cdf670a7088985c6f0595166f8c2" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-171" aria-label="Relatório de Acessos ao Sistema">
+            <span class="menu-item-text">Relatório de Acessos ao Sistema</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=relatorio_acessos_painel&amp;hash=b4485f5c1c5408bed699e35833e962a6" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-183" aria-label="Relatório de Acessos aos Painéis">
+            <span class="menu-item-text">Relatório de Acessos aos Painéis</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+
+    <li class="">
+
+        <a href="controlador.php?acao=mandado_prisao/autenticacao_bnmp&amp;hash=565bea4d922428fb426da04232409ca8" class="collapsed" tabindex="0" data-toggle="" data-target="#menu-ul-802" aria-label="Testar acesso ao BNMP">
+            <span class="menu-item-text">Testar acesso ao BNMP</span>
+            <span class="sub-arrow material-icons">arrow_drop_down</span>
+        </a>
+
+            </li>
+            </ul>
+            </li>
+                                            </ul>
+                    <div id="empty-space" style="height: 200px"></div>
+                </nav>
+                <div id="sidebar-wrapper-background"></div>
+            </div>
+                            <div id="page-content-wrapper" class="bootstrap-styles">
+                <div id="divInfraAreaTela" class="infraAreaTela mt-2">
+                    <div id="divInfraAreaTelaD" class="container-fluid">
+                                                    <div class="bootstrap-styles" id="divInfraBarraLocalizacao">
+				<div class="pl-0 pr-0 pt-1 col-md-12 justify-content-between d-flex">
+					<h1>Execução Penal - Relatório Diário de Cumprimento de Pena</h1>				<span class="dropleft">
+					<a id="dropdownMenuButton" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Ajuda">
+						<i class="material-icons justify-content-between">help_outline</i>
+					</a>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<a class="dropdown-item" href="#" onclick="eproc.hint.init(&quot;controlador_ajax.php?acao_ajax=buscar_dica&amp;hash=e81a370ccebd763e0ba0057373718034&quot;);">Rever dica</a>
+					</div>
+				</span>
+				</div>
+			</div>
+                                                                        <script>
+                            $(document).ready(function () {
+                                $('#menu-btn').on('click', function () {
+                                    var isExpanded = $(this).attr('aria-expanded') === 'true';
+                                    $(this).attr('aria-expanded', !isExpanded);
+
+                                    $('#sidebar-wrapper').attr('aria-expanded', !isExpanded);
+                                });
+                            });
+                        </script>
+                        <div class="eproc-barra-superior-flutuante mb-2"><input type="hidden" id="hdnInfraTipoPagina" name="hdnInfraTipoPagina" value="1">
+<div id="divInfraBarraComandosSuperior" class="infraBarraComandos">
+
+</div></div><div id="divInfraAreaDados" class="infraAreaDados" style="height:800px;">
+ <fieldset id="fldInformacoesConsulta" class="fldInformacoesConsulta eproc-fieldset">
+ 	<legend class="infraLegendObrigatorio">Opções do relatório</legend>
+ 		
+	<form method="post" id="frmConsulta" target="_blank" action="controlador.php?acao=relatorio_diario_cumprimento_pena_gerar&amp;hash=a3b2466c432a9f74eba345a31a773f8d">
+		<label id="lblVara">Vara:</label>
+		
+		<div id="divCmbVara">
+			<select id="cmbVara" name="cmbVara" class="eproc-select">
+				<option value="701500005">PRAPU01 - 1ª Vara Federal de Apucarana</option>
+<option value="700500017">PRCAS04 - 4ª Vara Federal de Cascavel</option>
+<option value="701000001">PRCMO01 - 1ª Vara Federal de Campo Mourão</option>
+<option value="700000085">PRCTB09 - 9ª Vara Federal de Curitiba</option>
+<option value="700000034">PRCTB12 - 12ª Vara Federal de Curitiba</option>
+<option value="700000037">PRCTB13 - 13ª Vara Federal de Curitiba</option>
+<option value="700000095">PRCTB23 - 23ª Vara Federal de Curitiba</option>
+<option value="700000151">PRCTBUI01 - 1ª Unidade de Apoio de Curitiba</option>
+<option value="700200007">PRFOZ03 - 3ª Vara Federal de Foz do Iguaçu</option>
+<option value="700200010" selected="selected">PRFOZ04 - 4ª Vara Federal de Foz do Iguaçu</option>
+<option value="700200018">PRFOZ05 - 5ª Vara Federal de Foz do Iguaçu</option>
+<option value="700700001">PRFRA01 - 1ª Vara Federal de Francisco Beltrão</option>
+<option value="701700004">PRGRA01 - 1ª Vara Federal de Guaíra</option>
+<option value="700600001">PRGUA01 - 1ª Vara Federal de Guarapuava</option>
+<option value="701300005">PRJAC01 - 1ª Vara Federal de Jacarezinho</option>
+<option value="700100019">PRLON05 - 5ª Vara Federal de Londrina</option>
+<option value="700300010">PRMAR03 - 3ª Vara Federal de Maringá</option>
+<option value="701200005">PRPBR01 - 1ª Vara Federal de Pato Branco</option>
+<option value="700900001">PRPGO01 - 1ª Vara Federal de Ponta Grossa</option>
+<option value="703200001">PRPIG01 - 1ª Vara Federal de Pitanga</option>
+<option value="702800001">PRTEB01 - 1ª Vara Federal de Telêmaco Borba</option>
+<option value="701600005">PRTLD01 - 1ª Vara Federal de Toledo</option>
+<option value="700400001">PRUMU01 - 1ª Vara Federal de Umuarama</option>
+<option value="700400007">PRUMU02 - 2ª Vara Federal de Umuarama</option>
+<option value="701400005">PRUNV01 - 1ª Vara Federal de União da Vitória</option>
+<option value="702500001">PRWBZUA02 - 2ª UAA em Wenceslau Braz</option>
+			</select>
+		</div>	
+		
+		<!-- 
+		<label id="lblNumProcesso">Número do processo:</label>		
+		<input type="text" id="txtNumProcesso" name="txtNumProcesso">
+		 -->
+		
+		<label id="lblEntidade">Entidade:</label>
+		<div id="divCmbentidade">
+			<select id="cmbEntidade" name="cmbEntidade" class="eproc-select"><option value=" " selected="selected">Selecione</option>
+<option value="701571410683373191784928773621">10° Grupamento de Bombeiros</option>
+<option value="701775827374765385310027832885">10º BATALHÃO DE BOMBEIROS MILITAR - FRANCISCO BELTRÃO</option>
+<option value="701636740706827447085654773788">13º GRUPAMENTO DE BOMBEIROS DE PATO BRANCO</option>
+<option value="701487779774007110056775713343">14º BATALHÃO DE POLÍCIA MILITAR</option>
+<option value="701636740706827447085487361199">1ª COMPANHIA DO 6º BATALHÃO DE POLÍCIA MILITAR</option>
+<option value="701571410683373191784953903188">21° Batalhão da Polícia Militar</option>
+<option value="701680190432297323001127969826">3ª COMPANHIA DE POLÍCIA RODOVIÁRIA ESTADUAL DE CASCAVEL</option>
+<option value="701716311553196145898982989968">3ª COMPANHIA DO BATALHÃO DE POLÍCIA DE FRONTEIRA</option>
+<option value="701580830827281149853625216826">4º GRUPAMENTO DE BOMBEIROS</option>
+<option value="701553614337232460069206736239">5º COLÉGIO DA POLÍCIA MILITAR DO PARANÁ</option>
+<option value="701777924852456161809108775931">5º COMANDO REGIONAL DE POLÍCIA MILITAR EM CASCAVEL</option>
+<option value="701497022386253550104382880690">6ª SDP de Foz do Iguaçu</option>
+<option value="701680190432297323001063086376">6º BATALHÃO DE POLÍCIA MILITAR DE CASCAVEL</option>
+<option value="701779985567624409535892859250">6º COLÉGIO DA POLÍCIA MILITAR DO PARANÁ</option>
+<option value="701501169515306010069133026633">9º Grupamento de Bombeiros</option>
+<option value="701603194498019709669583043745">9º GRUPAMENTO DE BOMBEIROS - STI</option>
+<option value="701615479272468575426482384203">ACARVI (PROJETO AMIGOS)</option>
+<option value="701580830827281149853356758516">ACESC - Administração dos Cemitérios e Serviços Funerários de Cascavel</option>
+<option value="701659535132058985325402990301">ADEFICA - ASSOCIAÇÃO DOS DEFICIENTES FÍSICOS DE CASCAVEL</option>
+<option value="701580917815502930032223534557">APAE de Francisco Beltrão</option>
+<option value="701757943417871394565603878654">APASFI - ASSOCIAÇÃO DE PAIS E AMIGOS DOS SURDOS DE FOZ DO IGUAÇU</option>
+<option value="701489769729084330184020303844">APMF ESCOLA MUNICIPAL JARDIM NAIPI</option>
+<option value="701778074236232192806613243034">ASSOCIAÇÃO ÁGAPE DE KARATÊ-DO HAYASHI-HA SHITORYU-KAI</option>
+<option value="701628102169016957949353478965">ASSOCIAÇÃO BASQUETEBOL ARTE DE PATO BRANCO</option>
+<option value="701621872700161872547070183953">ASSOCIAÇÃO BENEFICENTE SANTA RITA DE CÁSSIA</option>
+<option value="701687518756901380099416512054">ASSOCIAÇÃO DAS CRIANÇAS E ADOLESCENTES DE CÉU AZUL- ACAZUL</option>
+<option value="701494431795283960093290305739">Associação de Basquetebol de Foz do Iguaçu - ABASFI</option>
+<option value="701772803801016839443949214801">ASSOCIAÇÃO DE BASQUETEBOL DE FOZ DO IGUAÇU - ABASFI</option>
+<option value="701650468553218766584404445656">ASSOCIAÇÃO DE PAIS E AMIGOS DOS EXCEPCIONAIS (APAE) DE FOZ DO IGUAÇU/PR</option>
+<option value="701647978629343275973281596818">ASSOCIAÇÃO DE PAIS E AMIGOS DOS EXCEPCIONAIS DE CASCAVEL</option>
+<option value="701773844041089320693136782787">ASSOCIAÇÃO DE PAIS E AMIGOS DOS EXCEPCIONAIS DE FOZ DO  IGUAÇU – APAE FOZ</option>
+<option value="701775827374765385319861277529">ASSOCIAÇÃO DE PAIS E AMIGOS DOS EXCEPCIONAIS DE PATO BRANCO - APAE</option>
+<option value="701684774623965162852988695118">ASSOCIAÇÃO DE PAIS, MESTRES E FUNCIONÁRIOS DO CENTRO MUNICIPAL DE EDUCAÇÃO INFANTIL CELESTE SOTTOMAIOR</option>
+<option value="701698170090228593576939742355">ASSOCIAÇÃO DE PAIS, MESTRES E FUNCIONÁRIOS DO COLÉGIO ESTADUAL LEO FLACH</option>
+<option value="701529689248607410050569995695">ASSOCIACAO DE PAIS,MESTRES E FUNC. DO COL.EST. IEDA BAGGIO MAYER-EFM</option>
+<option value="701698161229645889045989148670">ASSOCIAÇÃO DE XADREZ FOZ DO IGUAÇU - AXFI</option>
+<option value="701630684179464490630871684891">ASSOCIAÇÃO DOS POLICIAIS MILITARES DO SUDOESTE DO PARANÁ - PMSUL</option>
+<option value="701760458178958708758150213731">ASSOCIAÇÃO DOS POLICIAIS, CABOS E SOLDADOS - APCS/PR</option>
+<option value="701697209964413181986133708221">ASSOCIAÇÃO FILANTRÓPICA CASA DAS FRALDAS MÃOS DE ANJOS DE FOZ DO IGUAÇU</option>
+<option value="721327414972307780110000000011">ASSOCIAÇÃO FILHAS DE SÃO CAMILO</option>
+<option value="701498836060065370094798881661">Associação Fraternidade Aliança - AFA</option>
+<option value="701481815963672430019691035846">ASSOCIACAO FRATERNIDADE ALIANCA-AFA</option>
+<option value="701693224610511368168015063301">ASSOCIAÇÃO MAESTRO ESPORTE CLUBE</option>
+<option value="701500999309095660062368780376">Associação Pestalozzi de Santa Terezinha de Itaipu</option>
+<option value="701487863840170100075616145972">ASSOCIAÇÃO UM CHUTE PARA O FUTURO</option>
+<option value="701753452548493031842956643981">BATALHÃO DE POLÍCIA MILITAR DE FRONTEIRA - 1ª CIA BPFRON - FOZ DO IGUAÇU</option>
+<option value="701466191145173760021356772436">CASA DE PROTEÇÃO TEMPORÁRIA ACOLHER - CDPT ACOLHER</option>
+<option value="701687451611986240444047053926">CENTRO DE CONVIVÊNCIA DOS IDOSOS DE CÉU AZUL - CCI</option>
+<option value="701498836060065370094458694733">CENTRO DE CONVIVÊNCIA PREFEITO CLÓVIS CUNHA VIANA</option>
+<option value="701512734905776090072122692404">CENTRO DE EDUCAÇÃO INFANTIL N. SRA DA CONCEIÇÃO</option>
+<option value="701647978629343275973335511284">CENTRO DE ESTUDOS DO MENOR E INTEGRAÇÃO À COMUNIDADE DE CASCAVEL</option>
+<option value="701562254855765217195283738563">CENTRO ESCOLA BAIRRO LEONEL DE MOURA BRIZOLA</option>
+<option value="701654696341085824609840380545">CENTRO ESTADUAL DE EDUCAÇÃO PROFISSIONAL PEDRO BOARETTO NETO</option>
+<option value="701773774016515194294057200394">CENTRO ESTADUAL DE EDUCAÇÃO PROFISSIONAL PEDRO BOARETTO NETO</option>
+<option value="701709650078179573620468162807">CENTRO MUNICIPAL DE EDUCAÇÃO INFANTIL CELESTE SOTTOMAIOR DE FOZ DO IGUAÇU</option>
+<option value="701582219970824161358368027898">CMEI Marli Abdala</option>
+<option value="701778074236232192807746063325">CMEI SELONY BUENO DREHMER</option>
+<option value="701503331760947290097829259710">Colégio Estadual Almiro Sartori</option>
+<option value="701553527981249700091769146409">Colégio Estadual Angelo Antônio Benedet</option>
+<option value="701651261173991914717789961879">COLÉGIO ESTADUAL ARCÂNGELO NANDI</option>
+<option value="701509982953129560063742311740">Colégio Estadual Ayrton Senna da Silva</option>
+<option value="701540314333565970063817233456">Colégio Estadual Barão do Rio Branco</option>
+<option value="701663343312430926524400044177">COLÉGIO ESTADUAL CARLOS ZEWE COIMBRA</option>
+<option value="701621872700161872547101306681">COLÉGIO ESTADUAL CÍVICO MILITAR BRASMADEIRA</option>
+<option value="701630684179464490630802464440">COLÉGIO ESTADUAL CÍVICO MILITAR PRESIDENTE COSTA E SILVA</option>
+<option value="701506691516248310098325534957">Colégio Estadual Dom Manoel Konner</option>
+<option value="701697209964413181986038002752">COLÉGIO ESTADUAL DR. ARNALDO BUSATTO</option>
+<option value="701712339786474455843409614535">COLÉGIO ESTADUAL HORÁCIO RIBEIRO DOS REIS</option>
+<option value="701760709373436352396349438909">COLÉGIO ESTADUAL JARDIM INTERLAGOS</option>
+<option value="701714412486997175960760719620">COLÉGIO ESTADUAL JARDIM SANTA FELICIDADE</option>
+<option value="701690377351122506009214147614">COLÉGIO ESTADUAL PAULO FREIRE</option>
+<option value="701580830827281149854220878887">Colégio Estadual Prof. Francisco Lima da Silva</option>
+<option value="701583512495628524844872027508">Colégio Estadual Prof. Vicente de Carli</option>
+<option value="701633699883911836328698724117">COLÉGIO ESTADUAL PROFESSOR FLÁVIO WARKEN</option>
+<option value="701773154895858022351431099224">COLÉGIO ESTADUAL PROFESSOR FLÁVIO WARKEN</option>
+<option value="701712339786474455843303042080">COLÉGIO ESTADUAL PROFESSOR MARIO QUINTANA</option>
+<option value="701574089862648137827535433892">CONSELHO DA COMUNIDADE DA COMARCA DE PATO BRANCO/PR</option>
+<option value="701580830827281149854508756631">CONSELHO DA COMUNIDADE DE CASCAVEL</option>
+<option value="701773853417763623292821571870">CORREGEDORIA REGIONAL DA POLÍCIA RODOVIÁRIA FEDERAL NO PR - BASE DESCENTRALIZADA DE CORREGEDORIA 01</option>
+<option value="701715011094212027593832669745">DEFESA CIVIL DO ESTADO DO RIO GRANDE DO SUL</option>
+<option value="701692883056206503981875576622">DELEGACIA DE POLÍCIA FEDERAL DE CASCAVEL</option>
+<option value="701491419726319000096707571014">DELEGACIA DE POLÍCIA FEDERAL EM FOZ DO IGUAÇU</option>
+<option value="701714412486997175960940472525">DEPARTAMENTO DE POLÍCIA PENAL (DEPPEN) - DIVISÃO DE MONITORAÇÃO ELETRÔNICA (DME)</option>
+<option value="701478193389927930100720210420">Departamento Penitenciário do Paraná</option>
+<option value="701616673223885393413346347458">DIREÇÃO REGIONAL DA POLÍCIA PENAL - 8ª REGIÃO</option>
+<option value="701520599526456260016435535692">ESCOLA ALTERNATIVA - ASSOCIAÇÃO VIVA BIA</option>
+<option value="701747057329104313273020787863">ESCOLA ESTADUAL CÍVICO-MILITAR GRACILIANO RAMOS – ENS. FUND.</option>
+<option value="701562254855765217195302596404">ESCOLA MUNICIPAL JOÃO DA COSTA VIANA</option>
+<option value="701709650078179573620435935786">FUNDAÇÃO MUNICIPAL DE ESPORTE E CULTURA DE CASCAVEL - FMEC</option>
+<option value="701412882288676120180000000071">FUNDAÇÃO MUNICIPAL DE SAÚDE DE FOZ DO IGUAÇU</option>
+<option value="701764611138770703913080872367">FUNDO ESTADUAL PARA CALAMIDADES PÚBLICAS - FECAP</option>
+<option value="701491248485947640189284831411">GUARDA MIRIM DE FOZ DO IGUAÇU</option>
+<option value="701774384744325975758138078004">GUARDA MIRIM DE FOZ DO IGUAÇU</option>
+<option value="701568302940198960950494363542">Meu Cantinho</option>
+<option value="701657277417118937928425321696">NÚCLEO CRIANÇA DE VALOR</option>
+<option value="701486395592144000061287398845">Núcleo de Apoio Judiciário e Administrativo - NAJA FOZ</option>
+<option value="701748365581947085270932444807">NÚCLEO ESPECIAL DE POLÍCIA MARÍTIMA DA DELEGACIA DE POLÍCIA FEDERAL DE FOZ DO IGUAÇU</option>
+<option value="701624891053582601813211000587">ONG - ASSOCIAÇÃO DE PROTEÇÃO DOS ANIMAIS LATIDOS DO BEM</option>
+<option value="701763997223551793409488761560">ONG ESPORTIVA MENINOS DAS CATARATAS - OEMC</option>
+<option value="771230778800100040000000001341">Patronato Penitenciário Municipal de Foz do Iguaçu</option>
+<option value="701728308885639044716393472282">PELOTÃO C.O.B.R.A - BPFRON/PMPR</option>
+<option value="701683904291892097971465572203">PENITENCIÁRIA FEMININA DE FOZ DO IGUAÇU - UNIDADE DE PROGRESSÃO</option>
+<option value="701742568588059786912994524699">PENITENCIÁRIA INDUSTRIAL MARCELO PINHEIRO - UNIDADE DE PROGRESSÃO</option>
+<option value="701712172218899654514824956639">POLÍCIA RODOVIÁRIA FEDERAL - 5ª DELEGACIA - FOZ DO IGUAÇU</option>
+<option value="701759759784454403726031960789">POLÍCIA RODOVIÁRIA FEDERAL - DELEGACIA DE CASCAVEL</option>
+<option value="701759510627305225519594036346">POLÍCIA RODOVIÁRIA FEDERAL - DELEGACIA DE PATO BRANCO</option>
+<option value="701510932918670640092881227138">Prefeitura Municipal de Foz do Iguaçu</option>
+<option value="701478188575559930109641382238">Processos baixados</option>
+<option value="701651663739260256760915919541">ROTARY CLUB DE FOZ DO IGUAÇU - PONTE</option>
+<option value="701701168287668087712833699523">ROTARY CLUB FOZ DO IGUAÇU TRÊS FRONTEIRAS</option>
+<option value="701498836060065370096835849304">Secretaria Municipal de Assistência Social de Santa Terezinha de Itaipu</option>
+<option value="701475863435390930186499448472">Secretaria Municipal de Segurança Pública</option>
+<option value="701647978629343275973372472749">SERVIÇO INTEGRADO DE SAÚDE MENTAL - SIM-PR</option>
+<option value="701323793171686580010000000001">SOCIEDADE FILANTROPICA SEMEAR DE MEDIANEIRA - PR</option>
+<option value="701666697743739463677517018893">UNIPA - UNIÃO INDEPENDENTE DE PAIS E ATLETAS DE FOZ DO IGUAÇU</option>
+<option value="701494605513484060062426477511">Universidade Estadual do Oeste do Paraná - Campus Foz do Iguaçu</option>
+<option value="701702495972817111550381670961">UNIVERSIDADE ESTADUAL DO OESTE DO PARANÁ - UNIOESTE - CAMPUS DE CASCAVEL</option>
+<option value="701580830827281149854109210402">UOPECCAN - União Oeste Paranaense de Estudos e Combate ao Câncer</option>
+<option value="701615479272468575426524294971">UPA DR. WALTER CAVALCANTI BARBOSA</option>
+<option value="701615479272468575426567461288">UPA JOÃO SAMEK</option>
+</select>
+		</div>	
+		
+		<label id="lblPrestador">Prestador:</label>
+		<div id="divCmbPrestador">
+			<select id="cmbPrestador" name="cmbPrestador" class="eproc-select"><option value=" " selected="selected">Selecione</option>
+<option value="10150">ALESSANDRO DOS SANTOS AMORIM  - PROCESSO : 9001304-32.2024.4.04.7002</option>
+<option value="10138">ALINE MANTIMINIANO DUARTE  - PROCESSO : 9000472-28.2026.4.04.7002</option>
+<option value="10056">ANA CRISTINA LOPES CANO  - PROCESSO : 9000369-89.2024.4.04.7002</option>
+<option value="10046">ANTONIO CARLOS BALBINOT  - PROCESSO : 9000994-26.2024.4.04.7002</option>
+<option value="10137">CARLOS DAMIAN NUNEZ ACUNA  - PROCESSO : 9001909-41.2025.4.04.7002</option>
+<option value="10334">CHARLES TROIANI  - PROCESSO : 5008098-60.2026.4.04.7005</option>
+<option value="10068">CLAUDIO BERTUCCI JUNIOR  - PROCESSO : 5018163-71.2022.4.04.7000</option>
+<option value="10069">CLEVERSON FREITAS BARBOSA  - PROCESSO : 9000980-08.2025.4.04.7002</option>
+<option value="10112">DANIEL DA ROZA DE LIMA  - PROCESSO : 5009115-43.2026.4.04.7002</option>
+<option value="10045">FERNANDO ZGODA NETO  - PROCESSO : 9000081-73.2026.4.04.7002</option>
+<option value="10039">GUSTAVO LOURENCO GOMES  - PROCESSO : 5001686-25.2026.4.04.7002</option>
+<option value="9929">IDIANO DE LIMA  - PROCESSO : 5021144-62.2025.4.04.7002</option>
+<option value="10167">IGNACIO ROMERO VILLAMAYOR  - PROCESSO : 9001623-63.2025.4.04.7002</option>
+<option value="10066">IVAN LUIZ FONTES SOBRINHO  - PROCESSO : 9001340-40.2025.4.04.7002</option>
+<option value="10111">JEFERSON GOMES DA SILVA  - PROCESSO : 5010148-68.2026.4.04.7002</option>
+<option value="10336">JENNIFER FAGUNDES  - PROCESSO : 9000657-66.2026.4.04.7002</option>
+<option value="10044">JOAO UBALDO DE GODOY NETO  - PROCESSO : 5005392-16.2026.4.04.7002</option>
+<option value="10058">JOSE SANTANA DE MIRANDA KROEBEL  - PROCESSO : 9003431-74.2023.4.04.7002</option>
+<option value="10059">KALID ALI SAADA  - PROCESSO : 9001056-32.2025.4.04.7002</option>
+<option value="10354">LARISSA DOMINGUES LIMA  - PROCESSO : 9000541-60.2026.4.04.7002</option>
+<option value="9933">LEONARDO ANDRE SILVA MEIRELES  - PROCESSO : 5022425-53.2025.4.04.7002</option>
+<option value="10118">LEONARDO PINHEIRO DA SILVA  - PROCESSO : 5010608-55.2026.4.04.7002</option>
+<option value="10060">LIZ MABEL MACHUCA  - PROCESSO : 9000469-44.2024.4.04.7002</option>
+<option value="10140">LUCAS MATHEUS DA SILVA  - PROCESSO : 9000545-97.2026.4.04.7002</option>
+<option value="10139">MATEUS MEIRELES  - PROCESSO : 9000487-94.2026.4.04.7002</option>
+<option value="10022">MATHEUS HENRIQUE MARQUES  - PROCESSO : 9001977-88.2025.4.04.7002</option>
+<option value="10041">MOISES OLIVEIRA PEREIRA  - PROCESSO : 5001689-77.2026.4.04.7002</option>
+<option value="10335">PATRICIA GOMES  - PROCESSO : 9000642-97.2026.4.04.7002</option>
+<option value="10170">PEDRO PICCOLI ANTUNES  - PROCESSO : 9000580-57.2026.4.04.7002</option>
+<option value="10065">ROBERTO BASÍLIO DE OLIVEIRA  - PROCESSO : 9001902-49.2025.4.04.7002</option>
+<option value="10259">RODRIGO PINHEIRO FRANCO DA CRUZ  - PROCESSO : 9000241-98.2026.4.04.7002</option>
+<option value="10376">SIDNEY CASSEMIRO CORREIA  - PROCESSO : 9001657-38.2025.4.04.7002</option>
+<option value="10337">SOLIREGIA DANTAS DE OLIVEIRA  - PROCESSO : 9000530-65.2025.4.04.7002</option>
+<option value="10042">SUSI ALVES DE SOUZA  - PROCESSO : 5002579-16.2026.4.04.7002</option>
+<option value="10063">VALDENEIA NUNES FERNANDES  - PROCESSO : 9000360-96.2025.4.04.7001</option>
+<option value="10055">VICTOR HENRIC MENDES PILLONI  - PROCESSO : 5002659-68.2026.4.04.7005</option>
+<option value="10357">WILIAN ANTONIO BUSNELLO  - PROCESSO : 9000691-41.2026.4.04.7002</option>
+</select>
+		</div>
+		
+		<label id="lblMesAno" class="infraLabelObrigatorio">Mês/Ano:&nbsp;&nbsp;&nbsp;</label>
+		<div id="divContainerMesAno">
+			  <select id="cmbMesAno" name="cmbMesAno" class="eproc-select w-default"><option value=" ">Selecione</option> </select>
+		</div>
+		
+		<label id="lblObs">Obs: são listadas apenas as entidades e prestadores ativos. Para listar todos os prestadores e entidades,acesse o item do menu "Cadastro". </label>
+		<div>
+            <input type="submit" class="eproc-button-primary" id="btnPesquisar" name="btnPesquisar" value="Gerar Relatório" disabled="disabled">
+        </div>
+	<button class="eproc-button-primary" type="button" id="gerar-tudo">Gerar todos os relatórios</button></form>
+     <div class="text-right">
+         <img src="imagens/siscopen.jpg">
+     </div>
+ </fieldset>
+
+
+               
+
+            
+            
+ </div>
+<div id="divInfraBarraComandosInferior" class="infraBarraComandos  mt-2">
+</div>
+</div>    <div id="vlibras-container" vw="" style="left: initial; right: 0px; top: 50%; bottom: initial; transform: translateY(calc(-50% - 10px));">
+        <div id="vlibras-access-button" vw-access-button="" class="active" style=""><img class="vp-access-button" data-src="assets/access_icon.svg" alt="Conteúdo acessível em Libras usando o VLibras Widget com opções dos Avatares Ícaro, Hosana ou Guga." src="https://vlibras.gov.br/app//assets/access_icon.svg">
+<img class="vp-pop-up" data-src="assets/access_popup.jpg" alt="Conteúdo acessível em Libras usando o VLibras Widget com opções dos Avatares Ícaro, Hosana ou Guga." src="https://vlibras.gov.br/app//assets/access_popup.jpg">
+</div>
+        <div vw-plugin-wrapper=""><div vp="">
+  <div vp-box=""></div>
+  <div vp-message-box=""></div>
+  <div vp-settings=""></div>
+  <div vp-dictionary=""></div>
+  <div vp-settings-btn=""></div>
+  <div vp-info-screen=""></div>
+  <div vp-suggestion-screen=""></div>
+  <div vp-translator-screen=""></div>
+  <div vp-more-options-screen=""></div>
+  <div vp-emotions-tooltip=""></div>
+  <div vp-main-guide-screen=""></div>
+  <div vp-suggestion-button=""></div>
+  <div vp-rate-box=""></div>
+  <div vp-change-avatar=""></div>
+  <div vp-aux-controls=""></div>
+  <div vp-controls=""></div>
+  <span vp-click-blocker=""></span>
+</div>
+</div>
+    </div>
+    <script defer="defer" src="https://cdn.jsdelivr.net/gh/spbgovbr-vlibras/vlibras-portal@dev/app/vlibras-plugin.js" charset="UTF-8" onload="new window.VLibras.Widget('https://vlibras.gov.br/app');">
+    </script>                <link rel="stylesheet" href="css/dist/bundle-jquery-ui.css?9.21.1-3.0.6">
+                <script charset="utf-8" src="js/dist/npm.lodash.7e8d6ae734003ec18add.js"></script><script charset="utf-8" src="js/dist/npm.marked.ba6cfddd67995a84bad9.js"></script><script charset="utf-8" src="js/dist/npm.unorm.47cc161ba83e52f1e6ae.js"></script><script charset="utf-8" src="js/dist/npm.lodash.debounce.191b0f64bbcdf669f89f.js"></script><script charset="utf-8" src="js/dist/npm.datatables.net-buttons.851336fcb766320233cf.js"></script><script charset="utf-8" src="js/dist/npm.pdfmake.61cc0450e2a5af08d343.js"></script><script charset="utf-8" src="js/dist/npm.datatables.net.2f928245904c88325960.js"></script><script charset="utf-8" src="js/dist/npm.datatables.net-select.4f12cbea803e9743c7db.js"></script><script charset="utf-8" src="js/dist/npm.datatables.net-select-bs4.79be88935ba4f35b2256.js"></script><script charset="utf-8" src="js/dist/npm.datatables.net-rowgroup.93ba3420cdba631aea19.js"></script><script charset="utf-8" src="js/dist/npm.datatables.net-rowgroup-bs4.9e84b03ed914f52a1724.js"></script><script charset="utf-8" src="js/dist/npm.datatables.net-responsive.149053dfe724d7e5227d.js"></script><script charset="utf-8" src="js/dist/npm.datatables.net-responsive-bs4.054c4b66d217da398913.js"></script><script charset="utf-8" src="js/dist/npm.datatables.net-buttons-bs4.d258718e2b7101f458a0.js"></script><script charset="utf-8" src="js/dist/npm.datatables.net-bs4.bac12b9c70f4806f457d.js"></script><script charset="utf-8" src="js/dist/npm.plupload.04190cc81e53c54d6293.js"></script><script charset="utf-8" src="js/dist/npm.jszip.49e0f853af13b429baa9.js"></script><script charset="utf-8" src="js/dist/npm.focus-within-polyfill.9da5adff5426235e5862.js"></script><script charset="utf-8" src="js/dist/5298.0d6f5a9340e5e72e1d8e.js"></script><script charset="utf-8" src="js/dist/466.c1f1fcbc1c8a9b6fbef0.js"></script><script charset="utf-8" src="js/dist/1504.a970a8fe315f3f0aeed1.js"></script><script charset="utf-8" src="js/dist/4312.cd9ad0b371f024031ba0.js"></script><script charset="utf-8" src="js/dist/main-pos.70273987203ae5d77fe6.js"></script>                
+			<link href="infra_css/infra-barra-progresso.css?9.21.1-3.0.6" rel="stylesheet" type="text/css" media="all"><link href="infra_css/infra-impressao-global.css?9.21.1-3.0.6" rel="stylesheet" type="text/css" media="print">
+	<link href="infra_css/infra-ajax.css?9.21.1-3.0.6" rel="stylesheet" type="text/css" media="all">
+				<link href="infra_js/calendario/v1/infra-calendario.css?9.21.1-3.0.6" rel="stylesheet" type="text/css" media="all">
+				<link href="infra_js/mapa/infra-mapa.css?9.21.1-3.0.6" rel="stylesheet" type="text/css" media="all">
+		                        <div class="bootstrap-styles">
+                            
+                        </div>
+                    </div>
+                </div>
+                            </div>
+        </div>
+    
+
+                        <div class="bootstrap-styles ">
+                <button id="backTop" type="button" class="btn btn-light shadow-sm" style="display:none;" aria-label="Navegar para início" tabindex="-1">
+                    <i class="material-icons p-0">keyboard_arrow_up</i>
+                </button>
+                <button id="backBottom" type="button" class="btn btn-light shadow-sm" style="display:none;" aria-label="Navegar para fim" tabindex="-1">
+                    <i class="material-icons p-0">keyboard_arrow_down</i>
+                </button>
+            </div>
+            
+    <input type="hidden" id="hdnInfraPrefixoCookie" name="hdnInfraPrefixoCookie" value="TRF4_Eproc_BRK00">
+
+                                                <input type="hidden" name="url_websocket" value="wss://eproc-wsk.jfpr.jus.br:443/wss">
+            <input type="hidden" name="url_gerar_ticket" value="controlador_ajax.php?acao_ajax=controle_acesso_websocket_gerar_ticket&amp;acao_origem=relatorio_diario_cumprimento_pena&amp;hash=bbcb0189c6ab7c1f13ded8b5c4077024">
+            <input type="hidden" name="url_websocket_teste" value="controlador.php?acao=infra/teste_websocket/notificar&amp;acao_origem=relatorio_diario_cumprimento_pena&amp;hash=a3839cd49a669ab4c9103118f8dd97da">
+        
+                                    
+    
+    <div id="infraDivImpressao" class="infraImpressao"></div>
+    
+
+    <div class="bootstrap-styles" aria-live="polite">
+        <div id="toasts-container" class="d-block flex-column-reverse w-100 p-2 align-content-end h-100 w-100 fixed-bottom pe-none" style="pointer-events: none"></div>
+    </div>
+
+    <script src="js/siscom_desktop_icone.js"></script>
+
+
+
+
+
+</body></html>

@@ -104,7 +104,7 @@
                 console.error(`erro ao gerar relatório do prestador ${nomePrestador}: ${error}`);
             }
         }
-        baixarPDFs(linksPDF.filter(obj => obj.prestador.includes('PICCOLI')), mesAno);
+        window.open(linksPDF[0].pdfUrl);
         criaBotao();
     }
 
@@ -133,32 +133,6 @@
         if (typeof window.jQuery !== 'undefined') {
             window.jQuery(elemento).trigger('change');
         }
-    }
-
-    /**
-    * Baixa uma lista de objetos contendo { prestador, pdfUrl }
-    * @param {Array<{prestador: string, pdfUrl: string}>} listaPDFs 
-    * @param {string} mesAno 
-    */
-    function baixarPDFs(listaPDFs, mesAno) {
-        if (!listaPDFs || listaPDFs.length === 0) {
-            console.warn('Nenhum PDF para baixar.');
-            return;
-        }
-        const mesAnoFormatado = mesAno.replace('/', '-').replace(/\s+/g, '');
-        listaPDFs.forEach((item, index) => {
-        const nomeArquivo = `Relatorio_${item.prestador}_${mesAnoFormatado}.pdf`;
-        setTimeout(() => {
-            GM_download({
-                url: item.pdfUrl,
-                name: nomeArquivo,
-                onerror: (err) => {
-                    console.error(`[ERRO] Falha ao baixar ${nomeArquivo}:`, err);
-                }
-            });
-
-            }, index * 1000); // Aguarda 1 segundo entre cada download
-        });
     }
 
     /**

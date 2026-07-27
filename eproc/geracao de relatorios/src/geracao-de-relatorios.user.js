@@ -151,8 +151,8 @@
         const formData = new FormData();
         formData.append("relatoriosEproc", JSON.stringify(links));
         try {
-            await fetch(url, { method: 'POST', body: formData });
-            alert('Relatórios enviados para o Drive com sucesso.');
+            const response = await fetch(url, { method: 'POST', body: formData });
+            alert(response);
         } catch (error) {
             console.log("Erro ao enviar para planilha eproc: " + error);
         }

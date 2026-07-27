@@ -13,8 +13,6 @@
 
 (async function () {
     'use strict';
-    console.log('[eproc - geração de relatórios] script iniciado.');
-
     const ID_SELECT_PRESTADORES = '#cmbPrestador';
 
     const ID_SELECT_VARA = '#cmbVara';

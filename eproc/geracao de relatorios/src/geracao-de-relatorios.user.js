@@ -133,25 +133,10 @@
             params.set('cmbMesAno', opcaoCorrespondente.value);
 
             try {
-                const formEmNovaAba = document.createElement('form');
-                formEmNovaAba.method = form.method || 'POST';
-                formEmNovaAba.action = form.action;
-                formEmNovaAba.target = '_blank';
-                formEmNovaAba.style.display = 'none';
+                const urlRelatorio = new URL(form.action, window.location.href);
+                urlRelatorio.search = params.toString();
 
-                for (const [nomeCampo, valorCampo] of params.entries()) {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = nomeCampo;
-                    input.value = valorCampo;
-                    formEmNovaAba.appendChild(input);
-                }
-
-                document.body.appendChild(formEmNovaAba);
-                formEmNovaAba.submit();
-                formEmNovaAba.remove();
-
-                linksPDF.push({ prestador: nomePrestador, pdfUrl: `${form.action}?${params.toString()}` });
+                linksPDF.push({ prestador: nomePrestador, pdfUrl: urlRelatorio.toString() });
                 contagem++;
             }
             catch (error) {

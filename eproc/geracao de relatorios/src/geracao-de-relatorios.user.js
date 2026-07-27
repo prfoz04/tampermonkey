@@ -9,78 +9,11 @@
 // @downloadURL  https://raw.githubusercontent.com/prfoz04/tampermonkey/eproc/geracao de relatorios/src/geracao-de-relatorios.user.js
 // @run-at       document-idle
 // @grant        GM_download
-// @grant        GM_xmlhttpRequest
-// @connect      https://api.emailjs.com
-// @connect      https://cdn.jsdelivr.net
 // ==/UserScript==
 
-async function garantirEmailJs() {
-    if (typeof window.emailjs !== 'undefined') {
-        return window.emailjs;
-    }
-
-    await new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-        script.async = true;
-        const timeoutId = window.setTimeout(() => {
-            script.remove();
-            reject(new Error('Timeout ao carregar EmailJS'));
-        }, 8000);
-
-        script.onload = () => {
-            window.clearTimeout(timeoutId);
-            resolve();
-        };
-        script.onerror = () => {
-            window.clearTimeout(timeoutId);
-            reject(new Error('Falha ao carregar EmailJS'));
-        };
-        document.head.appendChild(script);
-    });
-
-    if (typeof window.emailjs === 'undefined') {
-        throw new Error('EmailJS não ficou disponível na janela');
-    }
-
-    window.emailjs.init({ publicKey: 'vhgmZTHn-Jng65jzC' });
-    return window.emailjs;
-}
-
-(async function () {
-    try {
-        await garantirEmailJs();
-    } catch (error) {
-        console.error('[eproc - geração de relatórios] erro ao carregar EmailJS:', error);
-    }
-})();
 (async function () {
     'use strict';
     console.log('[eproc - geração de relatórios] script iniciado.');
-
-    if (!window.__eprocBloquearAba) {
-        const submitOriginal = HTMLFormElement.prototype.submit;
-        HTMLFormElement.prototype.submit = function (...args) {
-            const target = (this.getAttribute('target') || '').toLowerCase();
-            if (target === '_blank' || target === '_new' || target === '_parent' || target === '_top') {
-                console.warn('[eproc - geração de relatórios] bloqueando submit em nova aba', this.action, target);
-                return;
-            }
-            return submitOriginal.apply(this, args);
-        };
-
-        const requestSubmitOriginal = HTMLFormElement.prototype.requestSubmit;
-        HTMLFormElement.prototype.requestSubmit = function (...args) {
-            const target = (this.getAttribute('target') || '').toLowerCase();
-            if (target === '_blank' || target === '_new' || target === '_parent' || target === '_top') {
-                console.warn('[eproc - geração de relatórios] bloqueando requestSubmit em nova aba', this.action, target);
-                return;
-            }
-            return requestSubmitOriginal.apply(this, args);
-        };
-
-        window.__eprocBloquearAba = true;
-    }
 
     const ID_SELECT_PRESTADORES = '#cmbPrestador';
 
@@ -124,10 +57,6 @@ async function garantirEmailJs() {
         const form = document.querySelector(ID_FORM);
         const linksPDF = [];
 
-        let contagem = 0;
-
-        let mensagem = '';
-
         forcarTrocaSelect(selectVara, CMB_VARA[0]);
         forcarChange(selectVara);
 
@@ -163,7 +92,6 @@ async function garantirEmailJs() {
             });
 
             if (!opcaoCorrespondente) {
-                mensagem += `[PULADO] Prestador ${nomePrestador} não possui relatório para ${mesAno}\n`;
                 continue;
             }
 
@@ -180,18 +108,30 @@ async function garantirEmailJs() {
             params.set('cmbMesAno', opcaoCorrespondente.value);
 
             try {
-                const urlRelatorio = new URL(form.action, window.location.href);
-                urlRelatorio.search = params.toString();
+                const formEmNovaAba = document.createElement('form');
+                formEmNovaAba.method = form.method || 'POST';
+                formEmNovaAba.action = form.action;
+                formEmNovaAba.target = '_blank';
+                formEmNovaAba.style.display = 'none';
 
-                linksPDF.push({ prestador: nomePrestador, pdfUrl: urlRelatorio.toString() });
-                contagem++;
+                for (const [nomeCampo, valorCampo] of params.entries()) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = nomeCampo;
+                    input.value = valorCampo;
+                    formEmNovaAba.appendChild(input);
+                }
+
+                document.body.appendChild(formEmNovaAba);
+                formEmNovaAba.submit();
+                formEmNovaAba.remove();
+
+                linksPDF.push({ prestador: nomePrestador, pdfUrl: `${form.action}?${params.toString()}` });
             }
             catch (error) {
-                mensagem += `erro ao gerar relatório do prestador ${nomePrestador}: ${error}\n`;
+                console.error(`erro ao gerar relatório do prestador ${nomePrestador}: ${error}`);
             }
         }
-        console.log(linksPDF)
-        await enviarEmails(`${contagem} relatórios gerados com sucesso\n${mensagem}`)
         await enviarParaPlanilhas(linksPDF);
         criaBotao();
     }
@@ -214,30 +154,7 @@ async function garantirEmailJs() {
             await fetch(url, { method: 'POST', body: formData });
             alert('Relatórios enviados para o Drive com sucesso.');
         } catch (error) {
-            await enviarEmails("Erro ao enviar para planilha eproc: " + error);
-        }
-    }
-
-    /**
-    * Envia mensagens automáticas por e-mail para registrar erros ocorridos na aplicação.
-    * @param {string} mensagem - Texto da mensagem a ser enviada.
-    */
-    async function enviarEmails(mensagem) {
-        const date = new Date();
-        const dateStr = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} - ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
-        const param = {
-            message: mensagem,
-            time: dateStr
-        };
-
-        console.log('enviando email de aviso para "prfoz04@gmail.com"');
-
-        try {
-            const emailjsApi = await garantirEmailJs();
-            await emailjsApi.send('service_g087904', 'template_3zyi2h5', param);
-            console.log('E-mail enviado com sucesso.');
-        } catch (err) {
-            console.error('Falha ao enviar e-mail via EmailJS:', err);
+            console.log("Erro ao enviar para planilha eproc: " + error);
         }
     }
 

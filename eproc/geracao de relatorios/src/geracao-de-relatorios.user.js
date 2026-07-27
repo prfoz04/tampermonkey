@@ -12,6 +12,26 @@
 // ==/UserScript==
 
 (async function () {
+    try {
+        if (typeof window.emailjs === 'undefined') {
+            await new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+                script.async = true;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+
+        if (typeof window.emailjs !== 'undefined') {
+            window.emailjs.init({ publicKey: 'vhgmZTHn-Jng65jzC' });
+        }
+    } catch (error) {
+        console.error('[eproc - geração de relatórios] erro ao carregar EmailJS:', error);
+    }
+})();
+(async function () {
     'use strict';
     console.log('[eproc - geração de relatórios] script iniciado.');
 
@@ -57,6 +77,10 @@
         const form = document.querySelector(ID_FORM);
         const linksPDF = [];
 
+        let contagem = 0;
+
+        let mensagem = '';
+
         forcarTrocaSelect(selectVara, CMB_VARA[0]);
         forcarChange(selectVara);
 
@@ -92,7 +116,7 @@
             });
 
             if (!opcaoCorrespondente) {
-                console.log(`[PULADO] Prestador ${nomePrestador} não possui relatório para ${mesAno}`);
+                mensagem += `[PULADO] Prestador ${nomePrestador} não possui relatório para ${mesAno}\n`;
                 continue;
             }
 
@@ -128,21 +152,60 @@
                 formEmNovaAba.remove();
 
                 linksPDF.push({ prestador: nomePrestador, pdfUrl: `${form.action}?${params.toString()}` });
+                contagem++;
             }
             catch (error) {
-                console.error(`erro ao gerar relatório do prestador ${nomePrestador}: ${error}`);
+                mensagem += `erro ao gerar relatório do prestador ${nomePrestador}: ${error}\n`;
             }
         }
-        console.log(linksPDF);
+        await enviarEmails(`${contagem} relatórios gerados com sucesso\n${mensagem}`)
+        await enviarParaPlanilhas(linksPDF);
         criaBotao();
     }
 
     /**
-     * envia para a planilha API para que ela possa registrar os valores na planilha PSC e enviar os pdfs para o drive
-     * @param {object} links 
+     * @typedef linkPrestador
+     * @property {string} pdfUrl
+     * @property {string} prestador
      */
-    function enviarParaPlanilhas(links) {
+
+    /**
+     * envia para a planilha API para que ela possa registrar os valores na planilha PSC e enviar os pdfs para o drive
+     * @param {linkPrestador[]} links 
+     */
+    async function enviarParaPlanilhas(links) {
         const url = "https://script.google.com/macros/s/AKfycbxH4GeMfR5z0deOlwgFOpvlEY9LLKAzj921hYuEOgM4pt-oc7ce5sviMQxhqnzMP914/exec";
+        const formData = new FormData();
+        formData.append("relatoriosEproc", JSON.stringify(links));
+        try {
+            await fetch(url, { method: 'POST', body: formData });
+            alert('Relatórios enviados para o Drive com sucesso.');
+        } catch (error) {
+            await enviarEmails("Erro ao enviar para planilha eproc: " + error);
+        }
+    }
+
+    /**
+    * Envia mensagens automáticas por e-mail para registrar erros ocorridos na aplicação.
+    * @param {string} mensagem - Texto da mensagem a ser enviada.
+    */
+    async function enviarEmails(mensagem) {
+        const date = new Date();
+        //trasnforma em uma string mais amigável
+        const dateStr = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} - ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`
+        const param = {
+            message: mensagem,
+            time: dateStr
+        }
+        console.log('enviando email de aviso para "prfoz04@gmail.com"');
+        if (typeof window.emailjs !== 'undefined') {
+            try {
+                await window.emailjs.send('service_g087904', 'template_3zyi2h5', param);
+                console.log('E-mail enviado com sucesso.');
+            } catch (err) {
+                console.error('Falha ao enviar e-mail via EmailJS:', err);
+            }
+        }
     }
 
     /**
@@ -163,7 +226,9 @@
         option.selected = true;
         selectElement.value = valor;
         selectElement.dispatchEvent(new Event('change', { bubbles: true }));
+        // @ts-ignore
         if (window.$ || window.jQuery) {
+            // @ts-ignore
             (window.$ || window.jQuery)(selectElement).trigger('change');
         }
     }
@@ -173,7 +238,9 @@
      */
     function forcarChange(elemento) {
         elemento.dispatchEvent(new Event('change', { bubbles: true }));
+        // @ts-ignore
         if (typeof window.jQuery !== 'undefined') {
+            // @ts-ignore
             window.jQuery(elemento).trigger('change');
         }
     }
@@ -211,6 +278,11 @@
         });
     }
 
+    /**
+     * normaliza de forma robusta os meses
+     * @param {string} valor 
+     * @returns {string}
+     */
     function normalizarMesAno(valor) {
         return (valor || '')
             .toString()

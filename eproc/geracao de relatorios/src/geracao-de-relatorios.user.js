@@ -109,16 +109,25 @@
             params.set('cmbMesAno', opcaoCorrespondente.value);
 
             try {
-                const response = await fetch(form.action, {
-                    method: form.method || 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: params.toString(),
-                });
-                if (response.url.endsWith('.pdf') || response.headers.get('content-type')?.includes('application/pdf')) {
-                    linksPDF.push({ prestador: nomePrestador, pdfUrl: response.url });
+                const formEmNovaAba = document.createElement('form');
+                formEmNovaAba.method = form.method || 'POST';
+                formEmNovaAba.action = form.action;
+                formEmNovaAba.target = '_blank';
+                formEmNovaAba.style.display = 'none';
+
+                for (const [nomeCampo, valorCampo] of params.entries()) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = nomeCampo;
+                    input.value = valorCampo;
+                    formEmNovaAba.appendChild(input);
                 }
+
+                document.body.appendChild(formEmNovaAba);
+                formEmNovaAba.submit();
+                formEmNovaAba.remove();
+
+                linksPDF.push({ prestador: nomePrestador, pdfUrl: `${form.action}?${params.toString()}` });
             }
             catch (error) {
                 console.error(`erro ao gerar relatório do prestador ${nomePrestador}: ${error}`);

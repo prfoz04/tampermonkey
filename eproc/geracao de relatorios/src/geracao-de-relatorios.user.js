@@ -104,7 +104,7 @@
                 console.error(`erro ao gerar relatório do prestador ${nomePrestador}: ${error}`);
             }
         }
-        window.open(linksPDF[0].pdfUrl);
+        console.log(linksPDF)
         criaBotao();
     }
 

@@ -108,24 +108,32 @@
             params.set('cmbMesAno', opcaoCorrespondente.value);
 
             try {
-                const formEmNovaAba = document.createElement('form');
-                formEmNovaAba.method = form.method || 'POST';
-                formEmNovaAba.action = form.action;
-                formEmNovaAba.target = '_blank';
-                formEmNovaAba.style.display = 'none';
+                //cria um iframe para que as abas sejam abertas ocultas aqui e não polua a tela do usuário
+                const iframeName = `iframe_oculto_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+                const iframe = document.createElement('iframe');
+                iframe.name = iframeName;
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+
+                const formOculto = document.createElement('form');
+                formOculto.method = form.method || 'POST';
+                formOculto.action = form.action;
+                formOculto.target = iframeName; 
+                formOculto.style.display = 'none';
 
                 for (const [nomeCampo, valorCampo] of params.entries()) {
                     const input = document.createElement('input');
                     input.type = 'hidden';
                     input.name = nomeCampo;
                     input.value = valorCampo;
-                    formEmNovaAba.appendChild(input);
+                    formOculto.appendChild(input);
                 }
 
-                document.body.appendChild(formEmNovaAba);
-                formEmNovaAba.submit();
-                formEmNovaAba.remove();
-
+                document.body.appendChild(formOculto);
+                formOculto.submit();
+                formOculto.remove();
+                //destroi o iframe invisível
+                setTimeout(() => iframe.remove(), 15000);
                 linksPDF.push({ prestador: nomePrestador, pdfUrl: `${form.action}?${params.toString()}` });
             }
             catch (error) {

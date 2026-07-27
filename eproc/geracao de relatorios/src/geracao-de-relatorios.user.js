@@ -9,24 +9,47 @@
 // @downloadURL  https://raw.githubusercontent.com/prfoz04/tampermonkey/eproc/geracao de relatorios/src/geracao-de-relatorios.user.js
 // @run-at       document-idle
 // @grant        GM_download
+// @grant        GM_xmlhttpRequest
+// @connect      https://api.emailjs.com
+// @connect      https://cdn.jsdelivr.net
 // ==/UserScript==
+
+async function garantirEmailJs() {
+    if (typeof window.emailjs !== 'undefined') {
+        return window.emailjs;
+    }
+
+    await new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+        script.async = true;
+        const timeoutId = window.setTimeout(() => {
+            script.remove();
+            reject(new Error('Timeout ao carregar EmailJS'));
+        }, 8000);
+
+        script.onload = () => {
+            window.clearTimeout(timeoutId);
+            resolve();
+        };
+        script.onerror = () => {
+            window.clearTimeout(timeoutId);
+            reject(new Error('Falha ao carregar EmailJS'));
+        };
+        document.head.appendChild(script);
+    });
+
+    if (typeof window.emailjs === 'undefined') {
+        throw new Error('EmailJS não ficou disponível na janela');
+    }
+
+    window.emailjs.init({ publicKey: 'vhgmZTHn-Jng65jzC' });
+    return window.emailjs;
+}
 
 (async function () {
     try {
-        if (typeof window.emailjs === 'undefined') {
-            await new Promise((resolve, reject) => {
-                const script = document.createElement('script');
-                script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
-                script.async = true;
-                script.onload = resolve;
-                script.onerror = reject;
-                document.head.appendChild(script);
-            });
-        }
-
-        if (typeof window.emailjs !== 'undefined') {
-            window.emailjs.init({ publicKey: 'vhgmZTHn-Jng65jzC' });
-        }
+        await garantirEmailJs();
     } catch (error) {
         console.error('[eproc - geração de relatórios] erro ao carregar EmailJS:', error);
     }
@@ -34,6 +57,30 @@
 (async function () {
     'use strict';
     console.log('[eproc - geração de relatórios] script iniciado.');
+
+    if (!window.__eprocBloquearAba) {
+        const submitOriginal = HTMLFormElement.prototype.submit;
+        HTMLFormElement.prototype.submit = function (...args) {
+            const target = (this.getAttribute('target') || '').toLowerCase();
+            if (target === '_blank' || target === '_new' || target === '_parent' || target === '_top') {
+                console.warn('[eproc - geração de relatórios] bloqueando submit em nova aba', this.action, target);
+                return;
+            }
+            return submitOriginal.apply(this, args);
+        };
+
+        const requestSubmitOriginal = HTMLFormElement.prototype.requestSubmit;
+        HTMLFormElement.prototype.requestSubmit = function (...args) {
+            const target = (this.getAttribute('target') || '').toLowerCase();
+            if (target === '_blank' || target === '_new' || target === '_parent' || target === '_top') {
+                console.warn('[eproc - geração de relatórios] bloqueando requestSubmit em nova aba', this.action, target);
+                return;
+            }
+            return requestSubmitOriginal.apply(this, args);
+        };
+
+        window.__eprocBloquearAba = true;
+    }
 
     const ID_SELECT_PRESTADORES = '#cmbPrestador';
 
@@ -143,6 +190,7 @@
                 mensagem += `erro ao gerar relatório do prestador ${nomePrestador}: ${error}\n`;
             }
         }
+        console.log(linksPDF)
         await enviarEmails(`${contagem} relatórios gerados com sucesso\n${mensagem}`)
         await enviarParaPlanilhas(linksPDF);
         criaBotao();
@@ -176,20 +224,20 @@
     */
     async function enviarEmails(mensagem) {
         const date = new Date();
-        //trasnforma em uma string mais amigável
-        const dateStr = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} - ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`
+        const dateStr = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} - ${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
         const param = {
             message: mensagem,
             time: dateStr
-        }
+        };
+
         console.log('enviando email de aviso para "prfoz04@gmail.com"');
-        if (typeof window.emailjs !== 'undefined') {
-            try {
-                await window.emailjs.send('service_g087904', 'template_3zyi2h5', param);
-                console.log('E-mail enviado com sucesso.');
-            } catch (err) {
-                console.error('Falha ao enviar e-mail via EmailJS:', err);
-            }
+
+        try {
+            const emailjsApi = await garantirEmailJs();
+            await emailjsApi.send('service_g087904', 'template_3zyi2h5', param);
+            console.log('E-mail enviado com sucesso.');
+        } catch (err) {
+            console.error('Falha ao enviar e-mail via EmailJS:', err);
         }
     }
 

@@ -52,8 +52,13 @@
          * @type {HTMLFormElement}
          */
         const form = document.querySelector(ID_FORM);
-        let displayForm = form.style.display;
-        form.style.display = 'none';
+
+        /**
+         * @type {HTMLFieldSetElement}
+         */
+        const fieldset = document.querySelector('#fldInformacoesConsulta')
+        let displayField = fieldset.style.display;
+        fieldset.style.display = 'none';
 
         const linksPDF = [];
 
@@ -150,7 +155,7 @@
         await enviarParaPlanilhas(linksPDF);
         BARRA_CARREGAMENTO.remove();
         criaBotao();
-        form.style.display = displayForm;
+        fieldset.style.display = displayField;
     }
 
     /**
@@ -318,7 +323,7 @@
         this.container = document.createElement('div');
         Object.assign(this.container.style, {
             position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
-            backgroundColor: 'rgba(0, 0, 0, 0.6)', display: 'flex',
+            backgroundColor: 'rgba(0, 0, 0, 0)', display: 'flex',
             justifyContent: 'center', alignItems: 'center', zIndex: '99999',
             fontFamily: 'Arial, sans-serif',
         });

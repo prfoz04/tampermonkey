@@ -88,7 +88,7 @@
             const mesesDisponiveisNormalizados = mesesCumpridos.map(normalizarMesAno);
 
             if (!mesesCumpridos.length || mesesDisponiveisNormalizados.indexOf(mesNormalizado) === -1) {
-                linksPDF.push({prestador: nomePrestador, pdfUrl: "", erro: true, descricao: "Não possui nenhum relatório"})
+                linksPDF.push({prestador: nomePrestador, pdfUrl: " ", erro: true, descricao: "Não possui nenhum relatório"})
                 continue;
             }
 
@@ -104,7 +104,7 @@
             });
 
             if (!opcaoCorrespondente) {
-                linksPDF.push({prestador: nomePrestador, pdfUrl: "", erro: true, descricao: "Não possui nenhum relatório"})
+                linksPDF.push({prestador: nomePrestador, pdfUrl: " ", erro: true, descricao: "Não possui nenhum relatório"})
                 continue;
             }
 
@@ -150,11 +150,11 @@
                 linksPDF.push({ prestador: nomePrestador, pdfUrl: `${form.action}?${params.toString()}`, erro: false, descricao: "" });
             }
             catch (error) {
-                linksPDF.push({ prestador: nomePrestador, pdfUrl: "", erro: true, descricao: `Erro na busca do relatório: ${error}` })
+                linksPDF.push({ prestador: nomePrestador, pdfUrl: " ", erro: true, descricao: `Erro na busca do relatório: ${error}` })
             }
         }
         BARRA_CARREGAMENTO.finish();
-        await enviarParaPlanilhas(linksPDF);
+        await enviarParaPlanilhas(linksPDF.filter(link => link.prestador !== 'Selecione'));
         BARRA_CARREGAMENTO.remove();
         criaBotao();
         fieldset.style.display = displayField;

@@ -144,6 +144,7 @@
             catch (error) {
                 linksPDF.push({ prestador: nomePrestador, pdfUrl: null, erro: true, descricao: `Erro na busca do relatório: ${error}` })
             }
+            BARRA_CARREGAMENTO.update(++contador);
         }
         BARRA_CARREGAMENTO.finish();
         await enviarParaPlanilhas(linksPDF);

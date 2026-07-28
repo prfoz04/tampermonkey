@@ -73,6 +73,7 @@
         let contador = 0;
 
         for (const valorPrestador of prestadoresDisponiveis) {
+            BARRA_CARREGAMENTO.update(contador++);
             forcarTrocaSelect(selectPrestadores, valorPrestador);
             forcarChange(selectPrestadores);
 
@@ -144,7 +145,6 @@
             catch (error) {
                 linksPDF.push({ prestador: nomePrestador, pdfUrl: null, erro: true, descricao: `Erro na busca do relatório: ${error}` })
             }
-            BARRA_CARREGAMENTO.update(++contador);
         }
         BARRA_CARREGAMENTO.finish();
         await enviarParaPlanilhas(linksPDF);

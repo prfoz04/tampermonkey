@@ -55,10 +55,6 @@
         let displayForm = form.style.display;
         form.style.display = 'none';
 
-        const BARRA_CARREGAMENTO = new ProgressBar(selectPrestadores.options.length);
-
-        let contador = 0;
-
         const linksPDF = [];
 
         forcarTrocaSelect(selectVara, CMB_VARA[0]);
@@ -71,6 +67,11 @@
         }
 
         const prestadoresDisponiveis = await aguardarSelect(ID_SELECT_PRESTADORES);
+
+        const BARRA_CARREGAMENTO = new ProgressBar(prestadoresDisponiveis.length);
+
+        let contador = 0;
+
         for (const valorPrestador of prestadoresDisponiveis) {
             forcarTrocaSelect(selectPrestadores, valorPrestador);
             forcarChange(selectPrestadores);
@@ -143,7 +144,6 @@
             catch (error) {
                 linksPDF.push({ prestador: nomePrestador, pdfUrl: null, erro: true, descricao: `Erro na busca do relatório: ${error}` })
             }
-            BARRA_CARREGAMENTO.update(++contador);
         }
         BARRA_CARREGAMENTO.finish();
         await enviarParaPlanilhas(linksPDF);

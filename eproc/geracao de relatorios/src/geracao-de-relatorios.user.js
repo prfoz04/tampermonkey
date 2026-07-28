@@ -52,6 +52,8 @@
          * @type {HTMLFormElement}
          */
         const form = document.querySelector(ID_FORM);
+        let displayForm = form.style.display;
+        form.style.display = 'none';
         const linksPDF = [];
 
         forcarTrocaSelect(selectVara, CMB_VARA[0]);
@@ -139,6 +141,7 @@
         }
         await enviarParaPlanilhas(linksPDF);
         criaBotao();
+        form.style.display = displayForm;
     }
 
     /**
@@ -255,10 +258,6 @@
          * @type {HTMLFormElement}
          */
         const div = document.querySelector(ID_FORM);
-        //esconde o formulario enquanto itera
-        let display = div.style.display;
-        display = display == 'none' ? 'flex' : 'none';
-        div.style.display = display;
         const botao = document.createElement('button');
         botao.className = 'eproc-button-primary'
         botao.type = 'button'

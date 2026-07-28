@@ -54,6 +54,11 @@
         const form = document.querySelector(ID_FORM);
         let displayForm = form.style.display;
         form.style.display = 'none';
+
+        const BARRA_CARREGAMENTO = new ProgressBar(selectPrestadores.options.length);
+
+        let contador = 0;
+
         const linksPDF = [];
 
         forcarTrocaSelect(selectVara, CMB_VARA[0]);
@@ -138,8 +143,11 @@
             catch (error) {
                 linksPDF.push({ prestador: nomePrestador, pdfUrl: null, erro: true, descricao: `Erro na busca do relatório: ${error}` })
             }
+            BARRA_CARREGAMENTO.update(++contador);
         }
+        BARRA_CARREGAMENTO.finish();
         await enviarParaPlanilhas(linksPDF);
+        BARRA_CARREGAMENTO.remove();
         criaBotao();
         form.style.display = displayForm;
     }
@@ -294,6 +302,107 @@
         option.value = text;
         option.textContent = text;
         return option
+    }
+
+    class ProgressBar {
+    /**
+     * @param {number} totalItems Quantidade total de itens a processar
+     * @param {string} [titulo='Gerando Relatórios...'] Título da janela
+     */
+    constructor(totalItems, titulo = 'Gerando Relatórios...') {
+        this.totalItems = totalItems;
+        this.currentProgress = 0;
+
+        // Container principal (Overlay escuro)
+        this.container = document.createElement('div');
+        Object.assign(this.container.style, {
+            position: 'fixed', top: '0', left: '0', width: '100vw', height: '100vh',
+            backgroundColor: 'rgba(0, 0, 0, 0.6)', display: 'flex',
+            justifyContent: 'center', alignItems: 'center', zIndex: '99999',
+            fontFamily: 'Arial, sans-serif', backdropFilter: 'blur(2px)'
+        });
+
+        // Caixa modal branca
+        this.modal = document.createElement('div');
+        Object.assign(this.modal.style, {
+            backgroundColor: '#fff', padding: '25px', borderRadius: '8px',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.2)', width: '400px', textAlign: 'center'
+        });
+
+        // Título
+        this.titleEl = document.createElement('h3');
+        this.titleEl.textContent = titulo;
+        Object.assign(this.titleEl.style, {
+            marginTop: '0', marginBottom: '15px', color: '#333', fontSize: '18px'
+        });
+
+        // Texto de status (ex: "Processando 1 de 10")
+        this.statusEl = document.createElement('div');
+        this.statusEl.textContent = 'Iniciando...';
+        Object.assign(this.statusEl.style, {
+            marginBottom: '15px', color: '#555', fontSize: '14px', fontWeight: 'bold'
+        });
+
+        // Fundo da barra
+        this.barContainer = document.createElement('div');
+        Object.assign(this.barContainer.style, {
+            width: '100%', height: '22px', backgroundColor: '#e0e0e0',
+            borderRadius: '11px', overflow: 'hidden', border: '1px solid #ccc'
+        });
+
+        // Preenchimento da barra
+        this.barFill = document.createElement('div');
+        Object.assign(this.barFill.style, {
+            width: '0%', height: '100%', backgroundColor: '#4CAF50', // Verde
+            transition: 'width 0.3s ease, background-color 0.3s ease'
+        });
+
+        // Montagem do DOM
+        this.barContainer.appendChild(this.barFill);
+        this.modal.append(this.titleEl, this.statusEl, this.barContainer);
+        this.container.appendChild(this.modal);
+        document.body.appendChild(this.container);
+    }
+
+    /**
+     * Atualiza o progresso da barra
+     * @param {number} current Valor atual (ex: índice do loop)
+     * @param {string} [textoStatus] Texto opcional para exibir (ex: nome do prestador)
+     */
+    update(current, textoStatus) {
+        this.currentProgress = current;
+        const percentage = this.totalItems > 0 ? Math.min(100, Math.round((current / this.totalItems) * 100)) : 100;
+        
+        this.barFill.style.width = `${percentage}%`;
+        
+        if (textoStatus) {
+            this.statusEl.textContent = textoStatus;
+        } else {
+            this.statusEl.textContent = `Processando ${current} de ${this.totalItems} (${percentage}%)`;
+        }
+    }
+
+    /**
+     * Finaliza a barra de progresso (Muda a cor e exibe mensagem de sucesso)
+     * @param {string} [mensagem='Concluído!'] 
+     */
+    finish(mensagem = 'Concluído com sucesso!') {
+        this.update(this.totalItems);
+        this.statusEl.textContent = mensagem;
+        this.barFill.style.backgroundColor = '#2196F3'; // Muda para azul ao concluir
+        
+        // Remove automaticamente após 2 segundos
+        setTimeout(() => this.remove(), 2000);
+    }
+
+    /**
+     * Remove os elementos da tela manualmente
+     */
+    remove() {
+        if (this.container && this.container.parentNode) {
+            this.container.remove();
+        }
+    }
     }
 
     criaBotao();

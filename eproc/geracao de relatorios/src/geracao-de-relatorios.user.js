@@ -88,6 +88,7 @@
             const mesesDisponiveisNormalizados = mesesCumpridos.map(normalizarMesAno);
 
             if (!mesesCumpridos.length || mesesDisponiveisNormalizados.indexOf(mesNormalizado) === -1) {
+                linksPDF.push({prestador: nomePrestador, pdfUrl: null, erro: true, descricao: "Não possui nenhum relatório"})
                 continue;
             }
 
@@ -103,6 +104,7 @@
             });
 
             if (!opcaoCorrespondente) {
+                linksPDF.push({prestador: nomePrestador, pdfUrl: null, erro: true, descricao: "Não possui nenhum relatório"})
                 continue;
             }
 

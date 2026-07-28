@@ -158,8 +158,8 @@
         const formData = new FormData();
         formData.append("relatoriosEproc", JSON.stringify(links));
         try {
-            const response = await fetch(url, { method: 'POST', body: formData });
-            alert(await response.text());
+            fetch(url, { method: 'POST', body: formData });
+            alert('Relatórios enviados para o Drive!');
         } catch (error) {
             console.log("Erro ao enviar para planilha eproc: " + error);
         }
@@ -251,7 +251,14 @@
     }
 
     function criaBotao() {
+        /**
+         * @type {HTMLFormElement}
+         */
         const div = document.querySelector(ID_FORM);
+        //esconde o formulario enquanto itera
+        let display = div.style.display;
+        display = display == 'none' ? 'flex' : 'none';
+        div.style.display = display;
         const botao = document.createElement('button');
         botao.className = 'eproc-button-primary'
         botao.type = 'button'

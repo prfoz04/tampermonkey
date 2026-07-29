@@ -154,9 +154,8 @@
             }
         }
         BARRA_CARREGAMENTO.finish();
-        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'));
-        alert('Relatórios enviados para o Drive!');
         BARRA_CARREGAMENTO.remove();
+        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'));
         criaBotao();
         fieldset.style.display = displayField;
     }
@@ -166,17 +165,32 @@
      * @param {linkPrestador[]} links 
      */
     async function divideEmLotes(links) {
-        let vetorAux = [];
+        const BARRA_CARREGAMENTO = new ProgressBar(Math.ceil(links.length) / 5, "Enquadrando arquivos...")
+        let informacao = [];
         let lote = 1;
-        for (let i = 0; i < links.length; i++) {
-            if (vetorAux.length >= 100) {
-                enviarParaPlanilhas(links, lote++);
-                vetorAux = [];
+        let respostas = [];
+        for (let link of links) {
+            informacao.push(link);
+            if (informacao.length >= 5) {
+                respostas[lote - 1] = await enviarParaPlanilhas(informacao, lote);
+                informacao = [];
+                BARRA_CARREGAMENTO.update(lote++);
             }
-            vetorAux.push(links[i]);
         }
-        enviarParaPlanilhas(links, lote);
+        if (informacao.length >= 1) {
+            respostas[lote - 1] = await enviarParaPlanilhas(informacao, lote);
+            BARRA_CARREGAMENTO.update(lote)
+        }
+        BARRA_CARREGAMENTO.finish();
+        await enviarParaPlanilhas([null], -1, {respostas: respostas, total: links.length.toString()})
+        BARRA_CARREGAMENTO.remove();
     }
+
+    /**
+     * @typedef informativo
+     * @property {string[]} respostas
+     * @property {string} total
+     */
 
     /**
      * @typedef linkPrestador
@@ -190,16 +204,23 @@
      * envia para a planilha API para que ela possa registrar os valores na planilha PSC e enviar os pdfs para o drive
      * @param {linkPrestador[]} links 
      * @param {number} lote
+     * @param {informativo} informe
      */
-    async function enviarParaPlanilhas(links, lote) {
+    async function enviarParaPlanilhas(links, lote, informe = null) {
         const url = "https://script.google.com/macros/s/AKfycbxH4GeMfR5z0deOlwgFOpvlEY9LLKAzj921hYuEOgM4pt-oc7ce5sviMQxhqnzMP914/exec";
         const formData = new FormData();
         formData.append("relatoriosEproc", JSON.stringify(links));
         formData.append("lote", lote.toString());
+        if (informe)
+            formData.append("informativo", JSON.stringify(informe));
         try {
-            fetch(url, { method: 'POST', body: formData });
+            const response = await fetch(url, { method: 'POST', body: formData });
+            if (!response.ok) {
+                return `Lote ${lote} - Erro no servidor (Status: ${response.status})`
+            }
+            return await response.text();
         } catch (error) {
-            console.log("Erro ao enviar para planilha eproc: " + error);
+            return `Lote ${lote} - Erro ao enviar para planilha eproc: ${error}`;
         }
     }
 

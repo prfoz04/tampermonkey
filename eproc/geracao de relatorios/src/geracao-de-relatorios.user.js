@@ -167,7 +167,7 @@
     async function divideEmLotes(links, tamLote, promissesConcorrentes) {
         const lotesArq = Math.ceil(links.length / tamLote);
         const lotesPromisse = Math.ceil(lotesArq / promissesConcorrentes)
-        const BARRA_CARREGAMENTO1 = new ProgressBar(lotesArq, "Enquadrando arquivos...")
+        const BARRA_CARREGAMENTO = new ProgressBar(lotesArq + lotesPromisse, "Enviando arquivos...")
         let informacao = [];
         let lote = 1;
         let promises = [];
@@ -179,25 +179,20 @@
                 const loteAtual = lote;
                 promises[lote - 1] = () => enviarParaPlanilhas(dadosAtual, loteAtual);
                 informacao = [];
-                BARRA_CARREGAMENTO1.update(lote++);
+                BARRA_CARREGAMENTO.update(lote++);
             }
         }
         if (informacao.length >= 1) {
             const dadosAtual = informacao;
             const loteAtual = lote;
             promises[lote - 1] = () => enviarParaPlanilhas(dadosAtual, loteAtual);
-            BARRA_CARREGAMENTO1.update(lote)
+            BARRA_CARREGAMENTO.update(lote++)
         }
-        BARRA_CARREGAMENTO1.finish();
-        BARRA_CARREGAMENTO1.remove();
-
-        let contador = 0;
-        const BARRA_CARREGAMENTO2 = new ProgressBar(lotesPromisse, "Enviando arquivos...");
         for (let i = 0; i < promises.length; i += tamLote) {
             const bloco = promises.slice(i, i + tamLote).map(f => f());
             const respostaBloco = await Promise.all(bloco);
             respostas.push(...respostaBloco);
-            BARRA_CARREGAMENTO2.update(++contador);
+            BARRA_CARREGAMENTO.update(lote++);
         }
         let totalErros = 0;
         let total = 0;
@@ -206,9 +201,9 @@
                 totalErros++;
             else
                 total++
-        BARRA_CARREGAMENTO2.finish();
+        BARRA_CARREGAMENTO.finish();
         await enviarParaPlanilhas([null], -1, {respostas: respostas, total: total.toString(), totalErros: totalErros.toString()})
-        BARRA_CARREGAMENTO2.remove();
+        BARRA_CARREGAMENTO.remove();
     }
 
     /**

@@ -178,6 +178,7 @@
                 const loteAtual = lote;
                 promises[lote - 1] = () => enviarParaPlanilhas(dadosAtual, loteAtual);
                 informacao = [];
+                lote++;
             }
         }
         if (informacao.length >= 1) {

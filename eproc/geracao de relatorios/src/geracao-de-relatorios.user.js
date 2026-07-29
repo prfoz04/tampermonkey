@@ -154,7 +154,8 @@
             }
         }
         BARRA_CARREGAMENTO.finish();
-        divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'));
+        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'));
+        alert('Relatórios enviados para o Drive!');
         BARRA_CARREGAMENTO.remove();
         criaBotao();
         fieldset.style.display = displayField;
@@ -164,7 +165,7 @@
      * para contornar o tempo máximo de execução do App Script envia em lotes
      * @param {linkPrestador[]} links 
      */
-    function divideEmLotes(links) {
+    async function divideEmLotes(links) {
         let vetorAux = [];
         let lote = 1;
         for (let i = 0; i < links.length; i++) {
@@ -194,10 +195,9 @@
         const url = "https://script.google.com/macros/s/AKfycbxH4GeMfR5z0deOlwgFOpvlEY9LLKAzj921hYuEOgM4pt-oc7ce5sviMQxhqnzMP914/exec";
         const formData = new FormData();
         formData.append("relatoriosEproc", JSON.stringify(links));
-        formData.append("lote", lote);
+        formData.append("lote", lote.toString());
         try {
             fetch(url, { method: 'POST', body: formData });
-            alert('Relatórios enviados para o Drive!');
         } catch (error) {
             console.log("Erro ao enviar para planilha eproc: " + error);
         }

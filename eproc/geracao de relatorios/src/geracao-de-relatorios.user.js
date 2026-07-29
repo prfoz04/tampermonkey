@@ -88,7 +88,6 @@
             const mesesDisponiveisNormalizados = mesesCumpridos.map(normalizarMesAno);
 
             if (!mesesCumpridos.length || mesesDisponiveisNormalizados.indexOf(mesNormalizado) === -1) {
-                linksPDF.push({prestador: nomePrestador, pdfUrl: " ", erro: true, descricao: "Não possui nenhum relatório"})
                 continue;
             }
 
@@ -104,7 +103,6 @@
             });
 
             if (!opcaoCorrespondente) {
-                linksPDF.push({prestador: nomePrestador, pdfUrl: " ", erro: true, descricao: "Não possui nenhum relatório"})
                 continue;
             }
 
@@ -155,7 +153,7 @@
         }
         BARRA_CARREGAMENTO.finish();
         BARRA_CARREGAMENTO.remove();
-        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 5, 10);
+        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 5, 6);
         criaBotao();
         fieldset.style.display = displayField;
     }
@@ -201,8 +199,15 @@
             respostas.push(...respostaBloco);
             BARRA_CARREGAMENTO2.update(++contador);
         }
+        let totalErros = 0;
+        let total = 0;
+        for (let link of links)
+            if (link.erro)
+                totalErros++;
+            else
+                total++
         BARRA_CARREGAMENTO2.finish();
-        await enviarParaPlanilhas([null], -1, {respostas: respostas, total: links.length.toString()})
+        await enviarParaPlanilhas([null], -1, {respostas: respostas, total: total.toString(), totalErros: totalErros.toString()})
         BARRA_CARREGAMENTO2.remove();
     }
 
@@ -210,6 +215,7 @@
      * @typedef informativo
      * @property {string[]} respostas
      * @property {string} total
+     * @property {string} totalErros
      */
 
     /**

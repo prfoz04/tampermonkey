@@ -153,7 +153,7 @@
         }
         BARRA_CARREGAMENTO.finish();
         BARRA_CARREGAMENTO.remove();
-        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 5, 6);
+        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 2, 6);
         criaBotao();
         fieldset.style.display = displayField;
     }
@@ -187,8 +187,9 @@
         }
         const BARRA_CARREGAMENTO = new ProgressBar(lotesPromisse + 1, "Enviando arquivos...");
         let contador = 1;
-        for (let i = 0; i < promises.length; i += tamLote) {
-            const bloco = promises.slice(i, i + tamLote).map(f => f());
+        BARRA_CARREGAMENTO.update(contador++);
+        for (let i = 0; i < promises.length; i += promissesConcorrentes) {
+            const bloco = promises.slice(i, i + promissesConcorrentes).map(f => f());
             const respostaBloco = await Promise.all(bloco);
             respostas.push(...respostaBloco);
             BARRA_CARREGAMENTO.update(contador++)

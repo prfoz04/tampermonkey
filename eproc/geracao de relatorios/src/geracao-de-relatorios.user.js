@@ -155,7 +155,7 @@
         }
         BARRA_CARREGAMENTO.finish();
         BARRA_CARREGAMENTO.remove();
-        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 2);
+        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 5, 10);
         criaBotao();
         fieldset.style.display = displayField;
     }
@@ -164,11 +164,12 @@
      * para contornar o tempo máximo de execução do App Script envia em lotes
      * @param {linkPrestador[]} links 
      * @param {number} tamLote 
+     * @param {number} promissesConcorrentes
      */
-    async function divideEmLotes(links, tamLote) {
+    async function divideEmLotes(links, tamLote, promissesConcorrentes) {
         const lotesArq = Math.ceil(links.length / tamLote);
-        const lotesPromisse = Math.ceil(lotesArq / tamLote)
-        const BARRA_CARREGAMENTO = new ProgressBar(lotesArq + lotesPromisse, "Enquadrando arquivos...")
+        const lotesPromisse = Math.ceil(lotesArq / promissesConcorrentes)
+        const BARRA_CARREGAMENTO1 = new ProgressBar(lotesArq, "Enquadrando arquivos...")
         let informacao = [];
         let lote = 1;
         let promises = [];
@@ -180,24 +181,29 @@
                 const loteAtual = lote;
                 promises[lote - 1] = () => enviarParaPlanilhas(dadosAtual, loteAtual);
                 informacao = [];
-                BARRA_CARREGAMENTO.update(lote++);
+                BARRA_CARREGAMENTO1.update(lote++);
             }
         }
         if (informacao.length >= 1) {
             const dadosAtual = informacao;
             const loteAtual = lote;
             promises[lote - 1] = () => enviarParaPlanilhas(dadosAtual, loteAtual);
-            BARRA_CARREGAMENTO.update(lote++)
+            BARRA_CARREGAMENTO1.update(lote)
         }
+        BARRA_CARREGAMENTO1.finish();
+        BARRA_CARREGAMENTO1.remove();
+
+        let contador = 0;
+        const BARRA_CARREGAMENTO2 = new ProgressBar(lotesPromisse, "Enviando arquivos...");
         for (let i = 0; i < promises.length; i += tamLote) {
             const bloco = promises.slice(i, i + tamLote).map(f => f());
             const respostaBloco = await Promise.all(bloco);
             respostas.push(...respostaBloco);
-            BARRA_CARREGAMENTO.update(lote++);
+            BARRA_CARREGAMENTO2.update(++contador);
         }
-        BARRA_CARREGAMENTO.finish();
+        BARRA_CARREGAMENTO2.finish();
         await enviarParaPlanilhas([null], -1, {respostas: respostas, total: links.length.toString()})
-        BARRA_CARREGAMENTO.remove();
+        BARRA_CARREGAMENTO2.remove();
     }
 
     /**

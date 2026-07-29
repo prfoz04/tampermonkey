@@ -167,7 +167,6 @@
     async function divideEmLotes(links, tamLote, promissesConcorrentes) {
         try {const lotesArq = Math.ceil(links.length / tamLote);
         const lotesPromisse = Math.ceil(lotesArq / promissesConcorrentes)
-        const BARRA_CARREGAMENTO = new ProgressBar(lotesArq + lotesPromisse, "Enviando arquivos...")
         let informacao = [];
         let lote = 1;
         let promises = [];
@@ -179,20 +178,20 @@
                 const loteAtual = lote;
                 promises[lote - 1] = () => enviarParaPlanilhas(dadosAtual, loteAtual);
                 informacao = [];
-                BARRA_CARREGAMENTO.update(lote++);
             }
         }
         if (informacao.length >= 1) {
             const dadosAtual = informacao;
             const loteAtual = lote;
             promises[lote - 1] = () => enviarParaPlanilhas(dadosAtual, loteAtual);
-            BARRA_CARREGAMENTO.update(lote++)
         }
+        const BARRA_CARREGAMENTO = new ProgressBar(lotesPromisse + 1, "Enviando arquivos...");
+        let contador = 1;
         for (let i = 0; i < promises.length; i += tamLote) {
             const bloco = promises.slice(i, i + tamLote).map(f => f());
             const respostaBloco = await Promise.all(bloco);
             respostas.push(...respostaBloco);
-            BARRA_CARREGAMENTO.update(lote++);
+            BARRA_CARREGAMENTO.update(contador++)
         }
         let totalErros = 0;
         let total = 0;

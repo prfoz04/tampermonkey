@@ -165,7 +165,7 @@
      * @param {number} promissesConcorrentes
      */
     async function divideEmLotes(links, tamLote, promissesConcorrentes) {
-        const lotesArq = Math.ceil(links.length / tamLote);
+        try {const lotesArq = Math.ceil(links.length / tamLote);
         const lotesPromisse = Math.ceil(lotesArq / promissesConcorrentes)
         const BARRA_CARREGAMENTO = new ProgressBar(lotesArq + lotesPromisse, "Enviando arquivos...")
         let informacao = [];
@@ -203,7 +203,11 @@
                 total++
         BARRA_CARREGAMENTO.finish();
         await enviarParaPlanilhas([null], -1, {respostas: respostas, total: total.toString(), totalErros: totalErros.toString()})
-        BARRA_CARREGAMENTO.remove();
+        BARRA_CARREGAMENTO.remove();}
+        catch (error) {
+            console.error(error);
+            alert("Falha no envio dos arquivos");
+        }
     }
 
     /**

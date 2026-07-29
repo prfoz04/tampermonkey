@@ -154,10 +154,27 @@
             }
         }
         BARRA_CARREGAMENTO.finish();
-        await enviarParaPlanilhas(linksPDF.filter(link => link.prestador !== 'Selecione'));
+        divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'));
         BARRA_CARREGAMENTO.remove();
         criaBotao();
         fieldset.style.display = displayField;
+    }
+
+    /**
+     * para contornar o tempo máximo de execução do App Script envia em lotes
+     * @param {linkPrestador[]} links 
+     */
+    function divideEmLotes(links) {
+        let vetorAux = [];
+        let lote = 1;
+        for (let i = 0; i < links.length; i++) {
+            if (vetorAux.length >= 100) {
+                enviarParaPlanilhas(links, lote++);
+                vetorAux = [];
+            }
+            vetorAux.push(links[i]);
+        }
+        enviarParaPlanilhas(links, lote);
     }
 
     /**
@@ -171,11 +188,13 @@
     /**
      * envia para a planilha API para que ela possa registrar os valores na planilha PSC e enviar os pdfs para o drive
      * @param {linkPrestador[]} links 
+     * @param {number} lote
      */
-    async function enviarParaPlanilhas(links) {
+    async function enviarParaPlanilhas(links, lote) {
         const url = "https://script.google.com/macros/s/AKfycbxH4GeMfR5z0deOlwgFOpvlEY9LLKAzj921hYuEOgM4pt-oc7ce5sviMQxhqnzMP914/exec";
         const formData = new FormData();
         formData.append("relatoriosEproc", JSON.stringify(links));
+        formData.append("lote", lote);
         try {
             fetch(url, { method: 'POST', body: formData });
             alert('Relatórios enviados para o Drive!');

@@ -255,11 +255,27 @@
         try {
             const response = await fetch(url, { method: 'POST', body: formData });
             if (!response.ok) {
-                return `Lote ${lote} - Erro no servidor (Status: ${response.status})`
+                const mensagemErro = `Lote ${lote} - Erro no servidor (Status: ${response.status})`;
+                (links || []).forEach(link => {
+                    if (!link) {
+                        return;
+                    }
+                    link.erro = true;
+                    link.descricao = link.descricao ? `${link.descricao}\n${mensagemErro}` : mensagemErro;
+                });
+                return mensagemErro;
             }
             return await response.text();
         } catch (error) {
-            return `Lote ${lote} - Erro ao enviar para planilha eproc: ${error}`;
+            const mensagemErro = `Lote ${lote} - Erro ao enviar para planilha eproc: ${error}`;
+            (links || []).forEach(link => {
+                if (!link) {
+                    return;
+                }
+                link.erro = true;
+                link.descricao = link.descricao ? `${link.descricao}\n${mensagemErro}` : mensagemErro;
+            });
+            return mensagemErro;
         }
     }
 

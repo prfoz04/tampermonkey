@@ -163,7 +163,7 @@
         }
         BARRA_CARREGAMENTO.finish();
         BARRA_CARREGAMENTO.remove();
-        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 2, 6);
+        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 3, 2);
         criaBotao();
         fieldset.style.display = displayField;
     }
@@ -184,7 +184,7 @@
         for (let link of links) {
             informacao.push(link);
             if (informacao.length >= tamLote) {
-                const dadosAtual = informacao;
+                const dadosAtual = [...informacao];
                 const loteAtual = lote;
                 promises[lote - 1] = () => enviarParaPlanilhas(dadosAtual, loteAtual);
                 informacao = [];
@@ -192,7 +192,7 @@
             }
         }
         if (informacao.length >= 1) {
-            const dadosAtual = informacao;
+            const dadosAtual = [...informacao];
             const loteAtual = lote;
             promises[lote - 1] = () => enviarParaPlanilhas(dadosAtual, loteAtual);
         }

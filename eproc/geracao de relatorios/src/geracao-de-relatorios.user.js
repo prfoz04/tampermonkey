@@ -255,25 +255,27 @@
         try {
             const resposta = await fetch(url, { method: 'POST', body: formData }).then(response => response.json());
             if (!resposta.ok) {
-                const mensagemErro = `Lote ${lote} - Erro no servidor (Status: ${resposta.status})`;
+                let mensagemErro = `Lote ${lote} - Erro no servidor (Status: ${resposta.status})\nOs seguintes relatórios podem não ter sido adicionados\n`;
                 (links || []).forEach(link => {
                     if (!link) {
                         return;
                     }
                     link.erro = true;
                     link.descricao = link.descricao ? `${link.descricao}\n${mensagemErro}` : mensagemErro;
+                    mensagemErro += `${link.pdfUrl}\n`
                 });
                 return mensagemErro;
             }
             return await resposta.response();
         } catch (error) {
-            const mensagemErro = `Lote ${lote} - Erro ao enviar para planilha eproc: ${error}`;
+            let mensagemErro = `Lote ${lote} - Erro ao enviar para planilha eproc: ${error}\nOs seguintes relatórios podem não ter sido adicionados\n`;
             (links || []).forEach(link => {
                 if (!link) {
                     return;
                 }
                 link.erro = true;
                 link.descricao = link.descricao ? `${link.descricao}\n${mensagemErro}` : mensagemErro;
+                mensagemErro += `${link.pdfUrl}\n`
             });
             return mensagemErro;
         }

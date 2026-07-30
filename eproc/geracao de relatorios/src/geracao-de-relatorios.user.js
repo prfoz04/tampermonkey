@@ -262,11 +262,11 @@
                     }
                     link.erro = true;
                     link.descricao = link.descricao ? `${link.descricao}\n${mensagemErro}` : mensagemErro;
-                    mensagemErro += `${link.pdfUrl}\n`
+                    mensagemErro += `${link.prestador}:\n${link.pdfUrl}\n`
                 });
                 return mensagemErro;
             }
-            return await resposta.response();
+            return await resposta.response;
         } catch (error) {
             let mensagemErro = `Lote ${lote} - Erro ao enviar para planilha eproc: ${error}\nOs seguintes relatórios podem não ter sido adicionados\n`;
             (links || []).forEach(link => {
@@ -275,7 +275,7 @@
                 }
                 link.erro = true;
                 link.descricao = link.descricao ? `${link.descricao}\n${mensagemErro}` : mensagemErro;
-                mensagemErro += `${link.pdfUrl}\n`
+                mensagemErro += `${link.prestador}:\n${link.pdfUrl}\n`
             });
             return mensagemErro;
         }

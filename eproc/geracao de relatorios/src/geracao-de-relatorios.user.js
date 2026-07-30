@@ -29,13 +29,23 @@
     const DATE = new Date();
 
     /**
+     * @type {number}
+     */
+    var tempoInicio;
+
+    /**
+     * @type {number}
+     */
+    var tempoFim;
+
+    /**
      * itera sobre os prestadores capturando os formulários
      * @param {string} mesAno
      */
     async function gerar(mesAno) {
         if (!mesAno || mesAno === 'Selecione')
             return;
-
+        tempoInicio = performance.now();
         /**
          * @type {HTMLSelectElement}
          */
@@ -60,7 +70,7 @@
         let displayField = fieldset.style.display;
         fieldset.style.display = 'none';
 
-        const linksPDF = [];
+        var linksPDF = [];
 
         forcarTrocaSelect(selectVara, CMB_VARA[0]);
         forcarChange(selectVara);
@@ -203,7 +213,8 @@
             else
                 total++
         BARRA_CARREGAMENTO.finish();
-        await enviarParaPlanilhas([null], -1, {respostas: respostas, total: total.toString(), totalErros: totalErros.toString()})
+        tempoFim = performance.now()
+        await enviarParaPlanilhas([null], -1, {respostas: respostas, total: total.toString(), totalErros: totalErros.toString(), tempoExecucao: (tempoFim-tempoInicio).toFixed(2).toString().replace('.', ',')})
         BARRA_CARREGAMENTO.remove();}
         catch (error) {
             console.error(error);
@@ -216,6 +227,7 @@
      * @property {string[]} respostas
      * @property {string} total
      * @property {string} totalErros
+     * @property {string} tempoExecucao
      */
 
     /**
@@ -237,8 +249,9 @@
         const formData = new FormData();
         formData.append("relatoriosEproc", JSON.stringify(links));
         formData.append("lote", lote.toString());
-        if (informe)
+        if (informe) {
             formData.append("informativo", JSON.stringify(informe));
+        }
         try {
             const response = await fetch(url, { method: 'POST', body: formData });
             if (!response.ok) {

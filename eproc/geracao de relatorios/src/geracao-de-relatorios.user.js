@@ -214,7 +214,7 @@
                 total++
         BARRA_CARREGAMENTO.finish();
         tempoFim = performance.now()
-        await enviarParaPlanilhas([null], -1, {respostas: respostas, total: total.toString(), totalErros: totalErros.toString(), tempoExecucao: (tempoFim-tempoInicio).toFixed(2).toString().replace('.', ',')})
+        await enviarParaPlanilhas([null], -1, {respostas: respostas, total: total.toString(), totalErros: totalErros.toString(), tempoExecucao: ((tempoFim-tempoInicio)/60000).toFixed(2).toString().replace('.', ',')})
         BARRA_CARREGAMENTO.remove();}
         catch (error) {
             console.error(error);

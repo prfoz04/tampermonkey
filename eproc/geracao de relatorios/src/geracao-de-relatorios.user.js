@@ -253,9 +253,9 @@
             formData.append("informativo", JSON.stringify(informe));
         }
         try {
-            const response = await fetch(url, { method: 'POST', body: formData });
-            if (!response.ok) {
-                const mensagemErro = `Lote ${lote} - Erro no servidor (Status: ${response.status})`;
+            const resposta = await fetch(url, { method: 'POST', body: formData }).then(response => response.json());
+            if (!resposta.ok) {
+                const mensagemErro = `Lote ${lote} - Erro no servidor (Status: ${resposta.status})`;
                 (links || []).forEach(link => {
                     if (!link) {
                         return;
@@ -265,7 +265,7 @@
                 });
                 return mensagemErro;
             }
-            return await response.text();
+            return await resposta.response();
         } catch (error) {
             const mensagemErro = `Lote ${lote} - Erro ao enviar para planilha eproc: ${error}`;
             (links || []).forEach(link => {

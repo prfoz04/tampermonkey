@@ -13,4 +13,32 @@
 (async function () {
     'use strict';
     console.log('iniciando script...');
+
+    const ID_FORM = "#frmConsulta";
+
+    const CMB_ENTIDADE = "#cmbEntidade";
+
+    const CMB_VARA = "#cmbVara";
+
+    function executar() {
+
+    }
+
+    /**
+     * cria o botao que inicia a execução do script, o mesmo some ao clicar nele
+     */
+    function criarBotao() {
+        var botao = document.createElement('input');
+        botao.type = 'button';
+        botao.className = 'eproc-button-primary';
+        botao.textContent = 'Exportar dados';
+        botao.addEventListener('click', () => {
+            botao.remove();
+            executar();
+        })
+        document.querySelector(ID_FORM).appendChild(botao);
+    }
+
+    criarBotao();
+
 })();

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Atualizar banco de dados para o site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.0.6
+// @version      1.0.7
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
@@ -62,7 +62,10 @@
          * possui o atributo value de todas as entidades
          */
         const ENTIDADES = await aguardarSelect(ID_ENTIDADE);
-        //guarda os elementos no vetor para ficar mais rápido iterar sobre depois
+        /**
+         * guarda os elementos no vetor para ficar mais rápido iterar sobre depois
+         * @type {HTMLDivElement[]}
+         */
         const TABELAS = [];
         //itera sobre entidades capturando as tabelas resultado
         try {
@@ -74,18 +77,56 @@
                 if (resposta)
                     TABELAS.push(resposta);
             }
-            console.log(TABELAS);
+            console.log(extraiDados(TABELAS[0]))
         } catch (error) {
             console.error(error);
         }
     }
     /**
+     * @typedef linhaPrestador
+     * @property {string} Entidade
+     * @property {string} Prestador
+     * @property {string} Ano
+     * @property {string} Mes
+     * @property {string} Horas
+     * @property {string} Observações
+     */
+    /**
+     * transforma a tabela em um vetor de objetos
+     * @param {HTMLDivElement} tabela 
+     * @return {linhaPrestador[]}
+     */
+    function extraiDados(tabela) {
+        var linhas = tabela.querySelectorAll('tr');
+        /**
+         * @type {string[]}
+         */
+        var cabecalho = [];
+        var dados = [];
+        linhas[0].querySelectorAll('th').forEach(th => { if (th.textContent !== 'Ações') cabecalho.push(th.textContent); })
+        for (let i = 1; i < linhas.length; i++) {
+            var colunas = linhas[i].querySelectorAll('td');
+            var objeto = {};
+            for (let j = 1; j < colunas.length; j++) {
+                var text = colunas[j].textContent;
+                // @ts-ignore
+                objeto[cabecalho[j]] = text;
+            }
+            dados.push(objeto);
+        }
+        // @ts-ignore
+        return dados;
+    }
+    /**
      * espera a página responder com uma nova tabela
-     * @returns {Promise<Element>}
+     * @returns {Promise<HTMLDivElement>}
      */
     function esperaResultado() {
         return new Promise((response) => {
             const INTERVAL = setInterval(() => {
+                /**
+                 * @type {HTMLDivElement}
+                 */
                 var resultado = document.querySelector(ID_RESULTADO);
                 if (resultado) {
                     clearInterval(INTERVAL);

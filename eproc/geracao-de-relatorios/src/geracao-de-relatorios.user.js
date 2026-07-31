@@ -5,8 +5,8 @@
 // @description  Gera automaticamente os relatórios do último mês registrado para todos os prestadores no eproc.
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=relatorio_diario_cumprimento_pena*
-// @updateURL    https://raw.githubusercontent.com/prfoz04/tampermonkey/eproc/geracao de relatorios/src/geracao-de-relatorios.user.js
-// @downloadURL  https://raw.githubusercontent.com/prfoz04/tampermonkey/eproc/geracao de relatorios/src/geracao-de-relatorios.user.js
+// @updateURL    https://raw.githubusercontent.com/prfoz04/tampermonkey/main/eproc/geracao-de-relatorios/src/geracao-de-relatorios.user.js
+// @downloadURL  https://raw.githubusercontent.com/prfoz04/tampermonkey/main/eproc/geracao-de-relatorios/src/geracao-de-relatorios.user.js
 // @run-at       document-idle
 // @grant        GM_download
 // ==/UserScript==

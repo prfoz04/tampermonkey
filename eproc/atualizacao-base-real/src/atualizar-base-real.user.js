@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Atualizar banco de dados para o site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.0.5
+// @version      1.0.6
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
@@ -65,13 +65,19 @@
         //guarda os elementos no vetor para ficar mais rápido iterar sobre depois
         const TABELAS = [];
         //itera sobre entidades capturando as tabelas resultado
-        for (let value of ENTIDADES) {
-            forcarTrocaSelect(SELECT_ENTIDADE, value);
-            forcarChange(SELECT_ENTIDADE);
-            BOTAO_PESQUISAR.click();
-            TABELAS.push(await esperaResultado());
+        try {
+            for (let value of ENTIDADES) {
+                forcarTrocaSelect(SELECT_ENTIDADE, value);
+                forcarChange(SELECT_ENTIDADE);
+                BOTAO_PESQUISAR.click();
+                var resposta = await esperaResultado()
+                if (resposta)
+                    TABELAS.push(resposta);
+            }
+            console.log(TABELAS);
+        } catch (error) {
+            console.error(error);
         }
-        console.log(TABELAS);
     }
     /**
      * espera a página responder com uma nova tabela
@@ -80,10 +86,15 @@
     function esperaResultado() {
         return new Promise((response) => {
             const INTERVAL = setInterval(() => {
-                const RESULTADO = document.querySelector(ID_RESULTADO);
-                if (RESULTADO) {
+                var resultado = document.querySelector(ID_RESULTADO);
+                if (resultado) {
                     clearInterval(INTERVAL);
-                    response(RESULTADO);
+                    //ignora as tabelas que não possuem registro
+                    var primeiraLinha = resultado.querySelectorAll('td');
+                    //se tiver só uma coluna, é vazio
+                    if (primeiraLinha.length === 1)
+                        response(null);
+                    response(resultado);
                 }
             }, 300) 
         })

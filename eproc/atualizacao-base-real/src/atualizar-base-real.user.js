@@ -46,7 +46,9 @@
          */
         const SELECT_VARA = document.querySelector(ID_VARA);
         //preenche o select da vara caso nao esteja preenchido corretamente
-        SELECT_VARA.value = (await aguardarSelect(ID_VARA, option => option.textContent.includes("4") && option.textContent.includes("Foz do Iguaçu")))[0];
+        const VALUE_VARA = (await aguardarSelect(ID_VARA, option => option.textContent.includes("4") && option.textContent.includes("Foz do Iguaçu")))[0];
+        forcarTrocaSelect(SELECT_VARA, VALUE_VARA);
+        forcarChange(SELECT_VARA);
         /**
          * @type {string[]}
          * possui o atributo value de todas as entidades
@@ -54,7 +56,8 @@
         const ENTIDADES = await aguardarSelect(ID_ENTIDADE);
         //itera sobre entidades capturando as tabelas resultado
         for (let value of ENTIDADES) {
-            SELECT_ENTIDADE.value = value
+            forcarTrocaSelect(SELECT_ENTIDADE, value);
+            forcarChange(SELECT_ENTIDADE);
             FORM.submit();
         }
     }
@@ -87,6 +90,41 @@
                 }
             }, 300); //tempo de checagem
         });
+    }
+    /** 
+     * necessário pois a página usa jquery
+     * @param {HTMLSelectElement} elemento 
+     */
+    function forcarChange(elemento) {
+        elemento.dispatchEvent(new Event('change', { bubbles: true }));
+        // @ts-ignore
+        if (typeof window.jQuery !== 'undefined') {
+            // @ts-ignore
+            window.jQuery(elemento).trigger('change');
+        }
+    }
+    /**
+     * necessário pois a página usa jquery
+     * @param {HTMLSelectElement} selectElement 
+     * @param {string} valor 
+     */
+    function forcarTrocaSelect(selectElement, valor) {
+        if (!selectElement) {
+            return;
+        }
+        const option = Array.from(selectElement.options).find(opt => opt.value === valor);
+        if (!option) {
+            return;
+        }
+        Array.from(selectElement.options).forEach(opt => opt.selected = false);
+        option.selected = true;
+        selectElement.value = valor;
+        selectElement.dispatchEvent(new Event('change', { bubbles: true }));
+        // @ts-ignore
+        if (window.$ || window.jQuery) {
+            // @ts-ignore
+            (window.$ || window.jQuery)(selectElement).trigger('change');
+        }
     }
     /**
      * cria o botao que inicia a execução do script, o mesmo some ao clicar nele

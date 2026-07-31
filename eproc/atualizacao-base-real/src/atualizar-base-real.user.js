@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Atualizar banco de dados para o site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.0.3
+// @version      1.0.4
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
@@ -26,9 +26,13 @@
      */
     const ID_VARA = "#cmbVara";
     /**
-     * id da tabela gerada ao submeter formulário
+     * id da tabela gerada ao apertar botao
      */
     const ID_RESULTADO = "#divResultadoPesquisa";
+    /**
+     * id do botao que gera o resultado, não vem através de submit
+     */
+    const ID_BOTAO_PESQUISAR = "#btnPesquisar";
     /**
      * fluxo de execução principal do script
      */
@@ -45,6 +49,10 @@
          * @type {HTMLSelectElement}
          */
         const SELECT_VARA = document.querySelector(ID_VARA);
+        /**
+         * @type {HTMLInputElement}
+         */
+        const BOTAO_PESQUISAR = document.querySelector(ID_BOTAO_PESQUISAR);
         //preenche o select da vara caso nao esteja preenchido corretamente
         const VALUE_VARA = (await aguardarSelect(ID_VARA, option => option.textContent.includes("4") && option.textContent.includes("Foz do Iguaçu")))[0];
         forcarTrocaSelect(SELECT_VARA, VALUE_VARA);
@@ -54,12 +62,16 @@
          * possui o atributo value de todas as entidades
          */
         const ENTIDADES = await aguardarSelect(ID_ENTIDADE);
+        //guarda os elementos no vetor para ficar mais rápido iterar sobre depois
+        const TABELAS = [];
         //itera sobre entidades capturando as tabelas resultado
         for (let value of ENTIDADES) {
             forcarTrocaSelect(SELECT_ENTIDADE, value);
             forcarChange(SELECT_ENTIDADE);
-            FORM.submit();
+            BOTAO_PESQUISAR.click();
+            TABELAS.push(document.querySelector(ID_RESULTADO));
         }
+        console.log(TABELAS);
     }
     /**
      * função necessária pois o select é preenchido alguns milissegundos atrasado
@@ -81,7 +93,7 @@
                     let respostas = Array.from(options);
                     if (filtro)
                         respostas = respostas.filter(filtro);
-                    respostas = respostas.filter(option => option.value && option.value.trim() !== ' ' && option.value.trim() !== 'Selecione' && option.value.trim() !== 'null');
+                    respostas = respostas.filter(option => option.value && option.value !== ' ' && option.value.trim() !== 'Selecione' && option.value.trim() !== 'null');
                     response(respostas.map(option => option.value));
                 }
                 if (options.length === 1 && (!options[0].value || options[0].value.trim() === 'null')) {

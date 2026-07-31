@@ -26,6 +26,10 @@
      */
     const ID_VARA = "#cmbVara";
     /**
+     * id da tabela gerada ao submeter formulário
+     */
+    const ID_RESULTADO = "#divResultadoPesquisa";
+    /**
      * fluxo de execução principal do script
      */
     async function executar() {
@@ -48,7 +52,11 @@
          * possui o atributo value de todas as entidades
          */
         const ENTIDADES = await aguardarSelect(ID_ENTIDADE);
-        console.log(ENTIDADES)
+        //itera sobre entidades capturando as tabelas resultado
+        for (let value of ENTIDADES) {
+            SELECT_ENTIDADE.value = value
+            FORM.submit();
+        }
     }
     /**
      * função necessária pois o select é preenchido alguns milissegundos atrasado
@@ -84,7 +92,7 @@
      * cria o botao que inicia a execução do script, o mesmo some ao clicar nele
      */
     function criarBotao() {
-        var botao = document.createElement('input');
+        var botao = document.createElement('button');
         botao.type = 'button';
         botao.className = 'eproc-button-primary';
         botao.textContent = 'Exportar dados';

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Atualizar banco de dados para o site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.0.4
+// @version      1.0.5
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
@@ -69,9 +69,24 @@
             forcarTrocaSelect(SELECT_ENTIDADE, value);
             forcarChange(SELECT_ENTIDADE);
             BOTAO_PESQUISAR.click();
-            TABELAS.push(document.querySelector(ID_RESULTADO));
+            TABELAS.push(await esperaResultado());
         }
         console.log(TABELAS);
+    }
+    /**
+     * espera a página responder com uma nova tabela
+     * @returns {Promise<Element>}
+     */
+    function esperaResultado() {
+        return new Promise((response) => {
+            const INTERVAL = setInterval(() => {
+                const RESULTADO = document.querySelector(ID_RESULTADO);
+                if (RESULTADO) {
+                    clearInterval(INTERVAL);
+                    response(RESULTADO);
+                }
+            }, 300) 
+        })
     }
     /**
      * função necessária pois o select é preenchido alguns milissegundos atrasado

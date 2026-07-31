@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name         eproc - Geração de relatórios mensais
 // @namespace    https://github.com/4Vara
-// @version      1.0.8
+// @version      1.1
 // @description  Gera automaticamente os relatórios do último mês registrado para todos os prestadores no eproc.
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=relatorio_diario_cumprimento_pena*
-// @updateURL    https://raw.githubusercontent.com/prfoz04/tampermonkey/eproc/geracao de relatorios/src/geracao-de-relatorios.user.js
-// @downloadURL  https://raw.githubusercontent.com/prfoz04/tampermonkey/eproc/geracao de relatorios/src/geracao-de-relatorios.user.js
+// @updateURL    https://raw.githubusercontent.com/prfoz04/tampermonkey/main/eproc/geracao-de-relatorios/src/geracao-de-relatorios.user.js
+// @downloadURL  https://raw.githubusercontent.com/prfoz04/tampermonkey/main/eproc/geracao-de-relatorios/src/geracao-de-relatorios.user.js
 // @run-at       document-idle
 // @grant        GM_download
 // ==/UserScript==
@@ -494,8 +494,7 @@
     finish(mensagem = 'Concluído com sucesso!') {
         this.update(this.totalItems);
         this.statusEl.textContent = mensagem;
-        this.barFill.style.backgroundColor = '#2196F3'; // Muda para azul ao concluir
-        
+        this.barFill.style.backgroundColor = '#2196F3';
         // Remove automaticamente após 2 segundos
         setTimeout(() => this.remove(), 2000);
     }

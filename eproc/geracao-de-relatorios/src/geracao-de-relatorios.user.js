@@ -494,8 +494,7 @@
     finish(mensagem = 'Concluído com sucesso!') {
         this.update(this.totalItems);
         this.statusEl.textContent = mensagem;
-        this.barFill.style.backgroundColor = '#2196F3'; // Muda para azul ao concluir
-        
+        this.barFill.style.backgroundColor = '#2196F3';
         // Remove automaticamente após 2 segundos
         setTimeout(() => this.remove(), 2000);
     }

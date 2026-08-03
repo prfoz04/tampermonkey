@@ -62,10 +62,6 @@
          * possui o atributo value de todas as entidades
          */
         const ENTIDADES = await aguardarSelect(ID_ENTIDADE);
-        /**
-         * guarda os elementos no vetor para ficar mais rápido iterar sobre depois
-         * @type {HTMLTableElement[]}
-         */
         const TABELAS = [];
         //itera sobre entidades capturando as tabelas resultado
         try {
@@ -75,7 +71,7 @@
                 BOTAO_PESQUISAR.click();
                 var resposta = await esperaResultado()
                 if (resposta)
-                    TABELAS.push(resposta.innerHTML);
+                    TABELAS.push(extraiDados(resposta));
             }
             console.log(TABELAS)
         } catch (error) {
@@ -97,7 +93,16 @@
      * @return {linhaPrestador[]}
      */
     function extraiDados(tabela) {
-
+        const linhas = Array.from(tabela.querySelectorAll('tr'));
+        const cabecalho = Array.from(linhas[0].querySelectorAll('th')).map(th => th.textContent.trim());
+        const dados = linhas.slice(1).map(tr => {
+            const celulas = Array.from(tr.querySelectorAll('td'));
+            return cabecalho.reduce((obj, key, index) => {
+                obj[key] = celulas[index]?.textContent.trim() || '';
+                return obj;
+            }, {});
+        });
+        return dados;
     }
     /**
      * espera a página responder com uma nova tabela

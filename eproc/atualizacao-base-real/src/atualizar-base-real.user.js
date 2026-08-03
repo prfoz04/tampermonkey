@@ -151,7 +151,7 @@
                     clearInterval(interval);
                     response([]);
                 }
-            }, 300); //tempo de checagem
+            }, 50); //tempo de checagem
         });
     }
     /** 

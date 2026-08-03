@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Geração de relatórios mensais
 // @namespace    https://github.com/4Vara
-// @version      1.2
+// @version      1.2.1
 // @description  Gera automaticamente os relatórios do último mês registrado para todos os prestadores no eproc.
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=relatorio_diario_cumprimento_pena*
@@ -163,7 +163,7 @@
         }
         BARRA_CARREGAMENTO.finish();
         BARRA_CARREGAMENTO.remove();
-        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 6, 3);
+        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 3, 3);
         criaBotao();
         fieldset.style.display = displayField;
     }
@@ -349,6 +349,21 @@
                 }
             }, 50); //tempo de checagem
         });
+    }
+
+    /**
+     * cria um vetor de teste para enviar para a planilha, apenas para testar a função de envio
+     * @param {linkPrestador[]} links
+     * @param {number} n 
+     */
+    function teste(links, n) {
+        let aux = [];
+        for (let i = 0, j = 0; i < n; i++) {
+            if (j >= links.length)
+                j = 0;
+            aux.push(links[j]);
+        }
+        return aux;
     }
 
     /**

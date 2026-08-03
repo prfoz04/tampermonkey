@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Geração de relatórios mensais
 // @namespace    https://github.com/4Vara
-// @version      1.2.3
+// @version      1.2.4
 // @description  Gera automaticamente os relatórios do último mês registrado para todos os prestadores no eproc.
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=relatorio_diario_cumprimento_pena*
@@ -162,10 +162,17 @@
         }
         BARRA_CARREGAMENTO.finish();
         BARRA_CARREGAMENTO.remove();
-        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 6, 3);
+        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 2, 3);
         window.location.reload();
     }
+    /**
+     * retransmite os links que falharam, caso seja necessário
+     * @param {linkPrestador[]} links
+     * @returns {number} numero de retransmissoes necessarias 
+     */
+    function retransmite(links) {
 
+    }
     /**
      * para contornar o tempo máximo de execução do App Script envia em lotes
      * @param {linkPrestador[]} links 
@@ -211,8 +218,9 @@
             else
                 total++
         BARRA_CARREGAMENTO.finish();
+        let numeroRetransmissoes = retransmite(links.filter(link => link.erro));
         tempoFim = performance.now()
-        await enviarParaPlanilhas([null], -1, {respostas: respostas, total: total.toString(), totalErros: totalErros.toString(), tempoExecucao: ((tempoFim-tempoInicio)/60000).toFixed(2).toString().replace('.', ',')})
+        await enviarParaPlanilhas([null], -1, {respostas: respostas, total: total.toString(), totalErros: totalErros.toString(), tempoExecucao: ((tempoFim-tempoInicio)/60000).toFixed(2).toString().replace('.', ','), retransmissoes: numeroRetransmissoes.toString()})
         BARRA_CARREGAMENTO.remove();}
         catch (error) {
             console.error(error);
@@ -226,6 +234,7 @@
      * @property {string} total
      * @property {string} totalErros
      * @property {string} tempoExecucao
+     * @property {string} retransmissoes
      */
 
     /**
@@ -256,9 +265,10 @@
                 headers: {
                     'Content-Type': 'text/plain;charset=UTF-8'
                 }
-            }).then(response => response.json());
-            if (!resposta.ok) {
-                let mensagemErro = `Lote ${lote} - Erro no servidor (Status: ${resposta.status})\nOs seguintes relatórios podem não ter sido adicionados\n`;
+            });
+            const json = await JSON.parse(await resposta.text());
+            if (!resposta.ok || !json.ok) {
+                let mensagemErro = `Lote ${lote} - Erro no servidor (Status: ${resposta.status}): ${json.message}\nOs seguintes relatórios podem não ter sido adicionados\n`;
                 (links || []).forEach(link => {
                     if (!link) {
                         return;
@@ -269,7 +279,7 @@
                 });
                 return mensagemErro;
             }
-            return await resposta.response;
+            return await JSON.parse(await resposta.text()).response;
         } catch (error) {
             let mensagemErro = `Lote ${lote} - Erro ao enviar para planilha eproc: ${error}\nOs seguintes relatórios podem não ter sido adicionados\n`;
             (links || []).forEach(link => {

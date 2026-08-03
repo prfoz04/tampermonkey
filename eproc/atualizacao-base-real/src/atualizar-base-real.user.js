@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Atualizar banco de dados para o site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.0.7
+// @version      1.0.8
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
@@ -98,19 +98,26 @@
      */
     function extraiDados(tabela) {
         var linhas = tabela.querySelectorAll('tr');
+        if (!linhas.length) {
+            return [];
+        }
         /**
          * @type {string[]}
          */
-        var cabecalho = [];
+        var cabecalho = Array.from(linhas[0].querySelectorAll('th'))
+            .filter(th => th.textContent.trim() !== 'Ações')
+            .map(th => th.textContent.trim());
         var dados = [];
-        linhas[0].querySelectorAll('th').forEach(th => { if (th.textContent !== 'Ações') cabecalho.push(th.textContent); })
         for (let i = 1; i < linhas.length; i++) {
             var colunas = linhas[i].querySelectorAll('td');
+            if (colunas.length <= 1) {
+                continue;
+            }
             var objeto = {};
             for (let j = 1; j < colunas.length; j++) {
-                var text = colunas[j].textContent;
+                var text = colunas[j].textContent.trim();
                 // @ts-ignore
-                objeto[cabecalho[j]] = text;
+                objeto[cabecalho[j - 1]] = text;
             }
             dados.push(objeto);
         }
@@ -133,8 +140,10 @@
                     //ignora as tabelas que não possuem registro
                     var primeiraLinha = resultado.querySelectorAll('td');
                     //se tiver só uma coluna, é vazio
-                    if (primeiraLinha.length === 1)
+                    if (primeiraLinha.length === 1) {
+                        clearInterval(INTERVAL);
                         response(null);
+                    }
                     response(resultado);
                 }
             }, 300) 

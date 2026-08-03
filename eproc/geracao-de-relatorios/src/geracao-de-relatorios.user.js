@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Geração de relatórios mensais
 // @namespace    https://github.com/4Vara
-// @version      1.2.2
+// @version      1.2.3
 // @description  Gera automaticamente os relatórios do último mês registrado para todos os prestadores no eproc.
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=relatorio_diario_cumprimento_pena*
@@ -244,14 +244,19 @@
      */
     async function enviarParaPlanilhas(links, lote, informe = null) {
         const url = "https://script.google.com/macros/s/AKfycbxH4GeMfR5z0deOlwgFOpvlEY9LLKAzj921hYuEOgM4pt-oc7ce5sviMQxhqnzMP914/exec";
-        const formData = new FormData();
-        formData.append("relatoriosEproc", JSON.stringify(links));
-        formData.append("lote", lote.toString());
-        if (informe) {
-            formData.append("informativo", JSON.stringify(informe));
-        }
+        const payload = JSON.stringify({
+            relatoriosEproc: links,
+            lote: lote.toString(),
+            informativo: informe || null
+        });
         try {
-            const resposta = await fetch(url, { method: 'POST', body: formData }).then(response => response.json());
+            const resposta = await fetch(url, { 
+                method: 'POST', 
+                body: payload,
+                headers: {
+                    'Content-Type': 'text/plain;charset=UTF-8'
+                }
+            }).then(response => response.json());
             if (!resposta.ok) {
                 let mensagemErro = `Lote ${lote} - Erro no servidor (Status: ${resposta.status})\nOs seguintes relatórios podem não ter sido adicionados\n`;
                 (links || []).forEach(link => {

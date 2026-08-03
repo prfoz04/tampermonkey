@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Atualizar banco de dados para o site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.0.11
+// @version      1.1
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
@@ -38,13 +38,6 @@
      */
     async function executar() {
         /**
-         * @type {HTMLFieldSetElement}
-         */
-        const DIV_PRINCIPAL = document.querySelector("fieldset");
-        const DISPLAY_PRINCIPAL = DIV_PRINCIPAL ? DIV_PRINCIPAL.style.display : null;
-        //esconde a div principal durante a execução
-        DIV_PRINCIPAL.style.display = 'none';
-        /**
          * @type {HTMLSelectElement}
          */
         const SELECT_ENTIDADE = document.querySelector(ID_ENTIDADE);
@@ -60,6 +53,7 @@
          * @type {HTMLInputElement}
          */
         const BOTAO_PESQUISAR = document.querySelector(ID_BOTAO_PESQUISAR);
+        escondeDivs(true);
         //preenche o select da vara caso nao esteja preenchido corretamente
         const VALUE_VARA = (await aguardarSelect(ID_VARA, option => option.textContent.includes("4") && option.textContent.includes("Foz do Iguaçu")))[0];
         forcarTrocaSelect(SELECT_VARA, VALUE_VARA);
@@ -84,9 +78,7 @@
         } catch (error) {
             console.error(error);
         }
-        //reconstroi a div principal e o botão
-        DIV_PRINCIPAL.style.display = DISPLAY_PRINCIPAL;
-        criarBotao();
+        escondeDivs(false);
     }
     /**
      * @typedef linhaPrestador
@@ -171,6 +163,18 @@
         }
         // @ts-ignore
         return dados;
+    }
+    /**
+     * esconde ou mostra as divs da página
+     * @param {boolean} fechar 
+     */
+    function escondeDivs(fechar) {
+        const FIELDS = document.querySelectorAll('fieldset');
+        FIELDS.forEach(field => {
+            field.style.display = fechar ? 'none' : 'block';
+        });
+        if (!fechar) 
+            criarBotao();
     }
     /**
      * espera a página responder com uma nova tabela

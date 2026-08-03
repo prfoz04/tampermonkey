@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Geração de relatórios mensais
 // @namespace    https://github.com/4Vara
-// @version      1.2.4
+// @version      1.2.5
 // @description  Gera automaticamente os relatórios do último mês registrado para todos os prestadores no eproc.
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=relatorio_diario_cumprimento_pena*
@@ -171,7 +171,7 @@
      * @returns {number} numero de retransmissoes necessarias 
      */
     function retransmite(links) {
-
+        return 0;
     }
     /**
      * para contornar o tempo máximo de execução do App Script envia em lotes
@@ -266,7 +266,13 @@
                     'Content-Type': 'text/plain;charset=UTF-8'
                 }
             });
-            const json = await JSON.parse(await resposta.text());
+            const textoResposta = await resposta.text();
+            let json;
+            try {
+                json = await JSON.parse(textoResposta);
+            } catch (error) {
+                console.error("Erro ao analisar resposta JSON:", error);
+            }
             if (!resposta.ok || !json.ok) {
                 let mensagemErro = `Lote ${lote} - Erro no servidor (Status: ${resposta.status}): ${json.message}\nOs seguintes relatórios podem não ter sido adicionados\n`;
                 (links || []).forEach(link => {
@@ -279,7 +285,7 @@
                 });
                 return mensagemErro;
             }
-            return await JSON.parse(await resposta.text()).response;
+            return await json.response;
         } catch (error) {
             let mensagemErro = `Lote ${lote} - Erro ao enviar para planilha eproc: ${error}\nOs seguintes relatórios podem não ter sido adicionados\n`;
             (links || []).forEach(link => {

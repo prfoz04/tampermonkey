@@ -34,9 +34,20 @@
      */
     const ID_BOTAO_PESQUISAR = "#btnPesquisar";
     /**
+     * div que contem o formulário e o resultado da página
+     */
+    const ID_DIV_PRINCIPAL = "#divInfraDadosDinamica";
+    /**
      * fluxo de execução principal do script
      */
     async function executar() {
+        /**
+         * @type {HTMLDivElement}
+         */
+        const DIV_PRINCIPAL = document.querySelector(ID_DIV_PRINCIPAL);
+        const DISPLAY_PRINCIPAL = DIV_PRINCIPAL ? DIV_PRINCIPAL.style.display : null;
+        //esconde a div principal durante a execução
+        DIV_PRINCIPAL.style.display = 'none';
         /**
          * @type {HTMLSelectElement}
          */
@@ -77,6 +88,9 @@
         } catch (error) {
             console.error(error);
         }
+        //reconstroi a div principal e o botão
+        DIV_PRINCIPAL.style.display = DISPLAY_PRINCIPAL;
+        criarBotao();
     }
     /**
      * @typedef linhaPrestador

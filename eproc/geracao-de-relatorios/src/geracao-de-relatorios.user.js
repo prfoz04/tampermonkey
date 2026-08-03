@@ -163,7 +163,7 @@
         }
         BARRA_CARREGAMENTO.finish();
         BARRA_CARREGAMENTO.remove();
-        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 3, 3);
+        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 6, 3);
         criaBotao();
         fieldset.style.display = displayField;
     }

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Atualizar banco de dados para o site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.0.9
+// @version      1.0.10
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
@@ -75,9 +75,9 @@
                 BOTAO_PESQUISAR.click();
                 var resposta = await esperaResultado()
                 if (resposta)
-                    TABELAS.push(resposta);
+                    TABELAS.push(resposta.querySelector('tbody'));
             }
-            console.log(extraiDados(TABELAS[0]))
+            console.log(TABELAS)
         } catch (error) {
             console.error(error);
         }
@@ -97,25 +97,7 @@
      * @return {linhaPrestador[]}
      */
     function extraiDados(tabela) {
-        var linhas = tabela.querySelectorAll('tr');
-        if (!linhas.length) {
-            return [];
-        }
-        var cabecalho = Array.from(linhas[0].querySelectorAll('th')).map(th => th.textContent.trim());
-        var dados = [];
-        for (let i = 1; i < linhas.length; i++) {
-            var colunas = Array.from(linhas[i].querySelectorAll('td')).map(td => td.textContent.trim());
-            if (colunas.length === cabecalho.length) {
-                var obj = {};
-                for (let j = 0; j < cabecalho.length; j++) {
-                    // @ts-ignore
-                    obj[cabecalho[j]] = colunas[j];
-                }
-                dados.push(obj);
-            }
-        }
-        // @ts-ignore
-        return dados;
+
     }
     /**
      * espera a página responder com uma nova tabela
@@ -139,7 +121,7 @@
                     }
                     response(resultado);
                 }
-            }, 300) 
+            }, 50) 
         })
     }
     /**

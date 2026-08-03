@@ -34,9 +34,20 @@
      */
     const ID_BOTAO_PESQUISAR = "#btnPesquisar";
     /**
+     * id da div que contém o formulário, para esconder enquanto o script roda
+     */
+    const ID_DIV_PRINCIPAL = "#divInfraAreaTela";
+    /**
      * fluxo de execução principal do script
      */
     async function executar() {
+        /**
+         * @type {HTMLDivElement}
+         */
+        const DIV_PRINCIPAL = document.querySelector(ID_DIV_PRINCIPAL);
+        const DISPLAY_PRINCIPAL = DIV_PRINCIPAL.style.display;
+        //esconde a div principal para não atrapalhar a execução do script
+        DIV_PRINCIPAL.style.display = 'none';
         /**
          * @type {HTMLSelectElement}
          */
@@ -53,7 +64,6 @@
          * @type {HTMLInputElement}
          */
         const BOTAO_PESQUISAR = document.querySelector(ID_BOTAO_PESQUISAR);
-        escondeDivs(true);
         //preenche o select da vara caso nao esteja preenchido corretamente
         const VALUE_VARA = (await aguardarSelect(ID_VARA, option => option.textContent.includes("4") && option.textContent.includes("Foz do Iguaçu")))[0];
         forcarTrocaSelect(SELECT_VARA, VALUE_VARA);
@@ -78,7 +88,8 @@
         } catch (error) {
             console.error(error);
         }
-        escondeDivs(false);
+        //retorna a página ao estado original
+        window.location.reload();
     }
     /**
      * @typedef linhaPrestador
@@ -163,18 +174,6 @@
         }
         // @ts-ignore
         return dados;
-    }
-    /**
-     * esconde ou mostra as divs da página
-     * @param {boolean} fechar 
-     */
-    function escondeDivs(fechar) {
-        const FIELDS = document.querySelectorAll('fieldset');
-        FIELDS.forEach(field => {
-            field.style.display = fechar ? 'none' : 'block';
-        });
-        if (!fechar) 
-            criarBotao();
     }
     /**
      * espera a página responder com uma nova tabela

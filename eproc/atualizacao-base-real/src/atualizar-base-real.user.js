@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Atualizar banco de dados para o site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.0.8
+// @version      1.0.9
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
@@ -101,25 +101,18 @@
         if (!linhas.length) {
             return [];
         }
-        /**
-         * @type {string[]}
-         */
-        var cabecalho = Array.from(linhas[0].querySelectorAll('th'))
-            .filter(th => th.textContent.trim() !== 'Ações')
-            .map(th => th.textContent.trim());
+        var cabecalho = Array.from(linhas[0].querySelectorAll('th')).map(th => th.textContent.trim());
         var dados = [];
         for (let i = 1; i < linhas.length; i++) {
-            var colunas = linhas[i].querySelectorAll('td');
-            if (colunas.length <= 1) {
-                continue;
+            var colunas = Array.from(linhas[i].querySelectorAll('td')).map(td => td.textContent.trim());
+            if (colunas.length === cabecalho.length) {
+                var obj = {};
+                for (let j = 0; j < cabecalho.length; j++) {
+                    // @ts-ignore
+                    obj[cabecalho[j]] = colunas[j];
+                }
+                dados.push(obj);
             }
-            var objeto = {};
-            for (let j = 1; j < colunas.length; j++) {
-                var text = colunas[j].textContent.trim();
-                // @ts-ignore
-                objeto[cabecalho[j - 1]] = text;
-            }
-            dados.push(objeto);
         }
         // @ts-ignore
         return dados;

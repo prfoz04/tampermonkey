@@ -64,7 +64,7 @@
         const ENTIDADES = await aguardarSelect(ID_ENTIDADE);
         /**
          * guarda os elementos no vetor para ficar mais rápido iterar sobre depois
-         * @type {HTMLDivElement[]}
+         * @type {HTMLTableElement[]}
          */
         const TABELAS = [];
         //itera sobre entidades capturando as tabelas resultado
@@ -75,7 +75,7 @@
                 BOTAO_PESQUISAR.click();
                 var resposta = await esperaResultado()
                 if (resposta)
-                    TABELAS.push(resposta.querySelector('tbody'));
+                    TABELAS.push(resposta.innerHTML);
             }
             console.log(TABELAS)
         } catch (error) {
@@ -93,7 +93,7 @@
      */
     /**
      * transforma a tabela em um vetor de objetos
-     * @param {HTMLDivElement} tabela 
+     * @param {HTMLTableElement} tabela 
      * @return {linhaPrestador[]}
      */
     function extraiDados(tabela) {
@@ -101,7 +101,7 @@
     }
     /**
      * espera a página responder com uma nova tabela
-     * @returns {Promise<HTMLDivElement>}
+     * @returns {Promise<HTMLTableElement>}
      */
     function esperaResultado() {
         return new Promise((response) => {
@@ -119,7 +119,7 @@
                         clearInterval(INTERVAL);
                         response(null);
                     }
-                    response(resultado);
+                    response(resultado.querySelector('table'));
                 }
             }, 50) 
         })

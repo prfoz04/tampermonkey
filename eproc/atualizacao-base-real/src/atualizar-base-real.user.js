@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Atualizar banco de dados para o site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.0.10
+// @version      1.0.11
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
@@ -95,13 +95,17 @@
     function extraiDados(tabela) {
         const linhas = Array.from(tabela.querySelectorAll('tr'));
         const cabecalho = Array.from(linhas[0].querySelectorAll('th')).map(th => th.textContent.trim());
-        const dados = linhas.slice(1).map(tr => {
-            const celulas = Array.from(tr.querySelectorAll('td'));
-            return cabecalho.reduce((obj, key, index) => {
-                obj[key] = celulas[index]?.textContent.trim() || '';
-                return obj;
-            }, {});
-        });
+        const dados = [];
+        for (let i = 1; i < linhas.length; i++) {
+            const colunas = Array.from(linhas[i].querySelectorAll('td'));
+            const linha = {};
+            cabecalho.forEach((coluna, index) => {
+                // @ts-ignore
+                linha[coluna] = colunas[index].textContent.trim();
+            });
+            dados.push(linha);
+        }
+        // @ts-ignore
         return dados;
     }
     /**

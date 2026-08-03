@@ -34,17 +34,13 @@
      */
     const ID_BOTAO_PESQUISAR = "#btnPesquisar";
     /**
-     * div que contem o formulário e o resultado da página
-     */
-    const ID_DIV_PRINCIPAL = "#divInfraDadosDinamica";
-    /**
      * fluxo de execução principal do script
      */
     async function executar() {
         /**
-         * @type {HTMLDivElement}
+         * @type {HTMLFieldSetElement}
          */
-        const DIV_PRINCIPAL = document.querySelector(ID_DIV_PRINCIPAL);
+        const DIV_PRINCIPAL = document.querySelector("fieldset");
         const DISPLAY_PRINCIPAL = DIV_PRINCIPAL ? DIV_PRINCIPAL.style.display : null;
         //esconde a div principal durante a execução
         DIV_PRINCIPAL.style.display = 'none';

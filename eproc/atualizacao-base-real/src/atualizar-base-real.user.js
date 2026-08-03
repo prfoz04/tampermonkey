@@ -88,9 +88,63 @@
      * @property {string} Observações
      */
     /**
+     * envia para a api via post, enquadra em lotes cada lote só pode possuir registros da mesma entidade, para que a api não demore muito
+     * @param {linhaPrestador[][]} tabelas 
+     */
+    async function enviarParaPlanilha(tabelas) {
+        const TAM_MAX_LOTE = 5;
+        const CONCORRENCIAS = 3;
+        let contador = 0;
+        let loteAtual = 0;
+        let promises = [];
+        let resultados = [];
+        for (let i = 0; i < tabelas.length; i++) {
+            var tabela = tabelas[i];
+            let lote = [];
+            for (let j = 0; j < tabela.length; j++) {
+                lote.push(tabela[j]);
+                if (++contador >= TAM_MAX_LOTE) {
+                    promises.push(enviarLote(lote, ++loteAtual));
+                    lote = [];
+                    contador = 0;
+                }
+            }
+            if (lote.length > 0) {
+                promises.push(enviarLote(lote, ++loteAtual));
+            }
+        }
+        while (promises.length > 0) {
+            for (let i = 0; i < promises.length; i += CONCORRENCIAS) {
+                var bloco = promises.slice(i, i + CONCORRENCIAS);
+                var resultBloco = await Promise.all(bloco);
+                resultados.push(...resultBloco);
+            }
+        }
+        resultados.forEach((res) => {console.log(res.text)});
+    }
+    /**
+     * dispacha o lote para a api
+     * @param {linhaPrestador[]} lote 
+     * @param {number} numero 
+     */
+    async function enviarLote(lote, numero) {
+        const URL_API = "https://script.google.com/macros/s/AKfycbxH4GeMfR5z0deOlwgFOpvlEY9LLKAzj921hYuEOgM4pt-oc7ce5sviMQxhqnzMP914/exec";
+        const DATA = new FormData();
+        DATA.append('atualizarPlanilhas', JSON.stringify(lote));
+        DATA.append('lote', numero.toString());
+        const response = await fetch(URL_API, {
+            method: 'POST',
+            body: DATA
+        }).then(res => res.json()).catch(err => {
+            console.error(err);
+            return { text: `Erro ao enviar lote ${numero}: ${err.message}` };
+        });
+        return response;
+    }
+    /**
      * transforma a tabela em um vetor de objetos
      * @param {HTMLTableElement} tabela 
-     * @return {linhaPrestador[]}
+     * @return {linhaPrestador[][]}
      */
     function extraiDados(tabela) {
         const linhas = Array.from(tabela.querySelectorAll('tr'));

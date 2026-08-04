@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Geração de relatórios mensais
 // @namespace    https://github.com/4Vara
-// @version      1.2.5
+// @version      1.0.8
 // @description  Gera automaticamente os relatórios do último mês registrado para todos os prestadores no eproc.
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=relatorio_diario_cumprimento_pena*
@@ -162,17 +162,10 @@
         }
         BARRA_CARREGAMENTO.finish();
         BARRA_CARREGAMENTO.remove();
-        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 2, 3);
+        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 6, 3);
         window.location.reload();
     }
-    /**
-     * retransmite os links que falharam, caso seja necessário
-     * @param {linkPrestador[]} links
-     * @returns {number} numero de retransmissoes necessarias 
-     */
-    function retransmite(links) {
-        return 0;
-    }
+
     /**
      * para contornar o tempo máximo de execução do App Script envia em lotes
      * @param {linkPrestador[]} links 
@@ -218,9 +211,8 @@
             else
                 total++
         BARRA_CARREGAMENTO.finish();
-        let numeroRetransmissoes = retransmite(links.filter(link => link.erro));
         tempoFim = performance.now()
-        await enviarParaPlanilhas([null], -1, {respostas: respostas, total: total.toString(), totalErros: totalErros.toString(), tempoExecucao: ((tempoFim-tempoInicio)/60000).toFixed(2).toString().replace('.', ','), retransmissoes: numeroRetransmissoes.toString()})
+        await enviarParaPlanilhas([null], -1, {respostas: respostas, total: total.toString(), totalErros: totalErros.toString(), tempoExecucao: ((tempoFim-tempoInicio)/60000).toFixed(2).toString().replace('.', ',')})
         BARRA_CARREGAMENTO.remove();}
         catch (error) {
             console.error(error);
@@ -234,7 +226,6 @@
      * @property {string} total
      * @property {string} totalErros
      * @property {string} tempoExecucao
-     * @property {string} retransmissoes
      */
 
     /**
@@ -253,28 +244,16 @@
      */
     async function enviarParaPlanilhas(links, lote, informe = null) {
         const url = "https://script.google.com/macros/s/AKfycbxH4GeMfR5z0deOlwgFOpvlEY9LLKAzj921hYuEOgM4pt-oc7ce5sviMQxhqnzMP914/exec";
-        const payload = JSON.stringify({
-            relatoriosEproc: links,
-            lote: lote.toString(),
-            informativo: informe || null
-        });
+        const formData = new FormData();
+        formData.append("relatoriosEproc", JSON.stringify(links));
+        formData.append("lote", lote.toString());
+        if (informe) {
+            formData.append("informativo", JSON.stringify(informe));
+        }
         try {
-            const resposta = await fetch(url, { 
-                method: 'POST', 
-                body: payload,
-                headers: {
-                    'Content-Type': 'text/plain;charset=UTF-8'
-                }
-            });
-            const textoResposta = await resposta.text();
-            let json;
-            try {
-                json = await JSON.parse(textoResposta);
-            } catch (error) {
-                console.error("Erro ao analisar resposta JSON:", error);
-            }
-            if (!resposta.ok || !json.ok) {
-                let mensagemErro = `Lote ${lote} - Erro no servidor (Status: ${resposta.status}): ${json.message}\nOs seguintes relatórios podem não ter sido adicionados\n`;
+            const resposta = await fetch(url, { method: 'POST', body: formData }).then(response => response.json());
+            if (!resposta.ok) {
+                let mensagemErro = `Lote ${lote} - Erro no servidor (Status: ${resposta.status})\nOs seguintes relatórios podem não ter sido adicionados\n`;
                 (links || []).forEach(link => {
                     if (!link) {
                         return;
@@ -285,7 +264,7 @@
                 });
                 return mensagemErro;
             }
-            return await json.response;
+            return await resposta.response;
         } catch (error) {
             let mensagemErro = `Lote ${lote} - Erro ao enviar para planilha eproc: ${error}\nOs seguintes relatórios podem não ter sido adicionados\n`;
             (links || []).forEach(link => {
@@ -366,23 +345,8 @@
                     clearInterval(interval);
                     response([]);
                 }
-            }, 50); //tempo de checagem
+            }, 100); //tempo de checagem
         });
-    }
-
-    /**
-     * cria um vetor de teste para enviar para a planilha, apenas para testar a função de envio
-     * @param {linkPrestador[]} links
-     * @param {number} n 
-     */
-    function teste(links, n) {
-        let aux = [];
-        for (let i = 0, j = 0; i < n; i++) {
-            if (j >= links.length)
-                j = 0;
-            aux.push(links[j]);
-        }
-        return aux;
     }
 
     /**
@@ -528,7 +492,8 @@
     finish(mensagem = 'Concluído com sucesso!') {
         this.update(this.totalItems);
         this.statusEl.textContent = mensagem;
-        this.barFill.style.backgroundColor = '#2196F3';
+        this.barFill.style.backgroundColor = '#2196F3'; // Muda para azul ao concluir
+        
         // Remove automaticamente após 2 segundos
         setTimeout(() => this.remove(), 2000);
     }

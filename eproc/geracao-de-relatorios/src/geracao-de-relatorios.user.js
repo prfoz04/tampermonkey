@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Geração de relatórios mensais
 // @namespace    https://github.com/4Vara
-// @version      1.1
+// @version      1.2
 // @description  Gera automaticamente os relatórios do último mês registrado para todos os prestadores no eproc.
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=relatorio_diario_cumprimento_pena*
@@ -203,18 +203,27 @@
             respostas.push(...respostaBloco);
             BARRA_CARREGAMENTO.update(contador++)
         }
+        BARRA_CARREGAMENTO.finish();
+        BARRA_CARREGAMENTO.remove();
+        //fluxo de retransmissão de arquivos que falharam
         let totalErros = 0;
         let total = 0;
-        for (let link of links)
-            if (link.erro)
-                totalErros++;
-            else
-                total++
-        BARRA_CARREGAMENTO.finish();
+        let retransmitidos = 0;
+        let respostaRetransmissao = [];
+        for (let i = 0; i < 2; i++) {
+            for (let link of links)
+                if (link.erro)
+                    totalErros++;
+                else
+                    total++
+            if (totalErros > 0) {
+                respostaRetransmissao.push(...await retransmite(links.filter(link => link.erro)));
+                retransmitidos++;
+            }
+        }
         tempoFim = performance.now()
-        await enviarParaPlanilhas([null], -1, {respostas: respostas, total: total.toString(), totalErros: totalErros.toString(), tempoExecucao: ((tempoFim-tempoInicio)/60000).toFixed(2).toString().replace('.', ',')})
-        BARRA_CARREGAMENTO.remove();}
-        catch (error) {
+        await enviarParaPlanilhas([null], -1, {respostas: respostas.map(r => r.mensagem), total: total.toString(), totalErros: totalErros.toString(), tempoExecucao: ((tempoFim-tempoInicio)/60000).toFixed(2).toString().replace('.', ','), retransmitidos: retransmitidos.toString()})
+        } catch (error) {
             console.error(error);
             alert("Falha no envio dos arquivos");
         }
@@ -226,6 +235,7 @@
      * @property {string} total
      * @property {string} totalErros
      * @property {string} tempoExecucao
+     * @property {string} retransmitidos
      */
 
     /**
@@ -253,7 +263,7 @@
         try {
             const resposta = await fetch(url, { method: 'POST', body: formData }).then(response => response.json());
             if (!resposta.ok) {
-                let mensagemErro = `Lote ${lote} - Erro no servidor (Status: ${resposta.status})\nOs seguintes relatórios podem não ter sido adicionados\n`;
+                let mensagemErro = `Lote ${lote} - Erro no servidor (Status: ${resposta.response})\nOs seguintes relatórios podem não ter sido adicionados\n`;
                 (links || []).forEach(link => {
                     if (!link) {
                         return;
@@ -262,9 +272,9 @@
                     link.descricao = link.descricao ? `${link.descricao}\n${mensagemErro}` : mensagemErro;
                     mensagemErro += `${link.prestador}:\n${link.pdfUrl}\n`
                 });
-                return mensagemErro;
+                return {erro: true, mensagem: mensagemErro};
             }
-            return await resposta.response;
+            return {erro: false, mensagem: resposta.response};
         } catch (error) {
             let mensagemErro = `Lote ${lote} - Erro ao enviar para planilha eproc: ${error}\nOs seguintes relatórios podem não ter sido adicionados\n`;
             (links || []).forEach(link => {
@@ -275,10 +285,46 @@
                 link.descricao = link.descricao ? `${link.descricao}\n${mensagemErro}` : mensagemErro;
                 mensagemErro += `${link.prestador}:\n${link.pdfUrl}\n`
             });
-            return mensagemErro;
+            return {erro: true, mensagem: mensagemErro};
         }
     }
-
+    /**
+     * no final da execução, tenta retransmitir os links que falharam
+     * @param {linkPrestador[]} links 
+     * @return {Promise<string[]>}
+     */
+    async function retransmite(links) {
+        // Helper simples para dar uma pausa entre requisições
+        const TAM_LOTE = 3;
+        const CHAMADAS = Math.ceil(links.length / TAM_LOTE);
+        const BARRA_CARREGAMENTO = new ProgressBar(CHAMADAS, "Retransmitindo arquivos...");
+        let contador = 1;
+        BARRA_CARREGAMENTO.update(contador++);
+        // @ts-ignore
+        const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+        //envia três por vez e espera 1 segundo entre cada envio
+        let respostas = [];
+        let numeroLote = 0;
+        for (let i = 0; i < links.length; i += TAM_LOTE) {
+            const lote = links.slice(i, i + TAM_LOTE);
+            var response = await enviarParaPlanilhas(lote, ++numeroLote);
+            respostas.push(response.mensagem);
+            if (!response.erro) {
+                (links || []).forEach(link => {
+                    if (!link) {
+                        return;
+                    }
+                    link.erro = false;
+            });
+            }
+            //espera um pouco antes do próximo
+            await delay(1000);
+            BARRA_CARREGAMENTO.update(contador++);
+        }
+        BARRA_CARREGAMENTO.finish();
+        BARRA_CARREGAMENTO.remove();
+        return respostas;
+    }
     /**
      * @param {HTMLSelectElement} selectElement 
      * @param {string} valor 

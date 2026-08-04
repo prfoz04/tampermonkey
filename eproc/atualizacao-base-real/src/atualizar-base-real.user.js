@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         eproc - Atualizar banco de dados para o site (planilhas de entidade)
+// @name         eproc - Atualizar banco de dados do site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.2.1
+// @version      1.2.2
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
@@ -92,6 +92,7 @@
         } catch (error) {
             console.error(error);
         }
+        await enviarParaPlanilha(TABELAS);
         BARRA_CARREGAMENTO.remove();
         //retorna a página ao estado original
         window.location.reload();
@@ -110,7 +111,7 @@
      * @param {linhaPrestador[][]} tabelas 
      */
     async function enviarParaPlanilha(tabelas) {
-        const TAM_MAX_LOTE = 5;
+        const TAM_MAX_LOTE = 3;
         const CONCORRENCIAS = 3;
         let contador = 0;
         let loteAtual = 0;
@@ -162,11 +163,11 @@
     /**
      * transforma a tabela em um vetor de objetos
      * @param {HTMLTableElement} tabela 
-     * @return {linhaPrestador[][]}
+     * @return {linhaPrestador[]}
      */
     function extraiDados(tabela) {
         const linhas = Array.from(tabela.querySelectorAll('tr'));
-        const cabecalho = Array.from(linhas[0].querySelectorAll('th')).map(th => th.textContent.trim());
+        const cabecalho = Array.from(linhas[0].querySelectorAll('th')).map(th => th.textContent.trim()).map(str => str.replace(/ç/g, 'c').replace(/õ/g, 'o').replace(/á/g, 'a').replace(/é/g, 'e').replace(/í/g, 'i').replace(/ó/g, 'o').replace(/ú/g, 'u').replace(/ /g, '').replace(/\./g, '').replace(/\//g, '').replace(/\-/g, '').toLowerCase());
         const dados = [];
         for (let i = 1; i < linhas.length; i++) {
             const colunas = Array.from(linhas[i].querySelectorAll('td'));

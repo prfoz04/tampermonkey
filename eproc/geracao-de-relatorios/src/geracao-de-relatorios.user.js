@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Geração de relatórios mensais
 // @namespace    https://github.com/4Vara
-// @version      1.2
+// @version      1.3
 // @description  Gera automaticamente os relatórios do último mês registrado para todos os prestadores no eproc.
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=relatorio_diario_cumprimento_pena*
@@ -400,7 +400,7 @@
                     clearInterval(interval);
                     response([]);
                 }
-            }, 100); //tempo de checagem
+            }, 30); //tempo de checagem
         });
     }
 

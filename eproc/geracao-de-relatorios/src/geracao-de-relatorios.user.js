@@ -214,11 +214,12 @@
             for (let link of links)
                 if (link.erro)
                     totalErros++;
-                else
+                else if (i == 0)
                     total++
             if (totalErros > 0) {
-                respostaRetransmissao.push(...await retransmite(links.filter(link => link.erro)));
-                retransmitidos++;
+                var linksComErro = links.filter(link => link.erro); 
+                respostaRetransmissao.push(...await retransmite(linksComErro));
+                retransmitidos += linksComErro.length;
             }
         }
         tempoFim = performance.now()
@@ -278,7 +279,7 @@
                     }
                     link.erro = true;
                     link.descricao = link.descricao ? `${link.descricao}\n${mensagemErro}` : mensagemErro;
-                    mensagemErro += `${link.prestador}:\n${link.pdfUrl}\n`
+                    mensagemErro += `${link.prestador}:\n${link.pdfUrl}`
                 });
                 return {erro: true, mensagem: mensagemErro};
             }
@@ -291,7 +292,7 @@
                 }
                 link.erro = true;
                 link.descricao = link.descricao ? `${link.descricao}\n${mensagemErro}` : mensagemErro;
-                mensagemErro += `${link.prestador}:\n${link.pdfUrl}\n`
+                mensagemErro += `${link.prestador}:\n${link.pdfUrl}`
             });
             return {erro: true, mensagem: mensagemErro};
         }

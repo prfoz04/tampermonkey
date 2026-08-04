@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Atualizar banco de dados do site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.2.2
+// @version      1.2.3
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
@@ -132,13 +132,17 @@
                 promises.push(enviarLote(lote, ++loteAtual));
             }
         }
-        while (promises.length > 0) {
-            for (let i = 0; i < promises.length; i += CONCORRENCIAS) {
-                var bloco = promises.slice(i, i + CONCORRENCIAS);
-                var resultBloco = await Promise.all(bloco);
-                resultados.push(...resultBloco);
-            }
+        const BARRA_CARREGAMENTO = new ProgressBar(Math.ceil(promises.length / CONCORRENCIAS), 'Enviando dados para a planilha...');
+        contador = 0;
+        BARRA_CARREGAMENTO.update(++contador);
+        for (let i = 0; i < promises.length; i += CONCORRENCIAS) {
+            var bloco = promises.slice(i, i + CONCORRENCIAS);
+            var resultBloco = await Promise.all(bloco);
+            resultados.push(...resultBloco);
+            BARRA_CARREGAMENTO.update(++contador);
         }
+        BARRA_CARREGAMENTO.finish();
+        BARRA_CARREGAMENTO.remove();
         resultados.forEach((res) => {console.log(res.text)});
     }
     /**

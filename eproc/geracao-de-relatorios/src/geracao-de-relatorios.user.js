@@ -222,7 +222,14 @@
             }
         }
         tempoFim = performance.now()
-        await enviarParaPlanilhas([null], -1, {respostas: respostas.map(r => r.mensagem), total: total.toString(), totalErros: totalErros.toString(), tempoExecucao: ((tempoFim-tempoInicio)/60000).toFixed(2).toString().replace('.', ','), retransmitidos: retransmitidos.toString()})
+        await enviarParaPlanilhas([null], -1, {
+            respostas: respostas.map(r => r.mensagem), 
+            total: total.toString(), 
+            totalErros: totalErros.toString(), 
+            tempoExecucao: ((tempoFim-tempoInicio)/60000).toFixed(2).toString().replace('.', ','), 
+            retransmitidos: retransmitidos.toString(),
+            respostasRetransmissao: respostaRetransmissao
+        });
         } catch (error) {
             console.error(error);
             alert("Falha no envio dos arquivos");
@@ -236,6 +243,7 @@
      * @property {string} totalErros
      * @property {string} tempoExecucao
      * @property {string} retransmitidos
+     * @property {string[]} respostasRetransmissao 
      */
 
     /**

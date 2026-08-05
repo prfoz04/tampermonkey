@@ -163,6 +163,7 @@
         BARRA_CARREGAMENTO.finish();
         // Envia todos os links de uma vez, sem lógica de lotes ou retransmissão
         const resposta = await enviarParaPlanilhas(linksPDF.filter(link => link.prestador !== 'Selecione'));
+        alert(resposta)
         BARRA_CARREGAMENTO.remove();
         window.location.reload();
     }

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Geração de relatórios mensais
 // @namespace    https://github.com/4Vara
-// @version      1.4
+// @version      1.4.1
 // @description  Gera automaticamente os relatórios do último mês registrado para todos os prestadores no eproc.
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=relatorio_diario_cumprimento_pena*
@@ -161,9 +161,9 @@
             }
         }
         BARRA_CARREGAMENTO.finish();
-        BARRA_CARREGAMENTO.remove();
         // Envia todos os links de uma vez, sem lógica de lotes ou retransmissão
-        await enviarParaPlanilhas(linksPDF.filter(link => link.prestador !== 'Selecione'));
+        const resposta = await enviarParaPlanilhas(linksPDF.filter(link => link.prestador !== 'Selecione'));
+        BARRA_CARREGAMENTO.remove();
         window.location.reload();
     }
     /**
@@ -181,7 +181,7 @@
         formData.append("relatoriosEproc", JSON.stringify(links));
         try {
             // Envio simples: não há lógica de reenvio ou relatório de erros aqui
-            await fetch(url, { method: 'POST', body: formData });
+            fetch(url, { method: 'POST', body: formData }).then(res => res.text());
         } catch (error) {
             // Apenas loga o erro no console sem manipular os links
             console.error('Erro ao enviar para planilha:', error);

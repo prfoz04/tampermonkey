@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Geração de relatórios mensais
 // @namespace    https://github.com/4Vara
-// @version      1.3
+// @version      1.4
 // @description  Gera automaticamente os relatórios do último mês registrado para todos os prestadores no eproc.
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=relatorio_diario_cumprimento_pena*
@@ -162,177 +162,30 @@
         }
         BARRA_CARREGAMENTO.finish();
         BARRA_CARREGAMENTO.remove();
-        await divideEmLotes(linksPDF.filter(link => link.prestador !== 'Selecione'), 3, 3);
+        // Envia todos os links de uma vez, sem lógica de lotes ou retransmissão
+        await enviarParaPlanilhas(linksPDF.filter(link => link.prestador !== 'Selecione'));
         window.location.reload();
     }
-
-    /**
-     * para contornar o tempo máximo de execução do App Script envia em lotes
-     * @param {linkPrestador[]} links 
-     * @param {number} tamLote 
-     * @param {number} promissesConcorrentes
-     */
-    async function divideEmLotes(links, tamLote, promissesConcorrentes) {
-        try {const lotesArq = Math.ceil(links.length / tamLote);
-        const lotesPromisse = Math.ceil(lotesArq / promissesConcorrentes)
-        let informacao = [];
-        let lote = 1;
-        let promises = [];
-        let respostas = [];
-        for (let link of links) {
-            informacao.push(link);
-            if (informacao.length >= tamLote) {
-                const dadosAtual = [...informacao];
-                const loteAtual = lote;
-                promises[lote - 1] = () => enviarParaPlanilhas(dadosAtual, loteAtual);
-                informacao = [];
-                lote++;
-            }
-        }
-        if (informacao.length >= 1) {
-            const dadosAtual = [...informacao];
-            const loteAtual = lote;
-            promises[lote - 1] = () => enviarParaPlanilhas(dadosAtual, loteAtual);
-        }
-        const BARRA_CARREGAMENTO = new ProgressBar(lotesPromisse + 1, "Enviando arquivos...");
-        let contador = 1;
-        BARRA_CARREGAMENTO.update(contador++);
-        for (let i = 0; i < promises.length; i += promissesConcorrentes) {
-            const bloco = promises.slice(i, i + promissesConcorrentes).map(f => f());
-            const respostaBloco = await Promise.all(bloco);
-            respostas.push(...respostaBloco);
-            BARRA_CARREGAMENTO.update(contador++)
-        }
-        BARRA_CARREGAMENTO.finish();
-        BARRA_CARREGAMENTO.remove();
-        //fluxo de retransmissão de arquivos que falharam
-        let totalErros = 0;
-        let total = 0;
-        let retransmitidos = 0;
-        let respostaRetransmissao = [];
-        for (let i = 0; i < 2; i++) {
-            for (let link of links)
-                if (link.erro)
-                    totalErros++;
-                else if (i == 0)
-                    total++
-            if (totalErros > 0) {
-                var linksComErro = links.filter(link => link.erro); 
-                respostaRetransmissao.push(...await retransmite(linksComErro));
-                retransmitidos += linksComErro.length;
-            }
-        }
-        tempoFim = performance.now()
-        await enviarParaPlanilhas([null], -1, {
-            respostas: respostas.map(r => r.mensagem), 
-            total: total.toString(), 
-            totalErros: totalErros.toString(), 
-            tempoExecucao: ((tempoFim-tempoInicio)/60000).toFixed(2).toString().replace('.', ','), 
-            retransmitidos: retransmitidos.toString(),
-            respostasRetransmissao: respostaRetransmissao
-        });
-        } catch (error) {
-            console.error(error);
-            alert("Falha no envio dos arquivos");
-        }
-    }
-
-    /**
-     * @typedef informativo
-     * @property {string[]} respostas
-     * @property {string} total
-     * @property {string} totalErros
-     * @property {string} tempoExecucao
-     * @property {string} retransmitidos
-     * @property {string[]} respostasRetransmissao 
-     */
-
     /**
      * @typedef linkPrestador
      * @property {string} pdfUrl
      * @property {string} prestador
-     * @property {boolean} erro
-     * @property {string} descricao 
      */
-
     /**
      * envia para a planilha API para que ela possa registrar os valores na planilha PSC e enviar os pdfs para o drive
      * @param {linkPrestador[]} links 
-     * @param {number} lote
-     * @param {informativo} informe
      */
-    async function enviarParaPlanilhas(links, lote, informe = null) {
+    async function enviarParaPlanilhas(links) {
         const url = "https://script.google.com/macros/s/AKfycbxH4GeMfR5z0deOlwgFOpvlEY9LLKAzj921hYuEOgM4pt-oc7ce5sviMQxhqnzMP914/exec";
         const formData = new FormData();
         formData.append("relatoriosEproc", JSON.stringify(links));
-        formData.append("lote", lote.toString());
-        if (informe) {
-            formData.append("informativo", JSON.stringify(informe));
-        }
         try {
-            const resposta = await fetch(url, { method: 'POST', body: formData }).then(response => response.json());
-            if (!resposta.ok) {
-                let mensagemErro = `Lote ${lote} - Erro no servidor (Status: ${resposta.response})\nOs seguintes relatórios podem não ter sido adicionados\n`;
-                (links || []).forEach(link => {
-                    if (!link) {
-                        return;
-                    }
-                    link.erro = true;
-                    link.descricao = link.descricao ? `${link.descricao}\n${mensagemErro}` : mensagemErro;
-                    mensagemErro += `${link.prestador}:\n${link.pdfUrl}`
-                });
-                return {erro: true, mensagem: mensagemErro};
-            }
-            return {erro: false, mensagem: resposta.response};
+            // Envio simples: não há lógica de reenvio ou relatório de erros aqui
+            await fetch(url, { method: 'POST', body: formData });
         } catch (error) {
-            let mensagemErro = `Lote ${lote} - Erro ao enviar para planilha eproc: ${error}\nOs seguintes relatórios podem não ter sido adicionados\n`;
-            (links || []).forEach(link => {
-                if (!link) {
-                    return;
-                }
-                link.erro = true;
-                link.descricao = link.descricao ? `${link.descricao}\n${mensagemErro}` : mensagemErro;
-                mensagemErro += `${link.prestador}:\n${link.pdfUrl}`
-            });
-            return {erro: true, mensagem: mensagemErro};
+            // Apenas loga o erro no console sem manipular os links
+            console.error('Erro ao enviar para planilha:', error);
         }
-    }
-    /**
-     * no final da execução, tenta retransmitir os links que falharam
-     * @param {linkPrestador[]} links 
-     * @return {Promise<string[]>}
-     */
-    async function retransmite(links) {
-        // Helper simples para dar uma pausa entre requisições
-        const TAM_LOTE = 3;
-        const CHAMADAS = Math.ceil(links.length / TAM_LOTE);
-        const BARRA_CARREGAMENTO = new ProgressBar(CHAMADAS, "Retransmitindo arquivos...");
-        let contador = 1;
-        BARRA_CARREGAMENTO.update(contador++);
-        // @ts-ignore
-        const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-        //envia três por vez e espera 1 segundo entre cada envio
-        let respostas = [];
-        let numeroLote = 0;
-        for (let i = 0; i < links.length; i += TAM_LOTE) {
-            const lote = links.slice(i, i + TAM_LOTE);
-            var response = await enviarParaPlanilhas(lote, ++numeroLote);
-            respostas.push(response.mensagem);
-            if (!response.erro) {
-                (links || []).forEach(link => {
-                    if (!link) {
-                        return;
-                    }
-                    link.erro = false;
-            });
-            }
-            //espera um pouco antes do próximo
-            await delay(1000);
-            BARRA_CARREGAMENTO.update(contador++);
-        }
-        BARRA_CARREGAMENTO.finish();
-        BARRA_CARREGAMENTO.remove();
-        return respostas;
     }
     /**
      * @param {HTMLSelectElement} selectElement 

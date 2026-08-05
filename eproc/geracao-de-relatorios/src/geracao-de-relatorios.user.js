@@ -182,7 +182,7 @@
         formData.append("relatoriosEproc", JSON.stringify(links));
         try {
             // Envio simples: não há lógica de reenvio ou relatório de erros aqui
-            fetch(url, { method: 'POST', body: formData }).then(res => res.text());
+            return fetch(url, { method: 'POST', body: formData }).then(res => res.text());
         } catch (error) {
             // Apenas loga o erro no console sem manipular os links
             console.error('Erro ao enviar para planilha:', error);

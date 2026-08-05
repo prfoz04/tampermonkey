@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Atualizar banco de dados do site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.2.6
+// @version      1.2.8
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
@@ -95,7 +95,7 @@
         } catch (error) {
             console.error(error);
         }
-        await enviarParaPlanilha(TABELAS);
+        console.log(await enviar(TABELAS.flat()));
         BARRA_CARREGAMENTO.remove();
         //retorna a página ao estado original
         window.location.reload();
@@ -110,48 +110,13 @@
      * @property {string} Observações
      */
     /**
-     * envia para a api via post, enquadra em lotes cada lote só pode possuir registros da mesma entidade, para que a api não demore muito
-     * @param {linhaPrestador[][]} tabelas 
-     */
-    async function enviarParaPlanilha(tabelas) {
-        const CONCORRENCIAS = 3;
-        let contador = 0;
-        let loteAtual = 0;
-        let promises = [];
-        let resultados = [];
-        for (let i = 0; i < tabelas.length; i++) {
-            var tabela = tabelas[i];
-            for (let j = 0; j < tabela.length; j++) {
-                promises.push(enviarLote([tabela[j]], ++loteAtual));
-            }
-        }
-        const totalBlocos = Math.ceil(promises.length / CONCORRENCIAS);
-        const BARRA_CARREGAMENTO = new ProgressBar(totalBlocos, 'Enviando dados para a planilha...');
-        let blocoIndex = 0;
-        for (let i = 0; i < promises.length; i += CONCORRENCIAS) {
-            BARRA_CARREGAMENTO.update(++blocoIndex);
-            var bloco = promises.slice(i, i + CONCORRENCIAS);
-            var resultBloco = await Promise.all(bloco);
-            resultados.push(...resultBloco);
-            resultBloco.forEach(res => {
-                if (res.mensagem) {
-                    res = res.mensagem;
-                    console.log(res);
-                }
-            });
-        }
-        BARRA_CARREGAMENTO.finish();
-        BARRA_CARREGAMENTO.remove();    }
-    /**
      * dispacha o lote para a api
      * @param {linhaPrestador[]} lote 
-     * @param {number} numero 
      */
-    function enviarLote(lote, numero) {
+    function enviar(lote) {
     const URL_API = "https://script.google.com/macros/s/AKfycbxH4GeMfR5z0deOlwgFOpvlEY9LLKAzj921hYuEOgM4pt-oc7ce5sviMQxhqnzMP914/exec";
     const DATA = new FormData();
     DATA.append('atualizarPlanilhas', JSON.stringify(lote));
-    DATA.append('lote', numero.toString());
     return new Promise((resolve) => {
         // @ts-ignore
         GM_xmlhttpRequest({
@@ -170,7 +135,7 @@
             // @ts-ignore
             onerror: function (err) {
                 console.error(err);
-                resolve({ text: `Erro ao enviar lote ${numero}` });
+                resolve({ text: `Erro ao enviar lote` });
             }
         });
     });

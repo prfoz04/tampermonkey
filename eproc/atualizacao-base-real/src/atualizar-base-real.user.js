@@ -1,13 +1,16 @@
 // ==UserScript==
 // @name         eproc - Atualizar banco de dados do site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.2.4
+// @version      1.2.5
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
 // @updateURL    https://raw.githubusercontent.com/prfoz04/tampermonkey/main/eproc/atualizacao-base-real/src/atualizar-base-real.user.js
 // @downloadURL  https://raw.githubusercontent.com/prfoz04/tampermonkey/main/eproc/atualizacao-base-real/src/atualizar-base-real.user.js
 // @run-at       document-idle
+// @grant        GM_xmlhttpRequest
+// @connect      script.google.com
+// @connect      script.googleusercontent.com
 // ==/UserScript==
 
 (async function () {
@@ -136,13 +139,13 @@
         const BARRA_CARREGAMENTO = new ProgressBar(totalBlocos, 'Enviando dados para a planilha...');
         let blocoIndex = 0;
         for (let i = 0; i < promises.length; i += CONCORRENCIAS) {
+            BARRA_CARREGAMENTO.update(++blocoIndex);
             var bloco = promises.slice(i, i + CONCORRENCIAS);
             var resultBloco = await Promise.all(bloco);
             resultados.push(...resultBloco);
-            BARRA_CARREGAMENTO.update(++blocoIndex);
             resultBloco.forEach(res => {
-                if (res.json()) {
-                    res = res.json().mensagem;
+                if (res.mensagem) {
+                    res = res.mensagem;
                     console.log(res);
                 }
             });
@@ -154,20 +157,34 @@
      * @param {linhaPrestador[]} lote 
      * @param {number} numero 
      */
-    async function enviarLote(lote, numero) {
-        const URL_API = "https://script.google.com/macros/s/AKfycbxH4GeMfR5z0deOlwgFOpvlEY9LLKAzj921hYuEOgM4pt-oc7ce5sviMQxhqnzMP914/exec";
-        const DATA = new FormData();
-        DATA.append('atualizarPlanilhas', JSON.stringify(lote));
-        DATA.append('lote', numero.toString());
-        const response = await fetch(URL_API, {
-            method: 'POST',
-            body: DATA
-        }).then(res => res.json()).catch(err => {
-            console.error(err);
-            return { text: `Erro ao enviar lote ${numero}: ${err.message}` };
+    function enviarLote(lote, numero) {
+    const URL_API = "https://script.google.com/macros/s/AKfycbxH4GeMfR5z0deOlwgFOpvlEY9LLKAzj921hYuEOgM4pt-oc7ce5sviMQxhqnzMP914/exec";
+    const DATA = new FormData();
+    DATA.append('atualizarPlanilhas', JSON.stringify(lote));
+    DATA.append('lote', numero.toString());
+    return new Promise((resolve) => {
+        // @ts-ignore
+        GM_xmlhttpRequest({
+            method: "POST",
+            url: URL_API,
+            data: DATA,
+            // @ts-ignore
+            onload: function (response) {
+                try {
+                    const json = JSON.parse(response.responseText);
+                    resolve(json);
+                } catch (e) {
+                    resolve({ text: response.responseText });
+                }
+            },
+            // @ts-ignore
+            onerror: function (err) {
+                console.error(err);
+                resolve({ text: `Erro ao enviar lote ${numero}` });
+            }
         });
-        return response;
-    }
+    });
+}
     /**
      * transforma a tabela em um vetor de objetos
      * @param {HTMLTableElement} tabela 

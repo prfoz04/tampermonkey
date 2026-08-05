@@ -212,7 +212,7 @@
                     clearInterval(interval);
                     response([]);
                 }
-            }, 50); //tempo de checagem
+            }, 1000); //tempo de checagem
         });
     }
     /** 

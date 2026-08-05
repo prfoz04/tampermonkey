@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Atualizar banco de dados do site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.2.5
+// @version      1.2.6
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
@@ -114,7 +114,6 @@
      * @param {linhaPrestador[][]} tabelas 
      */
     async function enviarParaPlanilha(tabelas) {
-        const TAM_MAX_LOTE = 3;
         const CONCORRENCIAS = 3;
         let contador = 0;
         let loteAtual = 0;
@@ -122,17 +121,8 @@
         let resultados = [];
         for (let i = 0; i < tabelas.length; i++) {
             var tabela = tabelas[i];
-            let lote = [];
             for (let j = 0; j < tabela.length; j++) {
-                lote.push(tabela[j]);
-                if (++contador >= TAM_MAX_LOTE) {
-                    promises.push(enviarLote(lote, ++loteAtual));
-                    lote = [];
-                    contador = 0;
-                }
-            }
-            if (lote.length > 0) {
-                promises.push(enviarLote(lote, ++loteAtual));
+                promises.push(enviarLote([tabela[j]], ++loteAtual));
             }
         }
         const totalBlocos = Math.ceil(promises.length / CONCORRENCIAS);

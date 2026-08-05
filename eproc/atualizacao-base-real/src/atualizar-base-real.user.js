@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Atualizar banco de dados do site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.2.3
+// @version      1.2.4
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
@@ -132,19 +132,23 @@
                 promises.push(enviarLote(lote, ++loteAtual));
             }
         }
-        const BARRA_CARREGAMENTO = new ProgressBar(Math.ceil(promises.length / CONCORRENCIAS), 'Enviando dados para a planilha...');
-        contador = 0;
-        BARRA_CARREGAMENTO.update(++contador);
+        const totalBlocos = Math.ceil(promises.length / CONCORRENCIAS);
+        const BARRA_CARREGAMENTO = new ProgressBar(totalBlocos, 'Enviando dados para a planilha...');
+        let blocoIndex = 0;
         for (let i = 0; i < promises.length; i += CONCORRENCIAS) {
             var bloco = promises.slice(i, i + CONCORRENCIAS);
             var resultBloco = await Promise.all(bloco);
             resultados.push(...resultBloco);
-            BARRA_CARREGAMENTO.update(++contador);
+            BARRA_CARREGAMENTO.update(++blocoIndex);
+            resultBloco.forEach(res => {
+                if (res.json()) {
+                    res = res.json().mensagem;
+                    console.log(res);
+                }
+            });
         }
         BARRA_CARREGAMENTO.finish();
-        BARRA_CARREGAMENTO.remove();
-        resultados.forEach((res) => {console.log(res.text)});
-    }
+        BARRA_CARREGAMENTO.remove();    }
     /**
      * dispacha o lote para a api
      * @param {linhaPrestador[]} lote 
@@ -202,8 +206,7 @@
                     var primeiraLinha = resultado.querySelectorAll('td');
                     //se tiver só uma coluna, é vazio
                     if (primeiraLinha.length === 1) {
-                        clearInterval(INTERVAL);
-                        response(null);
+                        return response(null);
                     }
                     response(resultado.querySelector('table'));
                 }

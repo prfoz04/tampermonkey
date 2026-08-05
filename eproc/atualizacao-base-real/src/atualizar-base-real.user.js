@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Atualizar banco de dados do site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.2.8
+// @version      1.2.9
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
@@ -91,7 +91,6 @@
                     TABELAS.push(extraiDados(resposta));
                 BARRA_CARREGAMENTO.update(++contador);
             }
-            console.log(TABELAS)
         } catch (error) {
             console.error(error);
         }

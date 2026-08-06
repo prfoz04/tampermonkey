@@ -15,7 +15,6 @@
 
 (async function () {
     'use strict';
-    console.log('iniciando script...');
     /**
      * id do formulário principal
      */

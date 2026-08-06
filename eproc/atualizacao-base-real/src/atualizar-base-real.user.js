@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         eproc - Atualizar banco de dados do site (planilhas de entidade)
 // @namespace    https://github.com/4Vara
-// @version      1.3
+// @version      1.4
 // @description  Recolhe as informações de execução de pena do eproc e os insere nas devidas planilhas de entidade, a fim de normalizar os dados para vizualização no site
 // @author       Leonardo
 // @match        https://eproc.jfpr.jus.br/eprocV2/controlador.php?acao=pena_alternativa_consulta_interna*
@@ -116,28 +116,14 @@
     const URL_API = "https://script.google.com/macros/s/AKfycbxH4GeMfR5z0deOlwgFOpvlEY9LLKAzj921hYuEOgM4pt-oc7ce5sviMQxhqnzMP914/exec";
     const DATA = new FormData();
     DATA.append('atualizarPlanilhas', JSON.stringify(lote));
-    return new Promise((resolve) => {
-        // @ts-ignore
-        GM_xmlhttpRequest({
-            method: "POST",
-            url: URL_API,
-            data: DATA,
-            // @ts-ignore
-            onload: function (response) {
-                try {
-                    const json = JSON.parse(response.responseText);
-                    resolve(json);
-                } catch (e) {
-                    resolve({ text: response.responseText });
-                }
-            },
-            // @ts-ignore
-            onerror: function (err) {
-                console.error(err);
-                resolve({ text: `Erro ao enviar lote` });
-            }
-        });
-    });
+    try {
+        return fetch(URL_API, {
+            method: 'POST',
+            body: DATA
+        }).then(res => res.text())
+    } catch (error) {
+        alert('Erro ao exportar dados: ' + error);
+    }
 }
     /**
      * transforma a tabela em um vetor de objetos

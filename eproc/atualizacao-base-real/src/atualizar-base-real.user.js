@@ -94,7 +94,7 @@
         } catch (error) {
             console.error(error);
         }
-        console.log(await enviar(TABELAS.flat()));
+        alert(await enviar(TABELAS.flat()));
         BARRA_CARREGAMENTO.remove();
         //retorna a página ao estado original
         window.location.reload();

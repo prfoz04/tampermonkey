@@ -9,6 +9,8 @@
 // @connect      script.google.com
 // @connect      script.googleusercontent.com
 // @run-at       document-end
+// @updateURL    https://raw.githubusercontent.com/prfoz04/tampermonkey/main/SEEU/memos/src/memos.user.js
+// @downloadURL  https://raw.githubusercontent.com/prfoz04/tampermonkey/main/SEEU/memos/src/memos.user.js
 // ==/UserScript==
 
 (function () {

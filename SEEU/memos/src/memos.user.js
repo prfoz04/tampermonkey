@@ -44,8 +44,8 @@
       url,
       anonymous: true,
       headers: {
-        "Accept": "application/json" 
-      }
+        "Accept": "application/json"
+      },
       onload(resp) {
         if (resp.status >= 200 && resp.status < 400) {
           try {

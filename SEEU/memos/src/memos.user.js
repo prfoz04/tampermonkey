@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SEEU - Memos
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  insere a visualização de memos
 // @match        https://seeu.pje.jus.br/seeu/visualizacaoProcesso.do*
 // @grant        GM_xmlhttpRequest

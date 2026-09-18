@@ -19,8 +19,7 @@
   // --------------- CONFIG ----------------
   const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwDtLS3HtTcOXTw0yfjXDTxQJdIClRzAA01wxQ-9hsehmz5eX8UE2GlZJ34KwtkHR0J/exec';
   const DEBUG = true;
-  // ----------------------------------------
-
+  // ----------------------------------------  //
   let memoMap = new Map();
   let memosRequestSent = false;
   let memosLoaded = false;

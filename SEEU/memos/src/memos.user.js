@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SEEU - Memos
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.2.1
 // @description  insere a visualização de memos
 // @match        https://seeu.pje.jus.br/seeu/visualizacaoProcesso.do*
 // @grant        GM_xmlhttpRequest
@@ -51,7 +51,7 @@
         if (resp.status >= 200 && resp.status < 400) {
           try {
             const result = JSON.parse(resp.responseText || '{}');
-            if (result.debug && Array.isArray(result.debug)) {
+            if (result.debug && Array.isArray(result.debug)) { //campo retirado da resposta
               console.warn(`--- DEBUG INFO DO GOOGLE APPS SCRIPT ---\n${result.debug.join('\n')}`);
             }
             if (result.error) {

@@ -15,7 +15,12 @@
 (function () {
   'use strict';
 
+  console.log("[SEEU Memos] Inicializando script")
+
+  //configurações
   const URL_API = "https://api-memos.prfoz04.workers.dev/memos"
+  const ID_DIV_PROCESSO = ".titulo.processo"
+  const PROCESSO = getNumeroProcesso()
 
   /**
    * funcao generica para realizar requisicoes
@@ -63,11 +68,22 @@
         url: `${URL_API}/get/${processoLimpo}`
       })
 
-      console.log(`${memos.lenght} recebidos!`)
+      console.log(`[SEEU Memos] ${memos.length} memos recebidos!`)
       return memos
     }
     catch (error) {
-      console.error("Falha ao buscar memos:", error)
+      console.error("[SEEU Memos] Falha ao buscar memos:", error)
+    }
+  }
+
+  function getNumeroProcesso() {
+    const maskProcesso = /\d{7}-\d{2}.\d{4}.\d{1}.\d{2}.\d{4}/
+    try {
+      const processo = document.querySelector(ID_DIV_PROCESSO).textContent.match(maskProcesso)[0]
+      console.log(`[SEEU memos] Processo ${processo} encontrado!`)
+      return processo
+    } catch (error) {
+      console.error("Erro ao encontrar número do processo na página", error)
     }
   }
 
@@ -75,7 +91,6 @@
 
   }
 
-  getMemos("9000718-92.2024.4.04.7002")
 
 })();
 

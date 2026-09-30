@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         SEEU - Memos
+// @name         SEEU - Memos - nova implementação
 // @namespace    http://tampermonkey.net/
 // @version      1.2.2
 // @description  insere a visualização de memos
@@ -20,7 +20,18 @@
   //configurações
   const URL_API = "https://api-memos.prfoz04.workers.dev/memos"
   const ID_DIV_PROCESSO = ".titulo.processo"
+  const ID_LINHAS_TABELA = ".resultTable tbody tr"
   const PROCESSO = getNumeroProcesso()
+
+  //estilos dos elementos
+  //@ts-ignore
+  GM_addStyle(`
+    .memo-btn { cursor: pointer; font-size: 1.1em; margin-left:6px; display:inline-block; vertical-align:middle; }
+    .memo-display { background:#fffbdd; border:1px solid #e6db55; padding:6px; border-radius:4px; margin-top:6px; white-space:pre-wrap; font-size:0.9em; }
+    .memo-modal-backdrop { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:99999; display:flex; align-items:center; justify-content:center; }
+    .memo-modal-content { background:#fff; padding:16px; border-radius:6px; max-width:600px; width:90%; box-shadow:0 6px 18px rgba(0,0,0,0.25); }
+    .memo-modal-textarea { width:100%; height:140px; box-sizing:border-box; margin-bottom:8px; }
+  `);
 
   /**
    * funcao generica para realizar requisicoes
@@ -91,6 +102,56 @@
 
   }
 
+  /**
+ * Cria o elemento visual onde o texto do memo é exibido.
+ * @param {string} memoText - O texto a ser exibido no memo.
+ * @returns {HTMLDivElement} O elemento <div> estilizado com o memo.
+ */
+  function createMemoElement(memoText) {
+    const memoDiv = document.createElement('div');
+    memoDiv.className = 'memo-display';
+    memoDiv.textContent = memoText || '';
+    return memoDiv;
+  }
+
+  /**
+  * Cria o elemento do botão para adicionar/editar memo.
+  * @param {Function} onClickCallback - Função de callback executada ao clicar no botão.
+  * @returns {HTMLSpanElement} O elemento <span> com o ícone do botão e evento configurado.
+  */
+  function createMemoButton(onClickCallback) {
+    const btn = document.createElement('span');
+    btn.className = 'memo-btn';
+    btn.title = 'Adicionar/Editar Memo';
+    btn.textContent = '📝';
+  
+    if (typeof onClickCallback === 'function') {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        onClickCallback(e);
+      };
+    }
+    return btn;
+  }
+
+  /**
+   * insere o botao de adicionar memo em cada linha
+   */
+  function insertButtons() {
+    const LINHAS_TABELA = document.querySelectorAll(ID_LINHAS_TABELA)
+    let i = 0
+    LINHAS_TABELA.forEach(tr => {
+      const COLUNAS = tr.querySelectorAll("td")
+      //insere na ultima coluna
+      COLUNAS[COLUNAS.length - 1].appendChild(createMemoButton(modalMemos))
+      i++
+    })
+    console.log(`[SEEU Memos] ${i} botões inseridos na tabela!`)
+  }
+
+  function modalMemos() {
+    console.log("click")
+  }
 
 })();
 

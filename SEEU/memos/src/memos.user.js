@@ -20,8 +20,9 @@
   //configurações
   const URL_API = "https://api-memos.prfoz04.workers.dev/memos"
   const ID_DIV_PROCESSO = ".titulo.processo"
-  const ID_LINHAS_TABELA = ".resultTable tbody tr"
+  const ID_TABELA = ".resultTable"
   const PROCESSO = getNumeroProcesso()
+  insertButtons()
 
   //estilos dos elementos
   //@ts-ignore
@@ -135,18 +136,46 @@
   }
 
   /**
+   * filtra no dom a tabela correta, a da aba movimentações
+   * @returns {HTMLTableElement}
+   */
+  function getTable() {
+    const TABLES = document.querySelectorAll(ID_TABELA)
+    TABLES.forEach(table => {
+      //filtra baseado no head, deve possuir as colunas Seq. e Movimentado Por
+      const head = table.querySelector("thead")
+      let temSeq = false
+      let temMov = false
+      if (head) {
+        head.querySelectorAll("th").forEach(column => {
+          let text = column.textContent.toLowerCase()
+          temSeq = text.includes("seq") ? true : temSeq
+          temMov = text.includes("movimentado") ? true : temMov
+        })
+        if (temSeq && temMov)
+          return table
+      }
+    })
+    console.error("[SEEU Memos] Tabela não encontrada.")
+    return null
+  }
+
+  /**
    * insere o botao de adicionar memo em cada linha
    */
   function insertButtons() {
-    const LINHAS_TABELA = document.querySelectorAll(ID_LINHAS_TABELA)
-    let i = 0
-    LINHAS_TABELA.forEach(tr => {
-      const COLUNAS = tr.querySelectorAll("td")
-      //insere na ultima coluna
-      COLUNAS[COLUNAS.length - 1].appendChild(createMemoButton(modalMemos))
-      i++
-    })
-    console.log(`[SEEU Memos] ${i} botões inseridos na tabela!`)
+    const TABELA = getTable()
+    if (TABELA) {
+      const LINHAS_TABELA = TABELA.querySelectorAll("tbody tr")
+      let i = 0
+      LINHAS_TABELA.forEach(tr => {
+        const COLUNAS = tr.querySelectorAll("td")
+        //insere na ultima coluna
+        COLUNAS[COLUNAS.length - 1].appendChild(createMemoButton(modalMemos))
+        i++
+      })
+      console.log(`[SEEU Memos] ${i} botões inseridos na tabela!`)
+    }
   }
 
   function modalMemos() {

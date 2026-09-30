@@ -173,6 +173,8 @@
    */
   async function insertMemos() {
     const TABELA = getTable()
+    const COLUNA_SEQ = 2
+    const COLUNA_MOV = 6
     if (TABELA) {
       const MEMOS = await getMemos(PROCESSO) 
       const SEQ_MEMO = new Map() //armazena as sequencias que possuem um memo e seu respectivo indice no vetor MEMOS
@@ -185,9 +187,18 @@
         const COLUNAS = tr.querySelectorAll("td")
         //verifica se é uma linha que possui a coluna movimentado
         if (COLUNAS.length > 1) {
+          let indiceColunaVisivel = 0
           //insere na ultima coluna
-          COLUNAS[COLUNAS.length - 1].appendChild(createMemoButton(modalMemos))
-          
+          //COLUNAS[COLUNAS.length - 1].appendChild(createMemoButton(modalMemos))
+          COLUNAS.forEach(value => {
+            if (indiceColunaVisivel == COLUNA_SEQ)
+              console.log(value.textContent)
+            if (indiceColunaVisivel == COLUNA_MOV)
+              value.appendChild(createMemoButton(modalMemos))
+            if (value.checkVisibility()) {
+              indiceColunaVisivel++
+            }
+          })
           i++
         }
       })

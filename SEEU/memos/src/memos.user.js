@@ -145,7 +145,7 @@
 
   /**
    * filtra no dom a tabela correta, a da aba movimentações
-   * @returns {Element}
+   * @returns {object}
    */
   function getTable() {
     const TABLES = document.querySelectorAll(ID_TABELA)
@@ -154,14 +154,26 @@
       const head = table.querySelector("thead")
       let temSeq = false
       let temMov = false
+      let idSeq = -1
+      let idMov = -1
       if (head) {
-        head.querySelectorAll("th").forEach(column => {
+        head.querySelectorAll("th").forEach((column, index) => {
           let text = column.textContent.toLowerCase()
-          temSeq = text.includes("seq") ? true : temSeq
-          temMov = text.includes("movimentado") ? true : temMov
+          if (text.includes("seq")) { 
+            temSeq = true 
+            idSeq = index
+          }
+          if (text.includes("movimentado")) {
+            temMov = true
+            idMov = index
+          }
         })
         if (temSeq && temMov)
-          return table
+          return {
+            "table": table,
+            "idSeq": idSeq,
+            "idMov": idMov
+          }
       }
     }
     console.error("[SEEU Memos] Tabela não encontrada.")
@@ -173,27 +185,25 @@
    */
   async function insertMemos() {
     const TABELA = getTable()
-    const COLUNA_SEQ = 2
-    const COLUNA_MOV = 6
     if (TABELA) {
       const MEMOS = await getMemos(PROCESSO) 
       const SEQ_MEMO = new Map() //armazena as sequencias que possuem um memo e seu respectivo indice no vetor MEMOS
       MEMOS.forEach((memo, index) => {
         SEQ_MEMO.set(memo.seq, index)
       })
-      const LINHAS_TABELA = TABELA.querySelector("tbody").querySelectorAll("tr")
+      const LINHAS_TABELA = TABELA.table.querySelector("tbody").querySelectorAll("tr")
       let i = 0
       LINHAS_TABELA.forEach(tr => {
         const COLUNAS = tr.querySelectorAll("td")
         //verifica se é uma linha que possui a coluna movimentado
         if (COLUNAS.length > 1) {
           let indiceColunaVisivel = 0
-          //insere na ultima coluna
-          //COLUNAS[COLUNAS.length - 1].appendChild(createMemoButton(modalMemos))
+          let seq = -1
+          //insere na ultima coluna e guarda a sequencia
           COLUNAS.forEach(value => {
-            if (indiceColunaVisivel == COLUNA_SEQ)
-              console.log(value.textContent)
-            if (indiceColunaVisivel == COLUNA_MOV)
+            if (indiceColunaVisivel == TABELA.idSeq)
+              seq = value.textContent
+            if (indiceColunaVisivel == TABELA.idMov)
               value.appendChild(createMemoButton(modalMemos))
             if (value.checkVisibility()) {
               indiceColunaVisivel++

@@ -198,17 +198,24 @@
         //verifica se é uma linha que possui a coluna movimentado
         if (COLUNAS.length > 1) {
           let indiceColunaVisivel = 0
+          let indiceMemo = -1
           let seq = -1
           //insere na ultima coluna e guarda a sequencia
-          COLUNAS.forEach(value => {
+          COLUNAS.forEach((value, index) => {
             if (indiceColunaVisivel == TABELA.idSeq)
               seq = value.textContent
-            if (indiceColunaVisivel == TABELA.idMov)
+            if (indiceColunaVisivel == TABELA.idMov) {
               value.appendChild(createMemoButton(modalMemos))
+              indiceMemo = index
+            }
             if (value.checkVisibility()) {
               indiceColunaVisivel++
             }
           })
+          //se a sequencia esta na map, insere o respectivo memo
+          if (SEQ_MEMO.has(seq)) {
+            COLUNAS[indiceMemo].appendChild(createMemoElement(SEQ_MEMO.get(seq)))
+          }
           i++
         }
       })

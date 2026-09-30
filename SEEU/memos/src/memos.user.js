@@ -22,7 +22,7 @@
   const ID_DIV_PROCESSO = ".titulo.processo"
   const ID_TABELA = ".resultTable"
   const PROCESSO = getNumeroProcesso()
-  insertButtons()
+  insertMemos()
 
   //estilos dos elementos
   //@ts-ignore
@@ -33,6 +33,13 @@
     .memo-modal-content { background:#fff; padding:16px; border-radius:6px; max-width:600px; width:90%; box-shadow:0 6px 18px rgba(0,0,0,0.25); }
     .memo-modal-textarea { width:100%; height:140px; box-sizing:border-box; margin-bottom:8px; }
   `);
+
+  /**
+   * @typedef Memo
+   * @property {string} processo
+   * @property {number} seq
+   * @property {string} descricao
+   */
 
   /**
    * funcao generica para realizar requisicoes
@@ -71,6 +78,7 @@
   /**
    * consulta os memos para este processo na api que gerencia o banco
    * @param {string} processo 
+   * @returns {Promise<Memo[]>}
    */
   async function getMemos(processo) {
     var processoLimpo = processo.replaceAll(".", "").replaceAll("-", "")
@@ -161,11 +169,16 @@
   }
 
   /**
-   * insere o botao de adicionar memo em cada linha
+   * insere o botao de adicionar memo em cada linha e os memos recebidos na linha respectiva a sua sequencia
    */
-  function insertButtons() {
+  async function insertMemos() {
     const TABELA = getTable()
     if (TABELA) {
+      const MEMOS = await getMemos(PROCESSO) 
+      const SEQ_MEMO = new Map() //armazena as sequencias que possuem um memo e seu respectivo indice no vetor MEMOS
+      MEMOS.forEach((memo, index) => {
+        SEQ_MEMO.set(memo.seq, index)
+      })
       const LINHAS_TABELA = TABELA.querySelector("tbody").querySelectorAll("tr")
       let i = 0
       LINHAS_TABELA.forEach(tr => {
@@ -174,6 +187,7 @@
         if (COLUNAS.length > 1) {
           //insere na ultima coluna
           COLUNAS[COLUNAS.length - 1].appendChild(createMemoButton(modalMemos))
+          
           i++
         }
       })

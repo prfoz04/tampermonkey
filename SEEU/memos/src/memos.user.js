@@ -137,11 +137,11 @@
 
   /**
    * filtra no dom a tabela correta, a da aba movimentações
-   * @returns {HTMLTableElement}
+   * @returns {Element}
    */
   function getTable() {
     const TABLES = document.querySelectorAll(ID_TABELA)
-    TABLES.forEach(table => {
+    for (let table of TABLES) {
       //filtra baseado no head, deve possuir as colunas Seq. e Movimentado Por
       const head = table.querySelector("thead")
       let temSeq = false
@@ -155,7 +155,7 @@
         if (temSeq && temMov)
           return table
       }
-    })
+    }
     console.error("[SEEU Memos] Tabela não encontrada.")
     return null
   }
@@ -166,13 +166,16 @@
   function insertButtons() {
     const TABELA = getTable()
     if (TABELA) {
-      const LINHAS_TABELA = TABELA.querySelectorAll("tbody tr")
+      const LINHAS_TABELA = TABELA.querySelector("tbody").querySelectorAll("tr")
       let i = 0
       LINHAS_TABELA.forEach(tr => {
         const COLUNAS = tr.querySelectorAll("td")
-        //insere na ultima coluna
-        COLUNAS[COLUNAS.length - 1].appendChild(createMemoButton(modalMemos))
-        i++
+        //verifica se é uma linha que possui a coluna movimentado
+        if (COLUNAS.length > 1) {
+          //insere na ultima coluna
+          COLUNAS[COLUNAS.length - 1].appendChild(createMemoButton(modalMemos))
+          i++
+        }
       })
       console.log(`[SEEU Memos] ${i} botões inseridos na tabela!`)
     }

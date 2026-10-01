@@ -321,6 +321,7 @@
         seq: seq,
         descricao: ""
       })
+      cell.querySelector('.memo-display')?.remove();
       backdrop.remove();
     };
     backdrop.onclick = (e) => { if (e.target === backdrop) backdrop.remove(); };

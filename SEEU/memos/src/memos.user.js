@@ -315,7 +315,9 @@
         descricao: textarea.value.trim()
       })
       cell.querySelector('.memo-display')?.remove();
-      cell.appendChild(createMemoElement(textarea.value.trim()));
+      if (textarea.value.trim() !== "") {
+        cell.appendChild(createMemoElement(textarea.value.trim()));
+      }
       backdrop.remove();
     };
 

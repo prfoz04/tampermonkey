@@ -250,6 +250,7 @@
       <textarea class="memo-modal-textarea">${currentMemo || ''}</textarea>
       <div style="text-align:right">
         <button id="memoSaveBtn">Salvar</button>
+        <button id="memoDeleteBtn" style="margin-left:8px">Excluir</button>
         <button id="memoCancelBtn" style="margin-left:8px">Cancelar</button>
       </div>
     `;

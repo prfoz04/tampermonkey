@@ -142,6 +142,7 @@
         method: "DELETE",
         url: `${URL_API}/delete/${memo.processo}/${memo.seq}`
       });
+      SEQ_MEMO.set(memo.seq, "")
       console.log("[SEEU Memos] Memo excluído com sucesso:", response);
     } catch (error) {
       console.error("[SEEU Memos] Falha ao excluir memo:", error);

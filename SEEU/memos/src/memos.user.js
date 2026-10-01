@@ -189,7 +189,7 @@
     if (TABELA) {
       const MEMOS = (await getMemos(PROCESSO)).filter(memo => memo.descricao && memo.descricao.trim() !== "")
       MEMOS.forEach(memo => {
-        SEQ_MEMO.set(Number(memo.seq), memo)
+        SEQ_MEMO.set(Number(memo.seq), memo.descricao)
       })
       const LINHAS_TABELA = TABELA.table.querySelector("tbody").querySelectorAll("tr")
       let botoes = 0
@@ -207,7 +207,7 @@
               seq = Number(value.textContent)
             if (indiceColunaVisivel == TABELA.idMov) {
               value.appendChild(createMemoButton(() => {
-                showMemoModal(seq, SEQ_MEMO.get(seq).descricao, value)
+                showMemoModal(seq, SEQ_MEMO.get(seq), value)
               }))
               indiceMemo = index
             }
@@ -217,9 +217,9 @@
           })
           //se a sequencia esta na map, insere o respectivo memo
           if (SEQ_MEMO.has(seq)) {
-            COLUNAS[indiceMemo].appendChild(createMemoElement(SEQ_MEMO.get(seq).descricao))
+            COLUNAS[indiceMemo].appendChild(createMemoElement(SEQ_MEMO.get(seq)))
             memos++
-          }
+          } else SEQ_MEMO.set(seq, "")
           botoes++
         }
       })

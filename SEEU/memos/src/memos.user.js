@@ -108,8 +108,20 @@
     }
   }
 
-  async function setMemos() {
+  /**
+   * insere um novo lembrete no banco
+   * @param {Memo} memo 
+   */
+  async function setMemos(memo) {
 
+  }
+
+  /**
+   * deleta um memo do banco
+   * @param {Memo} memo
+   */
+  async function deleteMemo(memo) {
+    
   }
 
   /**
@@ -228,8 +240,6 @@
     }
   }
 
-  function saveMemo(processo, seq, descricao, cell) {}
-
   /**
    * exibe o modal para adicionar/editar/excluir memo
    * @param {number} seq 
@@ -258,16 +268,41 @@
     backdrop.appendChild(modal);
     (document.body || document.documentElement).appendChild(backdrop);
 
+    /**@type {HTMLTextAreaElement} */
+    const textarea = modal.querySelector('.memo-modal-textarea');
+
+    // Aguarda o render do DOM para dar o foco e posicionar o cursor
+    requestAnimationFrame(() => {
+      if (textarea) {
+        textarea.focus();
+        // Leva o cursor para o final do texto existente (ou use textarea.select() se quiser selecionar tudo)
+        textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+      }
+    });
+
     // @ts-ignore
     modal.querySelector('#memoCancelBtn').onclick = () => backdrop.remove();
 
     // @ts-ignore
     modal.querySelector('#memoSaveBtn').onclick = () => {
-      // @ts-ignore
-      const newMemo = modal.querySelector('.memo-modal-textarea').value;
+      setMemos({
+        processo: PROCESSO,
+        seq: seq,
+        descricao: textarea.value.trim()
+      })
       backdrop.remove();
-      saveMemo(PROCESSO, seq, newMemo, cell);
     };
+
+    // @ts-ignore
+    modal.querySelector('#memoDeleteBtn').onclick = () => {
+      deleteMemo({
+        processo: PROCESSO,
+        seq: seq,
+        descricao: ""
+      })
+      backdrop.remove();
+    };
+    backdrop.onclick = (e) => { if (e.target === backdrop) backdrop.remove(); };
   }
 
 })();

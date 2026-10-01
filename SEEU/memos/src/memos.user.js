@@ -121,6 +121,7 @@
           url: `${URL_API}/post`,
           body: memo
         });
+        SEQ_MEMO.set(memo.seq, memo.descricao)
         console.log("[SEEU Memos] Memo salvo com sucesso:", response);
       } catch (error) {
         console.error("[SEEU Memos] Falha ao salvar memo:", error);

@@ -192,7 +192,8 @@
         SEQ_MEMO.set(memo.seq, index)
       })
       const LINHAS_TABELA = TABELA.table.querySelector("tbody").querySelectorAll("tr")
-      let i = 0
+      let botoes = 0
+      let memos = 0
       LINHAS_TABELA.forEach(tr => {
         const COLUNAS = tr.querySelectorAll("td")
         //verifica se é uma linha que possui a coluna movimentado
@@ -203,7 +204,7 @@
           //insere na ultima coluna e guarda a sequencia
           COLUNAS.forEach((value, index) => {
             if (indiceColunaVisivel == TABELA.idSeq)
-              seq = value.textContent
+              seq = parseInt(value.textContent)
             if (indiceColunaVisivel == TABELA.idMov) {
               value.appendChild(createMemoButton(modalMemos))
               indiceMemo = index
@@ -215,11 +216,13 @@
           //se a sequencia esta na map, insere o respectivo memo
           if (SEQ_MEMO.has(seq)) {
             COLUNAS[indiceMemo].appendChild(createMemoElement(SEQ_MEMO.get(seq)))
+            memos++
           }
-          i++
+          botoes++
         }
       })
-      console.log(`[SEEU Memos] ${i} botões inseridos na tabela!`)
+      console.log(`[SEEU Memos] ${botoes} botões inseridos na tabela!`)
+      console.log(`[SEEU Memos] ${memos} memos inseridos na tabela!`)
     }
   }
 

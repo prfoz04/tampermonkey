@@ -219,14 +219,14 @@
     return null
   }
 
-  /**
+/**
    * insere o botao de adicionar memo em cada linha e os memos recebidos na linha respectiva a sua sequencia
    */
   async function insertMemos() {
     const TABELA = getTable()
     if (TABELA) {
-      const resposta = await getMemos();
-      //garante que é um array válido 
+      const resposta = await getMemos()
+      // garante que é um array válido
       const MEMOS = Array.isArray(resposta) ? resposta.filter(memo => memo.descricao && memo.descricao.trim() !== "") : [];      
       MEMOS.forEach(memo => {
         SEQ_MEMO.set(Number(memo.seq), memo.descricao)
@@ -234,33 +234,36 @@
       const LINHAS_TABELA = TABELA.table.querySelector("tbody").querySelectorAll("tr")
       let botoes = 0
       let memos = 0
+
       LINHAS_TABELA.forEach(tr => {
         const COLUNAS = tr.querySelectorAll("td")
-        //verifica se é uma linha que possui a coluna movimentado
-        if (COLUNAS.length > 1) {
-          let indiceColunaVisivel = 0
-          let indiceMemo = -1
-          let seq = -1
-          //insere na ultima coluna e guarda a sequencia
-          COLUNAS.forEach((value, index) => {
-            if (indiceColunaVisivel == TABELA.idSeq)
-              seq = Number(value.textContent)
-            if (indiceColunaVisivel == TABELA.idMov) {
-              value.appendChild(createMemoButton(() => {
-                showMemoModal(seq, SEQ_MEMO.get(seq), value)
+        // Garante que a linha possui colunas suficientes para cobrir os índices identificados
+        if (COLUNAS.length > Math.max(TABELA.idSeq, TABELA.idMov)) {
+          // Captura a coluna da Sequência diretamente pelo índice mapeado no thead
+          const cellSeq = COLUNAS[TABELA.idSeq]
+          const seqText = cellSeq ? cellSeq.textContent.trim() : ""
+          const seq = Number(seqText)
+          // Só processa se a coluna de sequência realmente contiver um número válido
+          if (!isNaN(seq) && seqText !== "") {
+            const cellMov = COLUNAS[TABELA.idMov]
+            // Evita duplicação se o botão já foi inserido nesta célula
+            if (cellMov && !cellMov.querySelector('.memo-btn')) {
+              cellMov.appendChild(createMemoButton(() => {
+                showMemoModal(seq, SEQ_MEMO.get(seq), cellMov)
               }))
-              indiceMemo = index
+              botoes++
+              // Se a sequência está no Map e possui conteúdo, insere o memo visual
+              if (SEQ_MEMO.has(seq) && SEQ_MEMO.get(seq)) {
+                // Evita duplicar o bloco de texto do memo
+                if (!cellMov.querySelector('.memo-display')) {
+                  cellMov.appendChild(createMemoElement(SEQ_MEMO.get(seq)))
+                  memos++
+                }
+              } else {
+                SEQ_MEMO.set(seq, "")
+              }
             }
-            if (value.checkVisibility()) {
-              indiceColunaVisivel++
-            }
-          })
-          //se a sequencia esta na map, insere o respectivo memo
-          if (SEQ_MEMO.has(seq)) {
-            COLUNAS[indiceMemo].appendChild(createMemoElement(SEQ_MEMO.get(seq)))
-            memos++
-          } else SEQ_MEMO.set(seq, "")
-          botoes++
+          }
         }
       })
       console.log(`[SEEU Memos] ${botoes} botões inseridos na tabela!`)

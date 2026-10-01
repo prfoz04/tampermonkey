@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         SEEU - Memos - nova implementação
+// @name         SEEU - Memos
 // @namespace    http://tampermonkey.net/
 // @version      1.2.3
 // @description  insere a visualização de memos

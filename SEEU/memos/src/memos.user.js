@@ -92,6 +92,7 @@
     }
     catch (error) {
       console.error("[SEEU Memos] Falha ao buscar memos:", error)
+      return []
     }
   }
 
@@ -224,7 +225,9 @@
   async function insertMemos() {
     const TABELA = getTable()
     if (TABELA) {
-      const MEMOS = (await getMemos()).filter(memo => memo.descricao && memo.descricao.trim() !== "")
+      const resposta = await getMemos();
+      //garante que é um array válido 
+      const MEMOS = Array.isArray(resposta) ? resposta.filter(memo => memo.descricao && memo.descricao.trim() !== "") : [];      
       MEMOS.forEach(memo => {
         SEQ_MEMO.set(Number(memo.seq), memo.descricao)
       })

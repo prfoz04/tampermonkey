@@ -215,7 +215,7 @@
           })
           //se a sequencia esta na map, insere o respectivo memo
           if (SEQ_MEMO.has(seq)) {
-            COLUNAS[indiceMemo].appendChild(createMemoElement(SEQ_MEMO.get(seq)))
+            COLUNAS[indiceMemo].appendChild(createMemoElement(MEMOS[SEQ_MEMO.get(seq)].descricao))
             memos++
           }
           botoes++

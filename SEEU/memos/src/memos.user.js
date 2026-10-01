@@ -127,6 +127,9 @@
         console.error("[SEEU Memos] Falha ao salvar memo:", error);
       }
     }
+    else {
+      deleteMemo(memo)
+    }
   }
 
   /**

@@ -78,15 +78,13 @@
 
   /**
    * consulta os memos para este processo na api que gerencia o banco
-   * @param {string} processo 
    * @returns {Promise<Memo[]>}
    */
-  async function getMemos(processo) {
-    var processoLimpo = processo.replaceAll(".", "").replaceAll("-", "")
+  async function getMemos() {
     try {
       const memos = await apiRequest({
         method: "GET",
-        url: `${URL_API}/get/${processoLimpo}`
+        url: `${URL_API}/get/${PROCESSO}`
       })
 
       console.log(`[SEEU Memos] ${memos.length} memos recebidos!`)
@@ -97,12 +95,15 @@
     }
   }
 
+  /**
+   * @returns {string} retorna o processo limpo
+   */
   function getNumeroProcesso() {
     const maskProcesso = /\d{7}-\d{2}.\d{4}.\d{1}.\d{2}.\d{4}/
     try {
       const processo = document.querySelector(ID_DIV_PROCESSO).textContent.match(maskProcesso)[0]
       console.log(`[SEEU memos] Processo ${processo} encontrado!`)
-      return processo
+      return processo.replaceAll(".", "").replaceAll("-", "")
     } catch (error) {
       console.error("Erro ao encontrar número do processo na página", error)
     }
@@ -113,7 +114,18 @@
    * @param {Memo} memo 
    */
   async function setMemos(memo) {
-
+    if (memo.descricao && memo.descricao.trim() !== "") {
+      try {
+        const response = await apiRequest({
+          method: "POST",
+          url: `${URL_API}/post`,
+          body: memo
+        });
+        console.log("[SEEU Memos] Memo salvo com sucesso:", response);
+      } catch (error) {
+        console.error("[SEEU Memos] Falha ao salvar memo:", error);
+      }
+    }
   }
 
   /**
@@ -121,7 +133,15 @@
    * @param {Memo} memo
    */
   async function deleteMemo(memo) {
-    
+    try {
+      const response = await apiRequest({
+        method: "DELETE",
+        url: `${URL_API}/delete/${memo.processo}/${memo.seq}`
+      });
+      console.log("[SEEU Memos] Memo excluído com sucesso:", response);
+    } catch (error) {
+      console.error("[SEEU Memos] Falha ao excluir memo:", error);
+    }
   }
 
   /**
@@ -199,7 +219,7 @@
   async function insertMemos() {
     const TABELA = getTable()
     if (TABELA) {
-      const MEMOS = (await getMemos(PROCESSO)).filter(memo => memo.descricao && memo.descricao.trim() !== "")
+      const MEMOS = (await getMemos()).filter(memo => memo.descricao && memo.descricao.trim() !== "")
       MEMOS.forEach(memo => {
         SEQ_MEMO.set(Number(memo.seq), memo.descricao)
       })
@@ -290,6 +310,7 @@
         seq: seq,
         descricao: textarea.value.trim()
       })
+      cell.appendChild(createMemoElement(textarea.value.trim()));
       backdrop.remove();
     };
 

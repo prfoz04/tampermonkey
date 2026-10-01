@@ -22,6 +22,7 @@
   const ID_DIV_PROCESSO = ".titulo.processo"
   const ID_TABELA = ".resultTable"
   const PROCESSO = getNumeroProcesso()
+  const SEQ_MEMO = new Map() //armazena as sequencias que possuem um memo e o respectivo memo
   insertMemos()
 
   //estilos dos elementos
@@ -186,10 +187,9 @@
   async function insertMemos() {
     const TABELA = getTable()
     if (TABELA) {
-      const MEMOS = await getMemos(PROCESSO) 
-      const SEQ_MEMO = new Map() //armazena as sequencias que possuem um memo e seu respectivo indice no vetor MEMOS
-      MEMOS.forEach((memo, index) => {
-        SEQ_MEMO.set(memo.seq, index)
+      const MEMOS = (await getMemos(PROCESSO)).filter(memo => memo.descricao && memo.descricao.trim() !== "")
+      MEMOS.forEach(memo => {
+        SEQ_MEMO.set(Number(memo.seq), memo)
       })
       const LINHAS_TABELA = TABELA.table.querySelector("tbody").querySelectorAll("tr")
       let botoes = 0
@@ -204,9 +204,11 @@
           //insere na ultima coluna e guarda a sequencia
           COLUNAS.forEach((value, index) => {
             if (indiceColunaVisivel == TABELA.idSeq)
-              seq = parseInt(value.textContent)
+              seq = Number(value.textContent)
             if (indiceColunaVisivel == TABELA.idMov) {
-              value.appendChild(createMemoButton(modalMemos))
+              value.appendChild(createMemoButton(() => {
+                showMemoModal(seq, SEQ_MEMO.get(seq).descricao, value)
+              }))
               indiceMemo = index
             }
             if (value.checkVisibility()) {
@@ -215,7 +217,7 @@
           })
           //se a sequencia esta na map, insere o respectivo memo
           if (SEQ_MEMO.has(seq)) {
-            COLUNAS[indiceMemo].appendChild(createMemoElement(MEMOS[SEQ_MEMO.get(seq)].descricao))
+            COLUNAS[indiceMemo].appendChild(createMemoElement(SEQ_MEMO.get(seq).descricao))
             memos++
           }
           botoes++
@@ -226,8 +228,45 @@
     }
   }
 
-  function modalMemos() {
-    console.log("click")
+  function saveMemo(processo, seq, descricao, cell) {}
+
+  /**
+   * exibe o modal para adicionar/editar/excluir memo
+   * @param {number} seq 
+   * @param {string} currentMemo 
+   * @param {HTMLElement} cell 
+   */
+  function showMemoModal(seq, currentMemo, cell) {
+    const existing = document.querySelector('.memo-modal-backdrop');
+    if (existing) existing.remove();
+
+    const backdrop = document.createElement('div');
+    backdrop.className = 'memo-modal-backdrop';
+
+    const modal = document.createElement('div');
+    modal.className = 'memo-modal-content';
+    modal.innerHTML = `
+      <h3>Memo — Processo: ${PROCESSO} — Seq: ${seq}</h3>
+      <textarea class="memo-modal-textarea">${currentMemo || ''}</textarea>
+      <div style="text-align:right">
+        <button id="memoSaveBtn">Salvar</button>
+        <button id="memoCancelBtn" style="margin-left:8px">Cancelar</button>
+      </div>
+    `;
+
+    backdrop.appendChild(modal);
+    (document.body || document.documentElement).appendChild(backdrop);
+
+    // @ts-ignore
+    modal.querySelector('#memoCancelBtn').onclick = () => backdrop.remove();
+
+    // @ts-ignore
+    modal.querySelector('#memoSaveBtn').onclick = () => {
+      // @ts-ignore
+      const newMemo = modal.querySelector('.memo-modal-textarea').value;
+      backdrop.remove();
+      saveMemo(PROCESSO, seq, newMemo, cell);
+    };
   }
 
 })();

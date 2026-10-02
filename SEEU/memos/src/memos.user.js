@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SEEU - Memos
 // @namespace    http://tampermonkey.net/
-// @version      1.3
+// @version      1.3.1
 // @description  insere a visualização de memos
 // @match        https://seeu.pje.jus.br/seeu/visualizacaoProcesso.do*
 // @grant        GM_xmlhttpRequest
@@ -256,7 +256,7 @@
             }
           })
           //se a sequencia esta na map, insere o respectivo memo
-          if (SEQ_MEMO.has(seq)) {
+          if (SEQ_MEMO.has(seq) && SEQ_MEMO.get(seq) && indiceMemo !== -1) {
             COLUNAS[indiceMemo].appendChild(createMemoElement(SEQ_MEMO.get(seq)))
             memos++
           } else SEQ_MEMO.set(seq, "")
